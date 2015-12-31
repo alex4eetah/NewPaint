@@ -19,6 +19,7 @@
 		2662B9831C2432FC004C0719 /* PanelColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B9821C2432FC004C0719 /* PanelColorViewController.m */; };
 		26A35E7E1C207372008C9565 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26A35E7C1C207372008C9565 /* Main.storyboard */; };
 		26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */; };
+		EDC6AB811C357C1A004B9B18 /* FileManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		26A35E7D1C207372008C9565 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = IosPaint/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26DF4F371C1EE55D00AC03D0 /* FigureDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FigureDrawer.h; sourceTree = "<group>"; };
 		26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FigureDrawer.m; sourceTree = "<group>"; };
+		EDC6AB7F1C357C1A004B9B18 /* FileManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagingVC.h; sourceTree = "<group>"; };
+		EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManagingVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 		2634EE981C1ED460007E6ED5 = {
 			isa = PBXGroup;
 			children = (
+				EDC6AB7F1C357C1A004B9B18 /* FileManagingVC.h */,
+				EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */,
 				265B478A1C2ED013005024A1 /* LineDrawer.h */,
 				265B478B1C2ED013005024A1 /* LineDrawer.m */,
 				2662B9811C2432FC004C0719 /* PanelColorViewController.h */,
@@ -181,6 +186,7 @@
 			files = (
 				265B478C1C2ED013005024A1 /* LineDrawer.m in Sources */,
 				26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */,
+				EDC6AB811C357C1A004B9B18 /* FileManagingVC.m in Sources */,
 				2662B97A1C2426EB004C0719 /* BoardViewController.m in Sources */,
 				2662B97D1C242C9C004C0719 /* CanvasViewController.m in Sources */,
 				2662B9831C2432FC004C0719 /* PanelColorViewController.m in Sources */,

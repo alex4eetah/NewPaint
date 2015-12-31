@@ -8,6 +8,8 @@
 
 #import "CanvasViewController.h"
 #import "FigureDrawer.h"
+#import "FileManagingVC.h"
+
 
 typedef enum operationsType
 {
@@ -51,6 +53,7 @@ typedef enum operationsType
 @property (nonatomic, strong) UIView* handleToDelete;
 @property (nonatomic, assign) BOOL isInProgress;
 
+@property (strong, nonatomic) FileManagingVC * fileViewController;
 @property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
 @property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
@@ -107,99 +110,11 @@ typedef enum operationsType
     
 }
 
-- (IBAction)writeToFile:(UIButton *)sender
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths firstObject];
-     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:@" "];
-    if (![self.nameOfFileField.text  isEqual: @""])
-    {
-        documentFile = [documentDirectory stringByAppendingPathComponent:self.nameOfFileField.text];
-    }
-    else
-    {
-        self.nameOfFileField.text = @"Enter file name!";
-    }
-    
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    
-    [archiver encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
-    [archiver finishEncoding];
-    [data writeToFile:documentFile atomically:YES];
-    
-    self.savingViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
 
-}
-- (IBAction)LoadDataFromFile:(UIButton *)sender
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths firstObject];
-    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:sender.titleLabel.text];
-    
-    NSData *loadedData = [[NSData alloc] initWithContentsOfFile:documentFile];
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
-    self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
-    for (UIView *v in self.view.subviews)
-    {
-        if ([v isKindOfClass:[FigureDrawer class]])
-        {
-            [v removeFromSuperview];
-        }
-    }
-    for (FigureDrawer *f in self.myViews)
-    {
-        [f setNeedsDisplay];
-        [self.view addSubview:f];
-    }
-    
-    self.loadingViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
-}
 
-- (IBAction)ManageOperationDidChanged:(UIButton *)sender
-{
-    if (sender.tag == 1)
-    {
-        self.managingViewOutlet.hidden = YES;
-        self.savingViewOutlet.hidden = NO;
-    }
-    else if (sender.tag == 2)
-    {
-        self.managingViewOutlet.hidden = YES;
-        self.loadingViewOutlet.hidden = NO;
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        
-        NSFileManager *manager = [NSFileManager defaultManager];
-        NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
-        for (int i = 0; i < fileList.count; i++)
-        {
-            if (i == 0)
-            {
-                self.firstLoadingButtonOutlet.enabled = YES;
-                [self.firstLoadingButtonOutlet setTitle:fileList[0] forState:UIControlStateNormal];
-            }
-            else if (i == 1)
-            {
-                self.secondLoadingButtonOutlet.enabled = YES;
-                [self.secondLoadingButtonOutlet setTitle:fileList[1] forState:UIControlStateNormal];
-            }
-            else if (i == 2)
-            {
-                self.thirdLoadingButtonOutlet.enabled = YES;
-                [self.thirdLoadingButtonOutlet setTitle:fileList[2] forState:UIControlStateNormal];
-            }
-            else if (i == 3)
-            {
-                self.fourthLoadingButtonOutlet.enabled = YES;
-                [self.fourthLoadingButtonOutlet setTitle:fileList[3] forState:UIControlStateNormal];
-            }
-        }
-    }
-}
+
+
+
 
 
 - (void)didReceiveMemoryWarning
@@ -742,14 +657,61 @@ typedef enum operationsType
     }
 }
 
-/*
+- (void)writeFigureToFile:(NSString *)pathComponent
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths firstObject];
+    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:@" "];
+
+    documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
+
+    
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
+    [archiver finishEncoding];
+    [data writeToFile:documentFile atomically:YES];
+    
+}
+
+- (void)loadDataFromFile:(NSString *)docFilePath
+{
+    
+    NSData *loadedData = [[NSData alloc] initWithContentsOfFile:docFilePath];
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
+    self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
+    for (UIView *v in self.view.subviews)
+    {
+        if ([v isKindOfClass:[FigureDrawer class]])
+        {
+            [v removeFromSuperview];
+        }
+    }
+    for (FigureDrawer *f in self.myViews)
+    {
+        [f setNeedsDisplay];
+        [self.view addSubview:f];
+    }
+    
+    self.loadingViewOutlet.hidden = YES;
+    self.managingViewOutlet.hidden = NO;
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * segueName = segue.identifier;
+    
+    if ([segueName isEqualToString: @"fileManagment"])
+    {
+        self.fileViewController = (FileManagingVC *) [segue destinationViewController];
+    }
+    self.fileViewController.delegate = self;
+
 }
-*/
+
 
 @end
