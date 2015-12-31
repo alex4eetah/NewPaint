@@ -40,7 +40,7 @@
 {
     if (![self.nameOfFileField.text  isEqual: @""])
     {
-        [self.delegate writeFigureToFile:sender.titleLabel.text];
+        [self.delegate writeFigureToFile:self.nameOfFileField.text];
     }
     else
     {
@@ -55,7 +55,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths firstObject];
     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:sender.titleLabel.text];
-    [self.delegate LoadDataFromFile:documentFile];
+    [self.delegate loadDataFromFile:documentFile];
     
     self.loadingViewOutlet.hidden = YES;
     self.managingViewOutlet.hidden = NO;

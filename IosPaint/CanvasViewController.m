@@ -263,7 +263,7 @@ typedef enum operationsType
                 [self.currentPointsOfLine addObject: [NSValue valueWithCGPoint:self.start]];
                 
                 CGRect frame = CGRectMake(self.view.frame.origin.x,
-                                          self.view.frame.origin.y,
+                                          self.view.frame.origin.y+50,
                                           self.view.frame.size.width,
                                           self.view.frame.size.height);
                 FigureDrawer *currentView = [[FigureDrawer alloc] initWithFrame:frame
