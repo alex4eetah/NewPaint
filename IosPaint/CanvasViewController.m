@@ -89,8 +89,9 @@ typedef enum operationsType
     self.isMoveFinished = NO;
     
     [self.view addGestureRecognizer:self.lpgr];*/
-    self.inset = [[NSNumber alloc] initWithDouble:5];
+    
     self.lineWidth = 5;
+    self.inset = [[NSNumber alloc] initWithDouble:self.lineWidth/2];
     self.currentOperationOutlet.text = @"drawing";
     
     self.isInProgress = NO;
@@ -272,7 +273,7 @@ typedef enum operationsType
     {
         case drawing:
             
-            if (self.currentShape == 6)
+            if (self.currentShape == 6)//random line
             {
                 self.currentPointsOfLine = [[NSMutableArray alloc] init];
                 [self.currentPointsOfLine addObject: [NSValue valueWithCGPoint:self.start]];
@@ -598,7 +599,8 @@ typedef enum operationsType
 
 - (void)didSelectWidth:(NSInteger)width AndOpacity:(CGFloat)opacity
 {
-    
+    self.lineWidth = width;
+    self.inset = [[NSNumber alloc]initWithDouble:width/2];
 }
 
 - (void)didSelectColor:(UIColor *)color

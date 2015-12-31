@@ -17,8 +17,8 @@
 @property (assign, nonatomic) CGFloat currentBlue;
 @property (assign, nonatomic) CGFloat currentOpacity;
 @property (assign, nonatomic) CGFloat currentWidth;
-@property (strong, nonatomic) IBOutlet UIView *colorViewIndicator;
-@property (weak, nonatomic) IBOutlet UIView *widthAndOpacityViewIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *colorViewIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *widthAndOpacityViewIndicator;
 
 
 @end
@@ -32,10 +32,12 @@
     self.currentBlue = 0.5;
     self.currentOpacity = 1;
     self.currentWidth = 5;
-    self.colorViewIndicator.backgroundColor = [UIColor colorWithRed:self.currentRed
-                                                              green:self.currentGreen
-                                                               blue:self.currentBlue
-                                                              alpha:1];
+    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
+    [self setNeedsOfIndicator:self.colorViewIndicator];
+//    self.colorViewIndicator.backgroundColor = [UIColor colorWithRed:self.currentRed
+//                                                              green:self.currentGreen
+//                                                               blue:self.currentBlue
+//                                                              alpha:1];
     
     UITapGestureRecognizer *singleFingerTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -86,11 +88,11 @@
         default:
             break;
     }
-    
-    self.colorViewIndicator.backgroundColor = [UIColor colorWithRed:self.currentRed
-                                          green:self.currentGreen
-                                           blue:self.currentBlue
-                                          alpha:1];
+    [self setNeedsOfIndicator:self.colorViewIndicator];
+//    self.colorViewIndicator.backgroundColor = [UIColor colorWithRed:self.currentRed
+//                                          green:self.currentGreen
+//                                           blue:self.currentBlue
+//                                          alpha:self.currentOpacity];
 }
 
 
@@ -98,8 +100,10 @@
 {
     self.currentWidth = sender.value;
     
-    CGRect r = self.widthAndOpacityViewIndicator.frame;
+    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
     
+    
+    /*CGRect r = self.widthAndOpacityViewIndicator.frame;
     UIGraphicsBeginImageContextWithOptions(r.size, YES, 0);
     
     CGPoint center = CGPointMake(self.widthAndOpacityViewIndicator.frame.size.width/2, self.widthAndOpacityViewIndicator.frame.size.height/2);
@@ -117,12 +121,33 @@
     
     [currentColor setFill];
     [aPath closePath];
-    [aPath fill];
+    [aPath fill];*/
 }
 
 - (IBAction)didOpacityGetChanged:(UISlider *)sender
 {
     self.currentOpacity = sender.value;
+    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
+}
+
+- (void)setNeedsOfIndicator:(UIImageView *)indicator
+{
+    UIGraphicsBeginImageContext(indicator.frame.size);
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+    if (indicator == self.widthAndOpacityViewIndicator)
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(),self.currentWidth);
+    else if (indicator == self.colorViewIndicator)
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(),40);
+    
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), self.currentRed, self.currentGreen, self.currentBlue, self.currentOpacity);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 20, 20);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 20, 20);
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    if (indicator == self.widthAndOpacityViewIndicator)
+        self.widthAndOpacityViewIndicator.image = UIGraphicsGetImageFromCurrentImageContext();
+    else if (indicator == self.colorViewIndicator)
+        self.colorViewIndicator.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
 }
 
 //The event handling method
@@ -131,7 +156,7 @@
     CGPoint location = [sender locationInView:sender.view];
     if ([sender.view hitTest:location withEvent:nil].tag == -1)
     {
-        [self.delegate didSelectColor:self.colorViewIndicator.backgroundColor];
+        [self.delegate didSelectColor:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
         self.colorMenuOutlet.hidden = YES;
         self.mainMenuOutlet.hidden = NO;
     }
