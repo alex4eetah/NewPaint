@@ -51,6 +51,15 @@ typedef enum operationsType
 @property (nonatomic, strong) UIView* handleToDelete;
 @property (nonatomic, assign) BOOL isInProgress;
 
+@property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
+@property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
+@property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
+@property (weak, nonatomic) IBOutlet UIView *loadingViewOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *firstLoadingButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *secondLoadingButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *thirdLoadingButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *fourthLoadingButtonOutlet;
+
 
 @property (nonatomic, strong) UIImage *currentImage;
 
@@ -98,37 +107,97 @@ typedef enum operationsType
     
 }
 
-- (IBAction)ManageOperationDidChanged:(UIButton *)sender
+- (IBAction)writeToFile:(UIButton *)sender
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths firstObject];
-    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:@"wtf.txt"];
+     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:@" "];
+    if (![self.nameOfFileField.text  isEqual: @""])
+    {
+        documentFile = [documentDirectory stringByAppendingPathComponent:self.nameOfFileField.text];
+    }
+    else
+    {
+        self.nameOfFileField.text = @"Enter file name!";
+    }
+    
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
+    [archiver finishEncoding];
+    [data writeToFile:documentFile atomically:YES];
+    
+    self.savingViewOutlet.hidden = YES;
+    self.managingViewOutlet.hidden = NO;
+
+}
+- (IBAction)LoadDataFromFile:(UIButton *)sender
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths firstObject];
+    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:sender.titleLabel.text];
+    
+    NSData *loadedData = [[NSData alloc] initWithContentsOfFile:documentFile];
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
+    self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
+    for (UIView *v in self.view.subviews)
+    {
+        if ([v isKindOfClass:[FigureDrawer class]])
+        {
+            [v removeFromSuperview];
+        }
+    }
+    for (FigureDrawer *f in self.myViews)
+    {
+        [f setNeedsDisplay];
+        [self.view addSubview:f];
+    }
+    
+    self.loadingViewOutlet.hidden = YES;
+    self.managingViewOutlet.hidden = NO;
+}
+
+- (IBAction)ManageOperationDidChanged:(UIButton *)sender
+{
     if (sender.tag == 1)
     {
-            NSMutableData *data = [[NSMutableData alloc] init];
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            
-            [archiver encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
-            [archiver finishEncoding];
-            [data writeToFile:documentFile atomically:YES];
+        self.managingViewOutlet.hidden = YES;
+        self.savingViewOutlet.hidden = NO;
     }
     else if (sender.tag == 2)
     {
-        NSData *loadedData = [[NSData alloc] initWithContentsOfFile:documentFile];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
-       self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
-        for (UIView *v in self.view.subviews)
+        self.managingViewOutlet.hidden = YES;
+        self.loadingViewOutlet.hidden = NO;
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        NSFileManager *manager = [NSFileManager defaultManager];
+        NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+        for (int i = 0; i < fileList.count; i++)
         {
-            if ([v isKindOfClass:[FigureDrawer class]])
+            if (i == 0)
             {
-                [v removeFromSuperview];
+                self.firstLoadingButtonOutlet.enabled = YES;
+                [self.firstLoadingButtonOutlet setTitle:fileList[0] forState:UIControlStateNormal];
+            }
+            else if (i == 1)
+            {
+                self.secondLoadingButtonOutlet.enabled = YES;
+                [self.secondLoadingButtonOutlet setTitle:fileList[1] forState:UIControlStateNormal];
+            }
+            else if (i == 2)
+            {
+                self.thirdLoadingButtonOutlet.enabled = YES;
+                [self.thirdLoadingButtonOutlet setTitle:fileList[2] forState:UIControlStateNormal];
+            }
+            else if (i == 3)
+            {
+                self.fourthLoadingButtonOutlet.enabled = YES;
+                [self.fourthLoadingButtonOutlet setTitle:fileList[3] forState:UIControlStateNormal];
             }
         }
-       for (FigureDrawer *f in self.myViews)
-       {
-           [f setNeedsDisplay];
-           [self.view addSubview:f];
-       }
     }
 }
 
