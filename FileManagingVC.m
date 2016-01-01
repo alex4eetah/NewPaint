@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *CurrentFileToLoad;
 @property (strong, nonatomic)  NSArray *fileList;
 
+@property (weak, nonatomic) IBOutlet UILabel *currentOperationLabel;
 
 @end
 
@@ -66,7 +67,7 @@
     NSString *documentDirectory = [paths firstObject];
     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:self.CurrentFileToLoad];
     [self.delegate loadDataFromFile:documentFile];
-    [self.delegate resizeFileManagingContainerHeightTo:50];
+    [self.resizerDelegate resizeFileManagingContainerHeightTo:50];
     
     self.loadingViewOutlet.hidden = YES;
     self.managingViewOutlet.hidden = NO;
@@ -93,7 +94,7 @@
     }
     else if (sender.tag == 2)
     {
-        [self.delegate resizeFileManagingContainerHeightTo:100];
+        [self.resizerDelegate resizeFileManagingContainerHeightTo:100];
         
         self.managingViewOutlet.hidden = YES;
         self.loadingViewOutlet.hidden = NO;
@@ -147,6 +148,14 @@
 {
     return [self.fileList objectAtIndex:row];
 }
+
+#pragma mark - delegate methods
+
+- (void)showCurrentOperation:(NSString *)operation
+{
+    self.currentOperationLabel.text = operation;
+}
+
 /*
 #pragma mark - Navigation
 

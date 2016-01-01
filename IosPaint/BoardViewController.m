@@ -10,13 +10,14 @@
 #import "PanelColorViewController.h"
 #import "PanelFiguresViewController.h"
 #import "CanvasViewController.h"
-#import "FileManagingVC.h"
+
 
 @interface BoardViewController ()
 @property (strong, nonatomic) PanelColorViewController * colorVC;
 @property (strong, nonatomic) PanelFiguresViewController * figureVC;
 @property (strong, nonatomic) CanvasViewController * canvasVC;
 @property (strong, nonatomic) FileManagingVC * fileViewController;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fileManagerPanelHeightConstraint;
 
 @end
 
@@ -53,9 +54,19 @@
         self.fileViewController = (FileManagingVC *) [segue destinationViewController];
     }
     self.fileViewController.delegate = self.canvasVC;
+    self.fileViewController.resizerDelegate = self;
+    self.canvasVC.delegate = self.fileViewController;
     self.colorVC.delegate = self.canvasVC;
     self.figureVC.delegate = self.canvasVC;
 }
+
+#pragma mark - delegate methods
+
+- (void)resizeFileManagingContainerHeightTo:(CGFloat)height
+{
+    self.fileManagerPanelHeightConstraint.constant = height;
+}
+
 /*
 - (IBAction)ManagingOperationDidChanged:(UIButton *)sender
 {

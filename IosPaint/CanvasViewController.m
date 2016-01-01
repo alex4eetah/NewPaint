@@ -63,8 +63,6 @@ typedef enum operationsType
 @property (weak, nonatomic) IBOutlet UIButton *thirdLoadingButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIButton *fourthLoadingButtonOutlet;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fileManagingContainerHeight;
-
 @property (nonatomic, strong) UIImage *currentImage;
 
 @property (nonatomic, assign) BOOL didPreviousEventWasTap;
@@ -610,7 +608,7 @@ typedef enum operationsType
     switch (self.currentOperation)
     {
         case drawing:
-            self.currentOperationOutlet.text = @"drawing";
+            [self.delegate showCurrentOperation:@"drawing"];
             [self.view removeGestureRecognizer:self.pinchGesture];
             self.pinchGesture = nil;
             [self.view removeGestureRecognizer:self.lPGesture];
@@ -618,7 +616,7 @@ typedef enum operationsType
             break;
             
         case movement:
-            self.currentOperationOutlet.text = @"moving";
+            [self.delegate showCurrentOperation:@"moving"];
             self.lPGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                            action:@selector(LongPressDetected:)];
             self.lPGesture.numberOfTouchesRequired = 1;
@@ -631,7 +629,7 @@ typedef enum operationsType
             break;
             
         case scaleing:
-            self.currentOperationOutlet.text = @"scaling";
+            [self.delegate showCurrentOperation:@"scaling"];
             self.pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(PinchDetected:)];
             [self.view addGestureRecognizer:self.pinchGesture];
@@ -643,7 +641,7 @@ typedef enum operationsType
             break;
             
         case rotating:
-            self.currentOperationOutlet.text = @"rotation";
+            [self.delegate showCurrentOperation:@"rotation"];
             self.rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotationDetected:)];
             [self.view addGestureRecognizer:self.rotationGesture];
             
@@ -699,10 +697,7 @@ typedef enum operationsType
     self.managingViewOutlet.hidden = NO;
 }
 
-- (void)resizeFileManagingContainerHeightTo:(CGFloat)height
-{
-    self.fileManagingContainerHeight.constant = height;
-}
+
 
 #pragma mark - Navigation
 

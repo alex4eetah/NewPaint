@@ -74,7 +74,6 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSK-9v-2Ft">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="diX-ct-FUt"/>
                                     <constraint firstAttribute="height" constant="50" id="pOr-uW-JS9"/>
                                 </constraints>
                                 <connections>
@@ -117,6 +116,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="fileManagerPanelHeightConstraint" destination="pOr-uW-JS9" id="QbB-1V-lde"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -823,9 +825,6 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2WW-pN-ACk">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3io-Y0-Q6u">
-                                        <rect key="frame" x="0.0" y="0.0" width="407" height="50"/>
-                                    </pickerView>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOQ-WH-91s">
                                         <rect key="frame" x="437" y="0.0" width="46" height="50"/>
                                         <constraints>
@@ -846,6 +845,10 @@
                                             <action selector="deleteFileFromSystem:" destination="27x-Cd-gVx" eventType="touchUpInside" id="Q4I-8M-5pe"/>
                                         </connections>
                                     </button>
+                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3io-Y0-Q6u">
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="50"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -885,6 +888,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="currentOperationLabel" destination="uuE-3m-X19" id="mLF-JO-dX9"/>
                         <outlet property="filePicker" destination="3io-Y0-Q6u" id="m2t-6Y-MFy"/>
                         <outlet property="loadingViewOutlet" destination="2WW-pN-ACk" id="fRM-tm-MWs"/>
                         <outlet property="managingViewOutlet" destination="Ejc-1k-qom" id="hyv-5B-9aX"/>

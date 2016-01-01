@@ -11,9 +11,16 @@
 #import "PanelColorViewController.h"
 #import "LineDrawer.h"
 
-
+@protocol FileManagerGelegate;
 
 @interface CanvasViewController : UIViewController <PanelsDelegate>
 
+@property (nonatomic, weak) id <FileManagerGelegate> delegate;
+
+@end
+
+@protocol FileManagerGelegate <NSObject>
+
+- (void)showCurrentOperation:(NSString *)operation;
 
 @end
