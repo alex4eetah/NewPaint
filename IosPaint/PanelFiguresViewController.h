@@ -25,5 +25,6 @@
 - (void)didSelectOperation:(NSInteger)operation;
 - (void)writeFigureToFile:(NSString *)pathComponent;
 - (void)loadDataFromFile:(NSString *)docFilePath;
+- (void)resizeFileManagingContainerHeightTo:(CGFloat)height;
 
 @end

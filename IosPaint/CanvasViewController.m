@@ -63,6 +63,7 @@ typedef enum operationsType
 @property (weak, nonatomic) IBOutlet UIButton *thirdLoadingButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIButton *fourthLoadingButtonOutlet;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fileManagingContainerHeight;
 
 @property (nonatomic, strong) UIImage *currentImage;
 
@@ -696,6 +697,11 @@ typedef enum operationsType
     
     self.loadingViewOutlet.hidden = YES;
     self.managingViewOutlet.hidden = NO;
+}
+
+- (void)resizeFileManagingContainerHeightTo:(CGFloat)height
+{
+    self.fileManagingContainerHeight.constant = height;
 }
 
 #pragma mark - Navigation

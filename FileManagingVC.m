@@ -18,10 +18,10 @@
 @property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
 @property (weak, nonatomic) IBOutlet UIView *loadingViewOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *firstLoadingButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *secondLoadingButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *thirdLoadingButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *fourthLoadingButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIPickerView *filePicker;
+@property (strong, nonatomic) NSString *CurrentFileToLoad;
+@property (strong, nonatomic)  NSArray *fileList;
+
 
 @end
 
@@ -29,13 +29,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)getArrayOfPaths
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    self.fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+}
+
 - (IBAction)saveToFile:(UIButton *)sender
 {
     if (![self.nameOfFileField.text  isEqual: @""])
@@ -54,12 +64,26 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths firstObject];
-    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:sender.titleLabel.text];
+    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:self.CurrentFileToLoad];
     [self.delegate loadDataFromFile:documentFile];
+    [self.delegate resizeFileManagingContainerHeightTo:50];
     
     self.loadingViewOutlet.hidden = YES;
     self.managingViewOutlet.hidden = NO;
 }
+
+- (IBAction)deleteFileFromSystem:(UIButton *)sender
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths firstObject];
+    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:self.CurrentFileToLoad];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    [manager removeItemAtPath:documentFile error:nil];
+    
+    [self getArrayOfPaths];
+    [self.filePicker reloadAllComponents];
+}
+
 - (IBAction)managingFileOperations:(UIButton *)sender
 {
     if (sender.tag == 1)
@@ -69,15 +93,14 @@
     }
     else if (sender.tag == 2)
     {
+        [self.delegate resizeFileManagingContainerHeightTo:100];
+        
         self.managingViewOutlet.hidden = YES;
         self.loadingViewOutlet.hidden = NO;
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        
-        NSFileManager *manager = [NSFileManager defaultManager];
-        NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
-        for (int i = 0; i < fileList.count; i++)
+        [self getArrayOfPaths];
+        self.filePicker.delegate = self;
+        /*for (int i = 0; i < fileList.count; i++)
         {
             if (i == 0)
             {
@@ -99,10 +122,31 @@
                 self.fourthLoadingButtonOutlet.enabled = YES;
                 [self.fourthLoadingButtonOutlet setTitle:fileList[3] forState:UIControlStateNormal];
             }
-        }
+        }*/
     }
 }
 
+#pragma mark - pickerMethods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.fileList.count;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    self.CurrentFileToLoad = [self.fileList objectAtIndex:row];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [self.fileList objectAtIndex:row];
+}
 /*
 #pragma mark - Navigation
 

@@ -157,6 +157,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="fileManagingContainerHeight" destination="pOr-uW-JS9" id="Dek-V4-cZy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9RB-Q3-vAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pinchGestureRecognizer id="8vj-Sf-KEa"/>
@@ -808,66 +811,56 @@
                                     <constraint firstItem="tFl-Tm-th1" firstAttribute="leading" secondItem="fN7-Ur-9k5" secondAttribute="trailing" constant="15" id="wwZ-Hv-uty"/>
                                     <constraint firstAttribute="bottom" secondItem="tFl-Tm-th1" secondAttribute="bottom" constant="10" id="xDJ-jD-Lc8"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="rto-UE-eLt"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2WW-pN-ACk">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cdQ-66-xSd">
-                                        <rect key="frame" x="8" y="0.0" width="142" height="50"/>
-                                        <state key="normal" title="Button"/>
+                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3io-Y0-Q6u">
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="50"/>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOQ-WH-91s">
+                                        <rect key="frame" x="437" y="0.0" width="46" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="c6a-N1-PWd"/>
+                                        </constraints>
+                                        <state key="normal" title="Load"/>
                                         <connections>
-                                            <action selector="LoadDataFromFile:" destination="3Ed-gb-bWo" eventType="touchUpInside" id="mnv-cW-wyO"/>
-                                            <action selector="loadFromFile:" destination="27x-Cd-gVx" eventType="touchUpInside" id="yWH-bb-SPl"/>
+                                            <action selector="loadFromFile:" destination="27x-Cd-gVx" eventType="touchUpInside" id="yjH-sz-pbm"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ma6-Wd-7HC">
-                                        <rect key="frame" x="308" y="0.0" width="142" height="50"/>
-                                        <state key="normal" title="Button"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnI-nV-Sem">
+                                        <rect key="frame" x="527" y="10" width="46" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="QVp-OB-0di"/>
+                                        </constraints>
+                                        <state key="normal" title="Delete"/>
                                         <connections>
-                                            <action selector="LoadDataFromFile:" destination="3Ed-gb-bWo" eventType="touchUpInside" id="yoK-Vi-HXG"/>
-                                            <action selector="loadFromFile:" destination="27x-Cd-gVx" eventType="touchUpInside" id="rHz-pM-zt8"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQB-6Q-Ay1">
-                                        <rect key="frame" x="458" y="0.0" width="142" height="50"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="LoadDataFromFile:" destination="3Ed-gb-bWo" eventType="touchUpInside" id="xv2-TS-cs8"/>
-                                            <action selector="loadFromFile:" destination="27x-Cd-gVx" eventType="touchUpInside" id="JR7-Jh-9xJ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bpb-Ec-10f">
-                                        <rect key="frame" x="158" y="0.0" width="142" height="50"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="LoadDataFromFile:" destination="3Ed-gb-bWo" eventType="touchUpInside" id="Zu6-Ju-7SG"/>
-                                            <action selector="loadFromFile:" destination="27x-Cd-gVx" eventType="touchUpInside" id="p0p-pd-3Eu"/>
+                                            <action selector="deleteFileFromSystem:" destination="27x-Cd-gVx" eventType="touchUpInside" id="Q4I-8M-5pe"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="cdQ-66-xSd" firstAttribute="leading" secondItem="2WW-pN-ACk" secondAttribute="leading" constant="8" id="0MY-tc-K7U"/>
-                                    <constraint firstItem="hQB-6Q-Ay1" firstAttribute="leading" secondItem="ma6-Wd-7HC" secondAttribute="trailing" constant="8" id="1D7-rX-kZR"/>
-                                    <constraint firstItem="ma6-Wd-7HC" firstAttribute="leading" secondItem="Bpb-Ec-10f" secondAttribute="trailing" constant="8" id="4Nu-3z-iaC"/>
-                                    <constraint firstAttribute="trailing" secondItem="hQB-6Q-Ay1" secondAttribute="trailing" id="96O-Cx-MNZ"/>
-                                    <constraint firstItem="cdQ-66-xSd" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="Cit-oF-X3l"/>
-                                    <constraint firstAttribute="bottom" secondItem="cdQ-66-xSd" secondAttribute="bottom" id="CpK-en-4eN"/>
-                                    <constraint firstItem="ma6-Wd-7HC" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="DVh-Bn-pbd"/>
-                                    <constraint firstItem="hQB-6Q-Ay1" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="F4J-Ko-mQn"/>
-                                    <constraint firstItem="Bpb-Ec-10f" firstAttribute="leading" secondItem="cdQ-66-xSd" secondAttribute="trailing" constant="8" id="GcK-YO-N4p"/>
-                                    <constraint firstItem="hQB-6Q-Ay1" firstAttribute="width" secondItem="cdQ-66-xSd" secondAttribute="width" id="QzC-mq-1Ac"/>
-                                    <constraint firstItem="ma6-Wd-7HC" firstAttribute="width" secondItem="cdQ-66-xSd" secondAttribute="width" id="SH4-uX-AhO"/>
-                                    <constraint firstItem="Bpb-Ec-10f" firstAttribute="width" secondItem="cdQ-66-xSd" secondAttribute="width" id="YAA-xH-bNW"/>
-                                    <constraint firstAttribute="bottom" secondItem="Bpb-Ec-10f" secondAttribute="bottom" id="ZS2-Eq-bFR"/>
-                                    <constraint firstAttribute="height" constant="50" id="jBf-l3-WRf"/>
-                                    <constraint firstAttribute="bottom" secondItem="ma6-Wd-7HC" secondAttribute="bottom" id="ldq-Is-2Yw"/>
-                                    <constraint firstAttribute="bottom" secondItem="hQB-6Q-Ay1" secondAttribute="bottom" id="oHn-UA-G7a"/>
-                                    <constraint firstItem="Bpb-Ec-10f" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="oMA-tp-w3n"/>
+                                    <constraint firstAttribute="bottom" secondItem="zOQ-WH-91s" secondAttribute="bottom" id="5qe-J9-axa"/>
+                                    <constraint firstItem="3io-Y0-Q6u" firstAttribute="leading" secondItem="2WW-pN-ACk" secondAttribute="leading" id="Iz6-OV-GVh"/>
+                                    <constraint firstItem="zOQ-WH-91s" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="Jpn-h5-QMv"/>
+                                    <constraint firstAttribute="bottom" secondItem="3io-Y0-Q6u" secondAttribute="bottom" id="Nrh-WL-v9x"/>
+                                    <constraint firstItem="3io-Y0-Q6u" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="UWW-hf-dO8"/>
+                                    <constraint firstItem="zOQ-WH-91s" firstAttribute="leading" secondItem="3io-Y0-Q6u" secondAttribute="trailing" constant="8" symbolic="YES" id="aRp-ju-agP"/>
+                                    <constraint firstItem="jnI-nV-Sem" firstAttribute="leading" secondItem="zOQ-WH-91s" secondAttribute="trailing" constant="8" symbolic="YES" id="dMN-n3-hfU"/>
+                                    <constraint firstAttribute="trailing" secondItem="jnI-nV-Sem" secondAttribute="trailing" constant="20" symbolic="YES" id="iJJ-6Y-KN7"/>
+                                    <constraint firstAttribute="bottom" secondItem="jnI-nV-Sem" secondAttribute="bottom" id="izl-fJ-iU9"/>
+                                    <constraint firstAttribute="trailing" secondItem="zOQ-WH-91s" secondAttribute="trailing" constant="20" id="mRu-C4-n5W"/>
+                                    <constraint firstItem="jnI-nV-Sem" firstAttribute="top" secondItem="2WW-pN-ACk" secondAttribute="top" id="sPe-Rr-hq8"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="jBf-l3-WRf"/>
+                                        <exclude reference="mRu-C4-n5W"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -889,14 +882,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="firstLoadingButtonOutlet" destination="cdQ-66-xSd" id="tc8-aD-iuu"/>
-                        <outlet property="fourthLoadingButtonOutlet" destination="hQB-6Q-Ay1" id="Vjc-wP-qOd"/>
+                        <outlet property="filePicker" destination="3io-Y0-Q6u" id="m2t-6Y-MFy"/>
                         <outlet property="loadingViewOutlet" destination="2WW-pN-ACk" id="fRM-tm-MWs"/>
                         <outlet property="managingViewOutlet" destination="Ejc-1k-qom" id="hyv-5B-9aX"/>
                         <outlet property="nameOfFileField" destination="tFl-Tm-th1" id="XP3-jE-rda"/>
                         <outlet property="savingViewOutlet" destination="g0e-lB-5bp" id="R9S-08-qJa"/>
-                        <outlet property="secondLoadingButtonOutlet" destination="Bpb-Ec-10f" id="grg-oW-ioK"/>
-                        <outlet property="thirdLoadingButtonOutlet" destination="ma6-Wd-7HC" id="qUs-lg-1b5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mo2-Dy-GzU" userLabel="First Responder" sceneMemberID="firstResponder"/>

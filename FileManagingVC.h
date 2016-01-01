@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PanelFiguresViewController.h"
 
-@interface FileManagingVC : UIViewController
+@interface FileManagingVC : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, weak) id <PanelsDelegate> delegate;
 
