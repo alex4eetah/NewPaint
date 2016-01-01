@@ -572,15 +572,17 @@ typedef enum operationsType
 }
 
 
-- (IBAction)Undo:(UIButton *)sender
+
+
+#pragma mark - delegate Methods
+
+- (void)Undo
 {
     [[self.myViews lastObject] removeFromSuperview];
     [self.myViews removeLastObject];
 }
 
-#pragma mark - delegate Methods
-
-- (void)didSelectWidth:(NSInteger)width AndOpacity:(CGFloat)opacity
+- (void)didSelectWidth:(NSInteger)width
 {
     self.lineWidth = width;
     self.inset = [[NSNumber alloc]initWithDouble:width/2];

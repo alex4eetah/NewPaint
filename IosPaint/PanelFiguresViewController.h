@@ -18,12 +18,13 @@
 
 @protocol PanelsDelegate <NSObject>
 
-- (void)didSelectWidth:(NSInteger)width AndOpacity:(CGFloat)opacity;
+- (void)didSelectWidth:(NSInteger)width;
 - (void)didSelectColor:(UIColor *)color;
 - (void)didSelectShape:(NSInteger)shape;
 - (void)didSelectImage:(UIImage *)image;
 - (void)didSelectOperation:(NSInteger)operation;
 - (void)writeFigureToFile:(NSString *)pathComponent;
 - (void)loadDataFromFile:(NSString *)docFilePath;
+- (void)Undo;
 
 @end

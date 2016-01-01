@@ -685,7 +685,7 @@
                                             <action selector="managingFileOperations:" destination="27x-Cd-gVx" eventType="touchUpInside" id="NcL-bn-mBe"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AX-pK-h1U">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AX-pK-h1U">
                                         <rect key="frame" x="555" y="0.0" width="45" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="ACz-ZJ-OLV"/>

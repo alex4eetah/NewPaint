@@ -89,10 +89,6 @@
             break;
     }
     [self setNeedsOfIndicator:self.colorViewIndicator];
-//    self.colorViewIndicator.backgroundColor = [UIColor colorWithRed:self.currentRed
-//                                          green:self.currentGreen
-//                                           blue:self.currentBlue
-//                                          alpha:self.currentOpacity];
 }
 
 
@@ -101,27 +97,6 @@
     self.currentWidth = sender.value;
     
     [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
-    
-    
-    /*CGRect r = self.widthAndOpacityViewIndicator.frame;
-    UIGraphicsBeginImageContextWithOptions(r.size, YES, 0);
-    
-    CGPoint center = CGPointMake(self.widthAndOpacityViewIndicator.frame.size.width/2, self.widthAndOpacityViewIndicator.frame.size.height/2);
-    
-    UIBezierPath *aPath = [UIBezierPath bezierPathWithArcCenter:center
-                                                         radius:sender.value/2
-                                                     startAngle:0
-                                                       endAngle:2*M_PI
-                                                      clockwise:YES];
-    
-    UIColor *currentColor = [UIColor colorWithRed:self.currentRed
-                                            green:self.currentGreen
-                                             blue:self.currentBlue
-                                            alpha:self.currentOpacity];
-    
-    [currentColor setFill];
-    [aPath closePath];
-    [aPath fill];*/
 }
 
 - (IBAction)didOpacityGetChanged:(UISlider *)sender
@@ -162,7 +137,8 @@
     }
     else if ([sender.view hitTest:location withEvent:nil].tag == -2)
     {
-        [self.delegate didSelectWidth:self.currentWidth AndOpacity:self.currentOpacity];
+        [self.delegate didSelectWidth:self.currentWidth];
+        [self.delegate didSelectColor:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
         self.widthAndOpacityMenuOutlet.hidden = YES;
         self.mainMenuOutlet.hidden = NO;
     }
@@ -170,11 +146,11 @@
 }
 
 
-
+/*
 - (void)setCurrentColor:(UIColor *)currentColor
 {
     [self.delegate didSelectColor:currentColor];
-}
+}*/
 
 /*
 #pragma mark - Navigation

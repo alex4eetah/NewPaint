@@ -101,29 +101,10 @@
         
         [self getArrayOfPaths];
         self.filePicker.delegate = self;
-        /*for (int i = 0; i < fileList.count; i++)
-        {
-            if (i == 0)
-            {
-                self.firstLoadingButtonOutlet.enabled = YES;
-                [self.firstLoadingButtonOutlet setTitle:fileList[0] forState:UIControlStateNormal];
-            }
-            else if (i == 1)
-            {
-                self.secondLoadingButtonOutlet.enabled = YES;
-                [self.secondLoadingButtonOutlet setTitle:fileList[1] forState:UIControlStateNormal];
-            }
-            else if (i == 2)
-            {
-                self.thirdLoadingButtonOutlet.enabled = YES;
-                [self.thirdLoadingButtonOutlet setTitle:fileList[2] forState:UIControlStateNormal];
-            }
-            else if (i == 3)
-            {
-                self.fourthLoadingButtonOutlet.enabled = YES;
-                [self.fourthLoadingButtonOutlet setTitle:fileList[3] forState:UIControlStateNormal];
-            }
-        }*/
+    }
+    else if (sender.tag == 3)
+    {
+        [self.delegate Undo];
     }
 }
 
