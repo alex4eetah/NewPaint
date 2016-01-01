@@ -8,7 +8,7 @@
 
 #import "CanvasViewController.h"
 #import "FigureDrawer.h"
-#import "FileManagingVC.h"
+
 
 
 typedef enum operationsType
@@ -53,7 +53,7 @@ typedef enum operationsType
 @property (nonatomic, strong) UIView* handleToDelete;
 @property (nonatomic, assign) BOOL isInProgress;
 
-@property (strong, nonatomic) FileManagingVC * fileViewController;
+
 @property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
 @property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
@@ -707,7 +707,7 @@ typedef enum operationsType
 #pragma mark - Navigation
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSString * segueName = segue.identifier;
     
@@ -717,7 +717,7 @@ typedef enum operationsType
     }
     self.fileViewController.delegate = self;
 
-}
+}*/
 
 
 @end

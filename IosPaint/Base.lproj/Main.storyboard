@@ -71,8 +71,18 @@
                                     <segue destination="v79-HU-1CI" kind="embed" identifier="colorViev_embed" id="f03-ag-neP"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSK-9v-2Ft">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="diX-ct-FUt"/>
+                                    <constraint firstAttribute="height" constant="50" id="pOr-uW-JS9"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="27x-Cd-gVx" kind="embed" identifier="fileManagment" id="UOZ-7f-97y"/>
+                                </connections>
+                            </containerView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TTQ-oz-tKd">
-                                <rect key="frame" x="0.0" y="67" width="600" height="413"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="413"/>
                                 <animations/>
                                 <connections>
                                     <segue destination="3Ed-gb-bWo" kind="embed" identifier="canvas_embed" id="fxT-O1-vga"/>
@@ -87,16 +97,21 @@
                             <constraint firstItem="TTQ-oz-tKd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="7dc-fS-OJA"/>
                             <constraint firstItem="nrn-xG-DRw" firstAttribute="top" secondItem="sRe-KX-7VJ" secondAttribute="bottom" constant="5" id="Ngj-hp-MKg"/>
                             <constraint firstAttribute="trailing" secondItem="nrn-xG-DRw" secondAttribute="trailing" id="R8W-q0-b6S"/>
+                            <constraint firstItem="uSK-9v-2Ft" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="SNL-bp-GQw"/>
+                            <constraint firstAttribute="trailing" secondItem="uSK-9v-2Ft" secondAttribute="trailing" id="Vdo-hv-b3j"/>
                             <constraint firstItem="nrn-xG-DRw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WfY-ur-ZKU"/>
                             <constraint firstAttribute="trailing" secondItem="sRe-KX-7VJ" secondAttribute="trailing" id="Wui-uk-Zob"/>
                             <constraint firstItem="nrn-xG-DRw" firstAttribute="top" secondItem="TTQ-oz-tKd" secondAttribute="bottom" id="Xsv-Av-HD2"/>
                             <constraint firstItem="TTQ-oz-tKd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="b8M-g2-Ia3"/>
                             <constraint firstItem="sRe-KX-7VJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lFQ-bu-PeF"/>
+                            <constraint firstItem="TTQ-oz-tKd" firstAttribute="top" secondItem="uSK-9v-2Ft" secondAttribute="bottom" constant="8" symbolic="YES" id="u4U-Vz-oWL"/>
+                            <constraint firstItem="uSK-9v-2Ft" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vdH-oT-tsp"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="nrn-xG-DRw" secondAttribute="bottom" constant="5" id="ww2-2U-U7j"/>
                             <constraint firstItem="sRe-KX-7VJ" firstAttribute="top" secondItem="TTQ-oz-tKd" secondAttribute="bottom" constant="5" id="xUN-YK-nIQ"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="28q-EV-blT"/>
                                 <exclude reference="7dc-fS-OJA"/>
                                 <exclude reference="Xsv-Av-HD2"/>
                             </mask>
@@ -119,16 +134,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="413"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uSK-9v-2Ft">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="pOr-uW-JS9"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="27x-Cd-gVx" kind="embed" identifier="fileManagment" id="UOZ-7f-97y"/>
-                                </connections>
-                            </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MPh-Nq-nic" userLabel="MainView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MPh-Nq-nic" userLabel="MainView">
                                 <rect key="frame" x="0.0" y="50" width="600" height="363"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -144,10 +150,7 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="MPh-Nq-nic" secondAttribute="bottom" id="22a-iU-53f"/>
                             <constraint firstAttribute="trailing" secondItem="MPh-Nq-nic" secondAttribute="trailing" id="5kL-ra-5dE"/>
-                            <constraint firstItem="uSK-9v-2Ft" firstAttribute="top" secondItem="HbD-ww-0fy" secondAttribute="bottom" id="ATO-px-nvK"/>
-                            <constraint firstItem="MPh-Nq-nic" firstAttribute="top" secondItem="uSK-9v-2Ft" secondAttribute="bottom" id="FMb-n4-kAu"/>
-                            <constraint firstAttribute="trailing" secondItem="uSK-9v-2Ft" secondAttribute="trailing" id="SyD-XZ-IxB"/>
-                            <constraint firstItem="uSK-9v-2Ft" firstAttribute="leading" secondItem="uJc-Qu-qIY" secondAttribute="leading" id="XHz-4R-31V"/>
+                            <constraint firstItem="MPh-Nq-nic" firstAttribute="top" secondItem="HbD-ww-0fy" secondAttribute="bottom" id="SIe-5I-JbO"/>
                             <constraint firstItem="MPh-Nq-nic" firstAttribute="leading" secondItem="uJc-Qu-qIY" secondAttribute="leading" id="wU8-uu-bWd"/>
                             <constraint firstItem="MPh-Nq-nic" firstAttribute="top" secondItem="HbD-ww-0fy" secondAttribute="bottom" id="yKX-P8-uqO"/>
                         </constraints>
@@ -166,7 +169,7 @@
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="hHi-l7-w1m"/>
                 <rotationGestureRecognizer id="jUB-iD-aKF"/>
             </objects>
-            <point key="canvasLocation" x="1184" y="34.5"/>
+            <point key="canvasLocation" x="1203" y="60.5"/>
         </scene>
         <!--Panel Color View Controller-->
         <scene sceneID="0JN-pL-CVK">
@@ -891,7 +894,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mo2-Dy-GzU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1856" y="41"/>
+            <point key="canvasLocation" x="1203" y="-230"/>
         </scene>
     </scenes>
 </document>

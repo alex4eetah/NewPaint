@@ -42,6 +42,7 @@ typedef enum shapeTypes
     [aCoder encodeObject: [NSNumber numberWithLong: self.dekNum] forKey:@"dekNum"];
     [aCoder encodeObject: [NSNumber numberWithLong: self.numOfSides] forKey:@"numOfSides"];
     [aCoder encodeObject: self.image forKey:@"image"];
+    [aCoder encodeObject: self.pointsOfLine forKey:@"pointsOfLine"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -56,6 +57,7 @@ typedef enum shapeTypes
         self.lineWidth = (int)[[aDecoder decodeObjectForKey:@"lineWidth"] longValue];
         self.dekNum = (int)[[aDecoder decodeObjectForKey:@"dekNum"] longValue];
         self.numOfSides = (int)[[aDecoder decodeObjectForKey:@"numOfSides"] longValue];
+        self.pointsOfLine = [aDecoder decodeObjectForKey:@"pointsOfLine"];
     }
     return self;
 }

@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanelColorViewController.h"
-#import "PanelFiguresViewController.h"
-#import "CanvasViewController.h"
+
 
 
 @interface BoardViewController : UIViewController 

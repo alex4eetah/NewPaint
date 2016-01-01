@@ -7,11 +7,16 @@
 //
 
 #import "BoardViewController.h"
+#import "PanelColorViewController.h"
+#import "PanelFiguresViewController.h"
+#import "CanvasViewController.h"
+#import "FileManagingVC.h"
 
 @interface BoardViewController ()
 @property (strong, nonatomic) PanelColorViewController * colorVC;
 @property (strong, nonatomic) PanelFiguresViewController * figureVC;
 @property (strong, nonatomic) CanvasViewController * canvasVC;
+@property (strong, nonatomic) FileManagingVC * fileViewController;
 
 @end
 
@@ -43,6 +48,11 @@
     {
         self.figureVC = (PanelFiguresViewController *) [segue destinationViewController];
     }
+    else if ([segueName isEqualToString: @"fileManagment"])
+    {
+        self.fileViewController = (FileManagingVC *) [segue destinationViewController];
+    }
+    self.fileViewController.delegate = self.canvasVC;
     self.colorVC.delegate = self.canvasVC;
     self.figureVC.delegate = self.canvasVC;
 }
