@@ -15,7 +15,9 @@
 @interface FileManagingVC ()
 
 @property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
-@property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
+@property (weak, nonatomic) IBOutlet UIView *savingOptionsViewOutlet;
+@property (weak, nonatomic) IBOutlet UIView *savingToFileViewOutlet;
+@property (weak, nonatomic) IBOutlet UIView *savingToGalleryViewOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
 @property (weak, nonatomic) IBOutlet UIView *loadingViewOutlet;
 @property (weak, nonatomic) IBOutlet UIPickerView *filePicker;
@@ -47,20 +49,7 @@
     self.fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
 }
 
-- (IBAction)saveToFile:(UIButton *)sender
-{
-    if (![self.nameOfFileField.text  isEqual: @""])
-    {
-        [self.delegate writeFigureToFile:self.nameOfFileField.text];
-    }
-    else
-    {
-        self.nameOfFileField.text = @"Enter file name!";
-    }
-    
-    self.savingViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
-}
+
 - (IBAction)loadFromFile:(UIButton *)sender
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -90,7 +79,7 @@
     if (sender.tag == 1)
     {
         self.managingViewOutlet.hidden = YES;
-        self.savingViewOutlet.hidden = NO;
+        self.savingOptionsViewOutlet.hidden = NO;
     }
     else if (sender.tag == 2)
     {
@@ -106,6 +95,46 @@
     {
         [self.delegate Undo];
     }
+}
+
+- (IBAction)savingOptionDidChanged:(UIButton *)sender
+{
+    switch (sender.tag)
+    {
+        case 1:
+            self.savingOptionsViewOutlet.hidden = YES;
+            self.savingToFileViewOutlet.hidden = NO;
+            break;
+        case 2:
+            self.savingOptionsViewOutlet.hidden = YES;
+            self.savingToGalleryViewOutlet.hidden = NO;
+            [self.delegate performSelector:@selector(setCurrentOperationWithNSNumber:) withObject:[NSNumber numberWithInt:4]];
+            break;
+        default:
+            break;
+    }
+}
+
+- (IBAction)saveToFile:(UIButton *)sender
+{
+    if (![self.nameOfFileField.text  isEqual: @""])
+    {
+        [self.delegate writeFigureToFile:self.nameOfFileField.text];
+    }
+    else
+    {
+        self.nameOfFileField.text = @"Enter file name!";
+    }
+    
+    self.savingToFileViewOutlet.hidden = YES;
+    self.managingViewOutlet.hidden = NO;
+}
+
+- (IBAction)saveToGallery:(UIButton *)sender
+{
+    [self.delegate saveFigureToGallery];
+    self.savingToGalleryViewOutlet.hidden = YES;
+    self.managingViewOutlet.hidden = NO;
 }
 
 #pragma mark - pickerMethods

@@ -12,6 +12,7 @@
 @property (strong, nonatomic) IBOutlet UIView *mainMenuOutlet;
 @property (strong, nonatomic) IBOutlet UIView *colorMenuOutlet;
 @property (strong, nonatomic) IBOutlet UIView *widthAndOpacityMenuOutlet;
+@property (weak, nonatomic) IBOutlet UIView *recentSettingsOutlet;
 @property (assign, nonatomic) CGFloat currentRed;
 @property (assign, nonatomic) CGFloat currentGreen;
 @property (assign, nonatomic) CGFloat currentBlue;
@@ -20,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *colorViewIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *widthAndOpacityViewIndicator;
 
+@property (strong, nonatomic) NSMutableArray *recentColors;//10 max
+@property (weak, nonatomic) IBOutlet UIImageView *recentColorViewIndicator;
+@property (strong, nonatomic) UIColor * thisColor;
 
 @end
 
@@ -67,7 +71,9 @@
             self.mainMenuOutlet.hidden = YES;
             break;
         case 3:
-            
+            self.widthAndOpacityMenuOutlet.hidden = NO;
+            self.recentSettingsOutlet.hidden = YES;
+            [self.resizerDelegate resizeColorContainerHeightTo:100];
             break;
     }
 }
@@ -142,8 +148,70 @@
         self.widthAndOpacityMenuOutlet.hidden = YES;
         self.mainMenuOutlet.hidden = NO;
     }
+    else if ([sender.view hitTest:location withEvent:nil].tag == -3)
+    {
+        [self.delegate didSelectWidth:self.currentWidth];
+        [self.delegate didSelectColor:self.thisColor];
+        self.recentSettingsOutlet.hidden = YES;
+        self.mainMenuOutlet.hidden = NO;
+    }
+    if (!self.recentColors)
+    {
+        self.recentColors = [[NSMutableArray alloc] init];
+    }
+    
+    static NSInteger i = 0;
+    
+    if (i >= 10)
+        i = 0;
+    
+    [self.recentColors insertObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity] atIndex:i];
+    i++;
+}
+
+#pragma mark - pickerMethods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.recentColors.count;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    self.thisColor = self.recentColors[row];
+    const CGFloat* components = CGColorGetComponents(self.thisColor.CGColor);
+    CGFloat thisRed = components[0];
+    CGFloat thisGreen = components[1];
+    CGFloat thisBlue = components[2];
+    CGFloat thisOpacity = CGColorGetAlpha(self.thisColor.CGColor);
+    
+    UIGraphicsBeginImageContext(self.recentColorViewIndicator.frame.size);
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(),100);
+    
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), thisRed, thisGreen, thisBlue, thisOpacity);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 50, 50);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 50, 50);
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    self.recentColorViewIndicator.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
 }
+
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *title = @"sample title";
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:self.thisColor}];
+    
+    return attString;
+    
+}
+
 
 
 /*

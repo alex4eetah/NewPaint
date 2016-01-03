@@ -18,6 +18,7 @@
 @property (strong, nonatomic) CanvasViewController * canvasVC;
 @property (strong, nonatomic) FileManagingVC * fileViewController;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fileManagerPanelHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *colorPanelHeightConstraint;
 
 @end
 
@@ -57,6 +58,7 @@
     self.fileViewController.resizerDelegate = self;
     self.canvasVC.delegate = self.fileViewController;
     self.colorVC.delegate = self.canvasVC;
+    self.colorVC.resizerDelegate = self;
     self.figureVC.delegate = self.canvasVC;
 }
 
@@ -65,6 +67,11 @@
 - (void)resizeFileManagingContainerHeightTo:(CGFloat)height
 {
     self.fileManagerPanelHeightConstraint.constant = height;
+}
+
+- (void)resizeColorContainerHeightTo:(CGFloat)height
+{
+    self.colorPanelHeightConstraint.constant = height;
 }
 
 /*

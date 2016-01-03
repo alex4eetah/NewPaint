@@ -16,8 +16,10 @@ typedef enum operationsType
     drawing,
     movement,
     scaleing,
-    rotating
+    rotating,
+    chosingArea
 } OperationType;
+
 
 @interface CanvasViewController ()
 
@@ -45,8 +47,8 @@ typedef enum operationsType
 @property (nonatomic, strong) UILongPressGestureRecognizer *lPGesture;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
 @property (nonatomic, strong) UIRotationGestureRecognizer *rotationGesture;
-
 @property (nonatomic, assign) OperationType currentOperation;
+
 @property (strong, nonatomic) IBOutlet UILabel *currentOperationOutlet;
 
 @property (nonatomic, strong) UIView* handleToMove;
@@ -66,9 +68,17 @@ typedef enum operationsType
 @property (nonatomic, strong) UIImage *currentImage;
 
 @property (nonatomic, assign) BOOL didPreviousEventWasTap;
+
+@property (nonatomic, strong) UIView *chosenArea;
 @end
 
 @implementation CanvasViewController
+
+-(void)setCurrentOperationWithNSNumber:(NSNumber*)number
+{
+    [self setCurrentOperation:[number intValue]];
+}
+
 /*
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -342,6 +352,16 @@ typedef enum operationsType
             
             break;
             
+        case chosingArea:
+            {
+            CGRect frame = CGRectMake(self.start.x, self.start.y, 0, 0);
+            
+            self.chosenArea = [[UIView alloc] initWithFrame:frame];
+            self.chosenArea.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
+            [self.view addSubview:self.chosenArea];
+            }
+            break;
+            
         default:
             break;
     }
@@ -351,7 +371,7 @@ typedef enum operationsType
 {
     UITouch* touch = [[event allTouches] anyObject];
     FigureDrawer * currentView;
-//    static NSInteger count = 0;
+
     switch (self.currentOperation)
     {
         case drawing:
@@ -360,27 +380,7 @@ typedef enum operationsType
             
             if (self.currentShape == 6)
             {
-//                count++;
                 [self.currentPointsOfLine addObject: [NSValue valueWithCGPoint:self.stop]];
-                
-//                CGContextRef ctx = UIGraphicsGetCurrentContext();
-//                CGContextBeginPath(ctx);
-//                CGContextSetLineWidth(ctx, self.lineWidth);
-//                CGContextSetStrokeColorWithColor(ctx, [[UIColor yellowColor] CGColor]);
-//
-//                if (count == 1)
-//                {
-//                    NSValue *v = [self.currentPointsOfLine firstObject];
-//                    CGPoint firstPint = [v CGPointValue];
-//                    CGContextMoveToPoint(ctx, firstPint.x, firstPint.y);
-//                }
-//                else
-//                {
-//                    NSValue *v = [self.currentPointsOfLine lastObject];
-//                    CGPoint lastPoint = [v CGPointValue];
-//                    CGContextAddLineToPoint(ctx, lastPoint.x, lastPoint.y);
-//                }
-//                CGContextStrokePath(ctx);
                 currentView = [self.myViews lastObject];
                 [self.myViews removeObject:currentView];
                 currentView.pointsOfLine  = self.currentPointsOfLine;
@@ -425,93 +425,7 @@ typedef enum operationsType
                 [self.myViews addObject:currentView];
                 [currentView setNeedsDisplay];
             }
-            /*
-            
-            
-            
-            
-            
-            
-            
-            
-            if (self.currentShape == 6)
-            {
-                if (self.didPreviousEventWasTap)
-                {
-                    
-                    
-                   
-                    
-                    currentView = self.myViews.lastObject;
-                    currentView.frame = frame;
-                    currentView.dekNum = dekNum;
-                    currentView.numOfSides = 3;
-                    [self.myViews removeLastObject];
-                    [self.myViews addObject:currentView];
-                    [currentView setNeedsDisplay];
-                    
-                    self.didPreviousEventWasTap = NO;
-                    if (dekNum == 4)
-                        self.start = CGPointMake(self.stop.x-5, self.stop.y-5);
-                    else if (dekNum == 3)
-                        self.start = CGPointMake(self.stop.x+5, self.stop.y-5);
-                    else if (dekNum == 2)
-                        self.start = CGPointMake(self.stop.x+5, self.stop.y+5);
-                    else if (dekNum == 1)
-                        self.start = CGPointMake(self.stop.x-5, self.stop.y+5);
-                }
-                else
-                {
-                    if (self.stop.x > self.start.x && self.stop.y < self.start.y)
-                        dekNum = 1;
-                    else if (self.stop.x < self.start.x && self.stop.y < self.start.y)
-                        dekNum = 2;
-                    else if (self.stop.x < self.start.x && self.stop.y > self.start.y)
-                        dekNum = 3;
-                    else if (self.stop.x > self.start.x && self.stop.y > self.start.y)
-                        dekNum = 4;
-                    
-                    currentView = [[FigureDrawer alloc] initWithFrame:frame
-                                                                shape:self.currentShape
-                                                               collor:self.currentColor
-                                                         dekartSystem:dekNum
-                                                            withInset:0
-                                                            lineWidth:self.lineWidth];
-                    currentView.backgroundColor = [UIColor clearColor];
-                    currentView.dekNum = dekNum;
-                    [self.view addSubview:currentView];
-                    [self.myViews addObject:currentView];
-                    
-                    if (dekNum == 4)
-                        self.start = CGPointMake(self.stop.x-5, self.stop.y-5);
-                    else if (dekNum == 3)
-                        self.start = CGPointMake(self.stop.x+5, self.stop.y-5);
-                    else if (dekNum == 2)
-                        self.start = CGPointMake(self.stop.x+5, self.stop.y+5);
-                    else if (dekNum == 1)
-                        self.start = CGPointMake(self.stop.x-5, self.stop.y+5);
-                        
-                }
-            }
-            else
-            {
-                if (self.currentShape == 4)
-                    frame = CGRectMake(x, y, (fabs(height)+fabs(width))/2, (fabs(height)+fabs(width))/2);
-                
-                
-                
-
-                
-                currentView = self.myViews.lastObject;
-                currentView.frame = frame;
-                currentView.dekNum = dekNum;
-                currentView.numOfSides = 3;
-                [self.myViews removeLastObject];
-                [self.myViews addObject:currentView];
-                [currentView setNeedsDisplay];
-            }*/
             break;
-            
         case movement:
             
             if (self.hitTheMoovingHandle)
@@ -529,6 +443,20 @@ typedef enum operationsType
             
             break;
             
+        case chosingArea:
+            {
+            CGFloat width = self.stop.x - self.start.x;
+            CGFloat height = self.stop.y - self.start.y;
+            
+            CGFloat x = width >= 0 ? self.start.x : self.start.x + width;
+            CGFloat y = height >= 0 ? self.start.y : self.start.y + height;
+            
+            CGRect frame = CGRectMake(x, y, fabs(width), fabs(height));
+            self.chosenArea.frame = frame;
+            [self.chosenArea setNeedsDisplay];
+            }
+            break;
+            
         default:
             break;
     }
@@ -539,6 +467,11 @@ typedef enum operationsType
     if (self.currentShape == 6)
     {
         
+    }
+    
+    if (self.currentOperation == chosingArea)
+    {
+        self.currentOperation = drawing;
     }
     
     if (self.hitTheMoovingHandle)
@@ -652,9 +585,18 @@ typedef enum operationsType
             self.lPGesture = nil;
             self.pinchGesture = nil;
             break;
-            
+
         default:
             break;
+    }
+}
+
+- (void)allClear
+{
+    for (FigureDrawer *f in self.view.subviews)
+    {
+        [f removeFromSuperview];
+        self.myViews = nil;
     }
 }
 
@@ -674,6 +616,24 @@ typedef enum operationsType
     [archiver finishEncoding];
     [data writeToFile:documentFile atomically:YES];
     
+}
+
+- (void)saveFigureToGallery
+{
+    UIGraphicsBeginImageContext(self.view.frame.size); //making image from view
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *sourceImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //now we will position the image, X/Y away from top left corner to get the portion we want
+    UIGraphicsBeginImageContext(self.chosenArea.frame.size);
+    [sourceImage drawAtPoint:CGPointMake(self.chosenArea.frame.origin.x, self.chosenArea.frame.origin.y)];
+    UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImageWriteToSavedPhotosAlbum(croppedImage, nil, nil, nil);
+    });
 }
 
 - (void)loadDataFromFile:(NSString *)docFilePath

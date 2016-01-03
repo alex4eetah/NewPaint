@@ -150,7 +150,7 @@ typedef enum shapeTypes
     
 }
 
-- (void)drawPanLine:(NSArray*)points
+/*- (void)drawPanLine:(NSArray*)points
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextBeginPath(ctx);
@@ -172,7 +172,69 @@ typedef enum shapeTypes
     
     
     CGContextStrokePath(ctx);
+}*/
+
+- (void) drawPanLine:(NSArray *)points
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [self.collor setStroke];
+    path.lineWidth = self.lineWidth;
+    //path.lineCapStyle =
+    
+    NSValue *value = [points firstObject];
+    CGPoint p1 = [value CGPointValue];
+    [path moveToPoint:p1];
+    
+    if (points.count == 2) {
+        value = points[1];
+        CGPoint p2 = [value CGPointValue];
+        [path addLineToPoint:p2];
+        [path stroke];
+        return;
+    }
+    
+    for (int i = 1; i < points.count; i++) {
+        value = points[i];
+        CGPoint p2 = [value CGPointValue];
+        
+        CGPoint midPoint = midPointForPoints(p1, p2);
+        [path addQuadCurveToPoint:midPoint controlPoint:controlPointForPoints(p1, midPoint)];
+        [path addQuadCurveToPoint:p2 controlPoint:controlPointForPoints(midPoint, p2)];
+        
+        p1 = p2;
+    }
+    [path stroke];
 }
+
+static CGPoint midPointForPoints(CGPoint p1, CGPoint p2) {
+    return CGPointMake((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+}
+
+static CGPoint controlPointForPoints(CGPoint p1, CGPoint p2)
+{
+    CGPoint controlPoint = midPointForPoints(p1, p2);
+    return controlPoint;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)drawRectangle:(CGRect)rect
 {

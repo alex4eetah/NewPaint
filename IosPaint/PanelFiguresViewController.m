@@ -86,20 +86,23 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     
 }
+- (IBAction)backFromOperationPanel:(id)sender
+{
+    self.mainPanelOutlet.hidden = NO;
+    self.OperationPanelOutlet.hidden = YES;
+}
+- (IBAction)allClear:(id)sender
+{
+    [self.delegate allClear];
+    self.mainPanelOutlet.hidden = NO;
+    self.OperationPanelOutlet.hidden = YES;
+}
 
 - (IBAction)OperationDidChanged:(UISegmentedControl *)sender
 {
-    if (sender.selectedSegmentIndex == 4)
-    {
-        self.mainPanelOutlet.hidden = NO;
-        self.OperationPanelOutlet.hidden = YES;
-    }
-    else
-    {
-        [self.delegate didSelectOperation:sender.selectedSegmentIndex];
-        self.mainPanelOutlet.hidden = NO;
-        self.OperationPanelOutlet.hidden = YES;
-    }
+    [self.delegate didSelectOperation:sender.selectedSegmentIndex];
+    self.mainPanelOutlet.hidden = NO;
+    self.OperationPanelOutlet.hidden = YES;
 }
 - (IBAction)DrawModeDidSelected:(UIButton *)sender
 {

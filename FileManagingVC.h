@@ -22,6 +22,7 @@
 @protocol ResizerProtocol <NSObject>
 
 - (void)resizeFileManagingContainerHeightTo:(CGFloat)height;
+- (void)resizeColorContainerHeightTo:(CGFloat)height;
 
 @end
 

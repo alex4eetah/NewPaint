@@ -24,7 +24,9 @@
 - (void)didSelectImage:(UIImage *)image;
 - (void)didSelectOperation:(NSInteger)operation;
 - (void)writeFigureToFile:(NSString *)pathComponent;
+- (void)saveFigureToGallery;
 - (void)loadDataFromFile:(NSString *)docFilePath;
 - (void)Undo;
+- (void)allClear;
 
 @end
