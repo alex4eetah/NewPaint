@@ -12,7 +12,7 @@
 #import "headerWithProtocols.h"
 
 
-@interface BoardViewController : UIViewController  <ResizerProtocol>
+@interface BoardViewController : UIViewController  <ResizerProtocol, LayerManagerGelegate>
 
 
 

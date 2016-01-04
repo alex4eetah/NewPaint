@@ -11,6 +11,7 @@
 #import "PanelFiguresViewController.h"
 #import "CanvasViewController.h"
 #import "FileManagingVC.h"
+#import "LayerManagingVC.h"
 
 
 @interface BoardViewController ()
@@ -18,8 +19,10 @@
 @property (strong, nonatomic) PanelFiguresViewController * figureVC;
 @property (strong, nonatomic) CanvasViewController * canvasVC;
 @property (strong, nonatomic) FileManagingVC * fileViewController;
+@property (strong, nonatomic) LayerManagingVC * layerViewController;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fileManagerPanelHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *colorPanelHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layerManagingContainerLeadingConstraint;
 
 @end
 
@@ -55,12 +58,18 @@
     {
         self.fileViewController = (FileManagingVC *) [segue destinationViewController];
     }
+    else if ([segueName isEqualToString: @"LayerManagingVC_seague"])
+    {
+        self.layerViewController = (LayerManagingVC *) [segue destinationViewController];
+    }
     self.fileViewController.delegate = self.canvasVC;
     self.fileViewController.resizerDelegate = self;
     self.canvasVC.delegate = self.fileViewController;
     self.colorVC.delegate = self.canvasVC;
     self.colorVC.resizerDelegate = self;
     self.figureVC.delegate = self.canvasVC;
+    self.layerViewController.resizerDelegate = self;
+    self.layerViewController.layerDelegate = self;
 }
 
 #pragma mark - delegate methods
@@ -75,6 +84,23 @@
     self.colorPanelHeightConstraint.constant = height;
 }
 
+- (void)moveLayerManagingContainerLeftOnWidth:(CGFloat)width
+{
+    [UIView animateWithDuration:6.0
+                     animations:^{
+                         self.layerManagingContainerLeadingConstraint.constant = width;
+                     }];
+}
+
+- (NSArray *)takeArrayOfSubviews
+{
+    return self.canvasVC.view.subviews;
+}
+
+- (void)highLightLayerAtIndex:(NSUInteger)index
+{
+    [self.canvasVC highLightGivenLayerAtIndex:index];
+}
 /*
 - (IBAction)ManagingOperationDidChanged:(UIButton *)sender
 {

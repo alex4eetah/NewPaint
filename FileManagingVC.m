@@ -73,6 +73,10 @@
     [self getArrayOfPaths];
     [self.filePicker reloadAllComponents];
 }
+- (IBAction)showLayerSettings:(UIButton *)sender
+{
+    [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:0];
+}
 
 - (IBAction)managingFileOperations:(UIButton *)sender
 {

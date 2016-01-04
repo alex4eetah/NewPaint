@@ -11,11 +11,13 @@
 
 
 #endif /* headerWithProtocols_h */
+#import "FigureDrawer.h"
 
 @protocol ResizerProtocol <NSObject>
 
 - (void)resizeFileManagingContainerHeightTo:(CGFloat)height;
 - (void)resizeColorContainerHeightTo:(CGFloat)height;
+- (void)moveLayerManagingContainerLeftOnWidth:(CGFloat)width;
 
 @end
 
@@ -37,5 +39,12 @@
 @protocol FileManagerGelegate <NSObject>
 
 - (void)showCurrentOperation:(NSString *)operation;
+
+@end
+
+@protocol LayerManagerGelegate <NSObject>
+
+- (NSArray *)takeArrayOfSubviews;
+- (void)highLightLayerAtIndex:(NSUInteger)index;
 
 @end

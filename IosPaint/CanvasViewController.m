@@ -505,7 +505,14 @@ typedef enum operationsType
     
 }
 
-
+- (void)highLightGivenLayerAtIndex:(NSUInteger)index
+{
+    
+    FigureDrawer * f = [self.view.subviews objectAtIndex:index];//subview at index
+    [f removeFromSuperview];
+    f.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
+    [self.view addSubview:f];
+}
 
 
 #pragma mark - delegate Methods

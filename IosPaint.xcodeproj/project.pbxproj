@@ -20,6 +20,7 @@
 		26A35E7E1C207372008C9565 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26A35E7C1C207372008C9565 /* Main.storyboard */; };
 		26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */; };
 		EDC6AB811C357C1A004B9B18 /* FileManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */; };
+		EDE88B261C3AB3F7004CBB54 /* LayerManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE88B251C3AB3F7004CBB54 /* LayerManagingVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		EDC6AB7F1C357C1A004B9B18 /* FileManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagingVC.h; sourceTree = "<group>"; };
 		EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManagingVC.m; sourceTree = "<group>"; };
 		EDE88B231C3A8525004CBB54 /* headerWithProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = headerWithProtocols.h; sourceTree = "<group>"; };
+		EDE88B241C3AB3F7004CBB54 /* LayerManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayerManagingVC.h; sourceTree = "<group>"; };
+		EDE88B251C3AB3F7004CBB54 /* LayerManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayerManagingVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 		2634EE981C1ED460007E6ED5 = {
 			isa = PBXGroup;
 			children = (
+				EDE88B241C3AB3F7004CBB54 /* LayerManagingVC.h */,
+				EDE88B251C3AB3F7004CBB54 /* LayerManagingVC.m */,
 				EDE88B231C3A8525004CBB54 /* headerWithProtocols.h */,
 				EDC6AB7F1C357C1A004B9B18 /* FileManagingVC.h */,
 				EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */,
@@ -186,6 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE88B261C3AB3F7004CBB54 /* LayerManagingVC.m in Sources */,
 				265B478C1C2ED013005024A1 /* LineDrawer.m in Sources */,
 				26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */,
 				EDC6AB811C357C1A004B9B18 /* FileManagingVC.m in Sources */,
