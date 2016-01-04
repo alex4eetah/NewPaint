@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FileManagingVC.h"
+//
+
+#import "headerWithProtocols.h"
 
 
 @interface BoardViewController : UIViewController  <ResizerProtocol>

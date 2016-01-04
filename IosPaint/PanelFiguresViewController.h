@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "headerWithProtocols.h"
 
-@protocol PanelsDelegate;
 
 @interface PanelFiguresViewController : UIViewController
 
@@ -16,17 +16,3 @@
 
 @end
 
-@protocol PanelsDelegate <NSObject>
-
-- (void)didSelectWidth:(NSInteger)width;
-- (void)didSelectColor:(UIColor *)color;
-- (void)didSelectShape:(NSInteger)shape;
-- (void)didSelectImage:(UIImage *)image;
-- (void)didSelectOperation:(NSInteger)operation;
-- (void)writeFigureToFile:(NSString *)pathComponent;
-- (void)saveFigureToGallery;
-- (void)loadDataFromFile:(NSString *)docFilePath;
-- (void)Undo;
-- (void)allClear;
-
-@end

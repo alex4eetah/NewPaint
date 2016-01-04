@@ -261,7 +261,7 @@ typedef enum operationsType
     CGPoint locationOfTouch = [touch locationInView:touch.view];
     self.start = [touch locationInView:self.view];
     FigureDrawer *currentView;
-    
+    CGRect frame;
     switch (self.currentOperation)
     {
         case drawing:
@@ -271,7 +271,7 @@ typedef enum operationsType
                 self.currentPointsOfLine = [[NSMutableArray alloc] init];
                 [self.currentPointsOfLine addObject: [NSValue valueWithCGPoint:self.start]];
                 
-                CGRect frame = CGRectMake(self.view.frame.origin.x,
+                frame = CGRectMake(self.view.frame.origin.x,
                                           self.view.frame.origin.y+50,
                                           self.view.frame.size.width,
                                           self.view.frame.size.height);
@@ -292,7 +292,7 @@ typedef enum operationsType
             else
             {
                 self.start = [touch locationInView:self.view];
-                CGRect frame = CGRectMake(self.start.x, self.start.y, self.lineWidth, self.lineWidth);
+                frame = CGRectMake(self.start.x, self.start.y, self.lineWidth, self.lineWidth);
                 
                 currentView = [[FigureDrawer alloc] initWithFrame:frame
                                                             shape:self.currentShape
@@ -353,13 +353,13 @@ typedef enum operationsType
             break;
             
         case chosingArea:
-            {
-            CGRect frame = CGRectMake(self.start.x, self.start.y, 0, 0);
+            
+            frame = CGRectMake(self.start.x, self.start.y, 0, 0);
             
             self.chosenArea = [[UIView alloc] initWithFrame:frame];
             self.chosenArea.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
             [self.view addSubview:self.chosenArea];
-            }
+            
             break;
             
         default:
@@ -371,12 +371,13 @@ typedef enum operationsType
 {
     UITouch* touch = [[event allTouches] anyObject];
     FigureDrawer * currentView;
+    self.stop = [touch locationInView:self.view];
 
     switch (self.currentOperation)
     {
         case drawing:
             
-            self.stop = [touch locationInView:self.view];
+            
             
             if (self.currentShape == 6)
             {
@@ -620,20 +621,27 @@ typedef enum operationsType
 
 - (void)saveFigureToGallery
 {
-    UIGraphicsBeginImageContext(self.view.frame.size); //making image from view
+    [self.chosenArea removeFromSuperview];
+    UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 1); //making image from view
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *sourceImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect([sourceImage CGImage], self.chosenArea.frame);
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    
+    
     //now we will position the image, X/Y away from top left corner to get the portion we want
-    UIGraphicsBeginImageContext(self.chosenArea.frame.size);
+    /*UIGraphicsBeginImageContext(self.chosenArea.frame.size);
     [sourceImage drawAtPoint:CGPointMake(self.chosenArea.frame.origin.x, self.chosenArea.frame.origin.y)];
     UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+*/
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImageWriteToSavedPhotosAlbum(croppedImage, nil, nil, nil);
     });
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)loadDataFromFile:(NSString *)docFilePath

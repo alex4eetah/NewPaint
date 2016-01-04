@@ -10,6 +10,7 @@
 #import "PanelColorViewController.h"
 #import "PanelFiguresViewController.h"
 #import "CanvasViewController.h"
+#import "FileManagingVC.h"
 
 
 @interface BoardViewController ()

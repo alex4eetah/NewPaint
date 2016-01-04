@@ -186,7 +186,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQF-vx-RRA">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KQF-vx-RRA">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="45"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WcT-XV-ntp">
@@ -234,14 +234,14 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMS-gN-a9P">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                 <subviews>
-                                    <slider opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Eg2-ue-uS3">
+                                    <slider opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Eg2-ue-uS3">
                                         <rect key="frame" x="333" y="5" width="59" height="31"/>
                                         <animations/>
                                         <connections>
                                             <action selector="colorDidChanged:" destination="v79-HU-1CI" eventType="valueChanged" id="Qvh-Zj-A99"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TEK-Ep-GxC">
+                                    <slider opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TEK-Ep-GxC">
                                         <rect key="frame" x="195" y="5" width="122" height="31"/>
                                         <animations/>
                                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -249,7 +249,7 @@
                                             <action selector="colorDidChanged:" destination="v79-HU-1CI" eventType="valueChanged" id="cMc-nA-mn8"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="4YN-b9-Qfl">
+                                    <slider opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="4YN-b9-Qfl">
                                         <rect key="frame" x="13" y="5" width="171" height="31"/>
                                         <animations/>
                                         <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -403,13 +403,13 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wlr-cR-6AP">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wlr-cR-6AP">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ibl-co-qbA">
                                         <rect key="frame" x="20" y="0.0" width="467" height="40"/>
                                     </pickerView>
-                                    <imageView userInteractionEnabled="NO" tag="-3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rpV-yU-U6c">
+                                    <imageView tag="-3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rpV-yU-U6c">
                                         <rect key="frame" x="495" y="0.0" width="100" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="jEP-TZ-u1w"/>
@@ -453,21 +453,17 @@
                             <constraint firstItem="Ol4-We-2JH" firstAttribute="top" secondItem="qMS-gN-a9P" secondAttribute="bottom" id="tsj-GZ-ClW"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="KQF-vx-RRA"/>
-                                <exclude reference="qMS-gN-a9P"/>
-                                <exclude reference="zWh-gs-4ZC"/>
-                            </mask>
                             <mask key="constraints">
+                                <exclude reference="plJ-9h-Een"/>
                                 <exclude reference="7Sm-4B-HZ1"/>
                                 <exclude reference="7YJ-eq-6lN"/>
                                 <exclude reference="NAh-vN-8kQ"/>
-                                <exclude reference="plJ-9h-Een"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="colorMenuOutlet" destination="qMS-gN-a9P" id="0pJ-aO-98n"/>
+                        <outlet property="colorPicker" destination="Ibl-co-qbA" id="rfU-Wu-L9o"/>
                         <outlet property="colorViewIndicator" destination="uxU-QJ-HaP" id="lP7-aV-B6I"/>
                         <outlet property="mainMenuOutlet" destination="KQF-vx-RRA" id="sHK-ZQ-SrT"/>
                         <outlet property="recentColorViewIndicator" destination="rpV-yU-U6c" id="HU8-dA-WKO"/>

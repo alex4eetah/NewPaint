@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IosPaint/BoardViewController.m"
-            timestampString = "473352675.10564"
+            timestampString = "473597576.031831"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "@implementation BoardViewController"
             landmarkType = "3">
          </BreakpointContent>

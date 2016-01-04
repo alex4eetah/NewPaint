@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *colorViewIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *widthAndOpacityViewIndicator;
 
+@property (weak, nonatomic) IBOutlet UIPickerView *colorPicker;
 @property (strong, nonatomic) NSMutableArray *recentColors;//10 max
 @property (weak, nonatomic) IBOutlet UIImageView *recentColorViewIndicator;
 @property (strong, nonatomic) UIColor * thisColor;
@@ -31,9 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.currentRed = 0.5;
-    self.currentGreen = 0.5;
-    self.currentBlue = 0.5;
+    self.currentRed = 0;
+    self.currentGreen = 0;
+    self.currentBlue = 0;
     self.currentOpacity = 1;
     self.currentWidth = 5;
     [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
@@ -71,8 +72,9 @@
             self.mainMenuOutlet.hidden = YES;
             break;
         case 3:
-            self.widthAndOpacityMenuOutlet.hidden = NO;
-            self.recentSettingsOutlet.hidden = YES;
+            self.colorPicker.delegate = self;
+            self.recentSettingsOutlet.hidden = NO;
+            self.mainMenuOutlet.hidden = YES;
             [self.resizerDelegate resizeColorContainerHeightTo:100];
             break;
     }
@@ -151,22 +153,31 @@
     else if ([sender.view hitTest:location withEvent:nil].tag == -3)
     {
         [self.delegate didSelectWidth:self.currentWidth];
-        [self.delegate didSelectColor:self.thisColor];
+        if (self.thisColor)
+            [self.delegate didSelectColor:self.thisColor];
+        else
+            [self.delegate didSelectColor:[UIColor blackColor]];
+        [self.resizerDelegate resizeColorContainerHeightTo:40];
         self.recentSettingsOutlet.hidden = YES;
         self.mainMenuOutlet.hidden = NO;
     }
-    if (!self.recentColors)
+    
+    if ([sender.view hitTest:location withEvent:nil].tag != -3)
     {
-        self.recentColors = [[NSMutableArray alloc] init];
+        if (!self.recentColors)
+        {
+            self.recentColors = [[NSMutableArray alloc] init];
+        }
+        static NSInteger i = 0;
+        
+        if (i >= 10)
+            i = 0;
+        if (self.recentColors.count)
+            [self.recentColors insertObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity] atIndex:i];
+        else
+            [self.recentColors addObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
+        i++;
     }
-    
-    static NSInteger i = 0;
-    
-    if (i >= 10)
-        i = 0;
-    
-    [self.recentColors insertObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity] atIndex:i];
-    i++;
 }
 
 #pragma mark - pickerMethods
@@ -178,17 +189,35 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return self.recentColors.count;
+    if (self.recentColors.count)
+        return self.recentColors.count;
+    else
+        return 1;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    self.thisColor = self.recentColors[row];
-    const CGFloat* components = CGColorGetComponents(self.thisColor.CGColor);
-    CGFloat thisRed = components[0];
-    CGFloat thisGreen = components[1];
-    CGFloat thisBlue = components[2];
-    CGFloat thisOpacity = CGColorGetAlpha(self.thisColor.CGColor);
+    CGFloat thisRed;
+    CGFloat thisGreen;
+    CGFloat thisBlue;
+    CGFloat thisOpacity;
+    
+    if (self.recentColors.count)
+    {
+        self.thisColor = self.recentColors[row];
+        const CGFloat* components = CGColorGetComponents(self.thisColor.CGColor);
+        thisRed = components[0];
+        thisGreen = components[1];
+        thisBlue = components[2];
+        thisOpacity = CGColorGetAlpha(self.thisColor.CGColor);
+    }
+    else
+    {
+        thisRed = 0;
+        thisGreen = 0;
+        thisBlue = 0;
+        thisOpacity = 1;
+    }
     
     UIGraphicsBeginImageContext(self.recentColorViewIndicator.frame.size);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
@@ -200,13 +229,21 @@
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     self.recentColorViewIndicator.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
 }
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *title = @"sample title";
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:self.thisColor}];
+    NSString *title = @"To apply push this ->";
+    NSAttributedString *attString;
+    if (self.recentColors.count)
+    {
+        attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:self.recentColors[row]}];
+    }
+    else
+    {
+        attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    }
+    [self pickerView:self.colorPicker didSelectRow:1 inComponent:1];
     
     return attString;
     

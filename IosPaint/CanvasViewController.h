@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanelFiguresViewController.h"
+/*#import "PanelFiguresViewController.h"
 #import "PanelColorViewController.h"
-#import "LineDrawer.h"
+#import "LineDrawer.h"*/
+#import "headerWithProtocols.h"
 
-
-@protocol FileManagerGelegate;
 
 @interface CanvasViewController : UIViewController <PanelsDelegate>
 
@@ -24,8 +23,3 @@
 
 @end
 
-@protocol FileManagerGelegate <NSObject>
-
-- (void)showCurrentOperation:(NSString *)operation;
-
-@end

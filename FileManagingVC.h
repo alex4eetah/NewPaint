@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanelFiguresViewController.h"
-#import "CanvasViewController.h"
+//#import "PanelFiguresViewController.h"
+//#import "CanvasViewController.h"
+#import "headerWithProtocols.h"
 
-@protocol ResizerProtocol;
+
 
 @interface FileManagingVC : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, FileManagerGelegate>
 
@@ -19,10 +20,5 @@
 
 @end
 
-@protocol ResizerProtocol <NSObject>
 
-- (void)resizeFileManagingContainerHeightTo:(CGFloat)height;
-- (void)resizeColorContainerHeightTo:(CGFloat)height;
-
-@end
 
