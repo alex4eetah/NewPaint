@@ -50,6 +50,53 @@
 }
 
 
+
+- (IBAction)showLayerSettings:(UIButton *)sender
+{
+    [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:0];
+}
+
+#pragma mark - main menu settings
+
+- (IBAction)managingFileOperations:(UIButton *)sender
+{
+    if (sender.tag == 1)
+    {
+        /*self.managingViewOutlet.hidden = NO;
+        self.savingOptionsViewOutlet.hidden = NO;
+        self.savingOptionsViewOutlet.alpha = 0.0;*/
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.managingViewOutlet.alpha = 0.0;
+            weakSelf.savingOptionsViewOutlet.alpha = 1.0;
+        }];
+        
+    }
+    else if (sender.tag == 2)
+    {
+        [self.resizerDelegate resizeFileManagingContainerHeightTo:100];
+        
+        /*self.managingViewOutlet.hidden = YES;
+        self.loadingViewOutlet.hidden = NO;*/
+        
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.managingViewOutlet.alpha = 0.0;
+            weakSelf.loadingViewOutlet.alpha = 1.0;
+        }];
+        
+        [self getArrayOfPaths];
+        self.filePicker.delegate = self;
+    }
+    else if (sender.tag == 3)
+    {
+        [self.delegate Undo];
+    }
+}
+
+#pragma mark - loading menu settings
 - (IBAction)loadFromFile:(UIButton *)sender
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -58,8 +105,15 @@
     [self.delegate loadDataFromFile:documentFile];
     [self.resizerDelegate resizeFileManagingContainerHeightTo:50];
     
-    self.loadingViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
+//    self.loadingViewOutlet.hidden = YES;
+//    self.managingViewOutlet.hidden = NO;
+    
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.loadingViewOutlet.alpha = 0.0;
+        weakSelf.managingViewOutlet.alpha = 1.0;
+    }];
 }
 
 - (IBAction)deleteFileFromSystem:(UIButton *)sender
@@ -73,50 +127,44 @@
     [self getArrayOfPaths];
     [self.filePicker reloadAllComponents];
 }
-- (IBAction)showLayerSettings:(UIButton *)sender
+- (IBAction)backFromLoadingpanel:(id)sender
 {
-    [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:0];
+    __typeof(self) __weak weakSelf = self;
+    [self.resizerDelegate resizeFileManagingContainerHeightTo:50];
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.loadingViewOutlet.alpha = 0.0;
+        weakSelf.managingViewOutlet.alpha = 1.0;
+    }];
 }
 
-- (IBAction)managingFileOperations:(UIButton *)sender
+#pragma mark - saving menu settings
+- (IBAction)savingOptionDidChanged:(UIButton *)sender
 {
     if (sender.tag == 1)
     {
-        self.managingViewOutlet.hidden = YES;
-        self.savingOptionsViewOutlet.hidden = NO;
+        /* self.savingOptionsViewOutlet.hidden = YES;
+         self.savingToFileViewOutlet.hidden = NO;*/
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.savingOptionsViewOutlet.alpha = 0.0;
+            weakSelf.savingToFileViewOutlet.alpha = 1.0;
+        }];
     }
-    else if (sender.tag == 2)
+    if (sender.tag == 2)
     {
-        [self.resizerDelegate resizeFileManagingContainerHeightTo:100];
-        
-        self.managingViewOutlet.hidden = YES;
-        self.loadingViewOutlet.hidden = NO;
-        
-        [self getArrayOfPaths];
-        self.filePicker.delegate = self;
+//        self.savingOptionsViewOutlet.hidden = YES;
+//        self.savingToGalleryViewOutlet.hidden = NO;
+        [self.delegate performSelector:@selector(setCurrentOperationWithNSNumber:) withObject:[NSNumber numberWithInt:4]];
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.savingOptionsViewOutlet.alpha = 0.0;
+            weakSelf.savingToGalleryViewOutlet.alpha = 1.0;
+        }];
     }
-    else if (sender.tag == 3)
-    {
-        [self.delegate Undo];
-    }
-}
 
-- (IBAction)savingOptionDidChanged:(UIButton *)sender
-{
-    switch (sender.tag)
-    {
-        case 1:
-            self.savingOptionsViewOutlet.hidden = YES;
-            self.savingToFileViewOutlet.hidden = NO;
-            break;
-        case 2:
-            self.savingOptionsViewOutlet.hidden = YES;
-            self.savingToGalleryViewOutlet.hidden = NO;
-            [self.delegate performSelector:@selector(setCurrentOperationWithNSNumber:) withObject:[NSNumber numberWithInt:4]];
-            break;
-        default:
-            break;
-    }
 }
 
 - (IBAction)saveToFile:(UIButton *)sender
@@ -130,15 +178,29 @@
         self.nameOfFileField.text = @"Enter file name!";
     }
     
-    self.savingToFileViewOutlet.hidden = YES;
+   /* self.savingToFileViewOutlet.hidden = YES;
     self.managingViewOutlet.hidden = NO;
+    */
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.savingToFileViewOutlet.alpha = 0.0;
+        weakSelf.managingViewOutlet.alpha = 1.0;
+    }];
 }
 
 - (IBAction)saveToGallery:(UIButton *)sender
 {
     [self.delegate saveFigureToGallery];
-    self.savingToGalleryViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
+    /*self.savingToGalleryViewOutlet.hidden = YES;
+    self.managingViewOutlet.hidden = NO;*/
+    
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.savingToGalleryViewOutlet.alpha = 0.0;
+        weakSelf.managingViewOutlet.alpha = 1.0;
+    }];
 }
 
 #pragma mark - pickerMethods

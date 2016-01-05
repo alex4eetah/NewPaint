@@ -59,27 +59,41 @@
 //    [self.delegate didSelectColor:sender.backgroundColor];
 //}
 
+#pragma mark - main menu settings
 - (IBAction)ColorMenuItemDidChanged:(UIButton *)sender
 {
-    switch (sender.tag)
+    if (sender.tag == 1)
     {
-        case 1:
-            self.colorMenuOutlet.hidden = NO;
-            self.mainMenuOutlet.hidden = YES;
-            break;
-        case 2:
-            self.widthAndOpacityMenuOutlet.hidden = NO;
-            self.mainMenuOutlet.hidden = YES;
-            break;
-        case 3:
-            self.colorPicker.delegate = self;
-            self.recentSettingsOutlet.hidden = NO;
-            self.mainMenuOutlet.hidden = YES;
-            [self.resizerDelegate resizeColorContainerHeightTo:100];
-            break;
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.mainMenuOutlet.alpha = 0.0;
+            weakSelf.colorMenuOutlet.alpha = 1.0;
+        }];
+    }
+    else if (sender.tag == 2)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.mainMenuOutlet.alpha = 0.0;
+            weakSelf.widthAndOpacityMenuOutlet.alpha = 1.0;
+        }];
+    }
+    else if (sender.tag == 3)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.mainMenuOutlet.alpha = 0.0;
+            weakSelf.recentSettingsOutlet.alpha = 1.0;
+        }];
+        [self.resizerDelegate resizeColorContainerHeightTo:100];
+        self.colorPicker.delegate = self;
     }
 }
 
+#pragma mark - color/width/alpha settings
 - (IBAction)colorDidChanged:(UISlider *)sender
 {
     switch (sender.tag)
@@ -133,22 +147,32 @@
     UIGraphicsEndImageContext();
 }
 
-//The event handling method
+#pragma mark - applying changes and back to main menu
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint location = [sender locationInView:sender.view];
     if ([sender.view hitTest:location withEvent:nil].tag == -1)
     {
         [self.delegate didSelectColor:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
-        self.colorMenuOutlet.hidden = YES;
-        self.mainMenuOutlet.hidden = NO;
+        
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.colorMenuOutlet.alpha = 0.0;
+            weakSelf.mainMenuOutlet.alpha = 1.0;
+        }];
     }
     else if ([sender.view hitTest:location withEvent:nil].tag == -2)
     {
         [self.delegate didSelectWidth:self.currentWidth];
         [self.delegate didSelectColor:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
-        self.widthAndOpacityMenuOutlet.hidden = YES;
-        self.mainMenuOutlet.hidden = NO;
+       
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.widthAndOpacityMenuOutlet.alpha = 0.0;
+            weakSelf.mainMenuOutlet.alpha = 1.0;
+        }];
     }
     else if ([sender.view hitTest:location withEvent:nil].tag == -3)
     {
@@ -158,8 +182,13 @@
         else
             [self.delegate didSelectColor:[UIColor blackColor]];
         [self.resizerDelegate resizeColorContainerHeightTo:40];
-        self.recentSettingsOutlet.hidden = YES;
-        self.mainMenuOutlet.hidden = NO;
+        
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.recentSettingsOutlet.alpha = 0.0;
+            weakSelf.mainMenuOutlet.alpha = 1.0;
+        }];
     }
     
     if ([sender.view hitTest:location withEvent:nil].tag != -3)
@@ -168,15 +197,22 @@
         {
             self.recentColors = [[NSMutableArray alloc] init];
         }
-        static NSInteger i = 0;
-        
-        if (i >= 10)
-            i = 0;
-        if (self.recentColors.count)
-            [self.recentColors insertObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity] atIndex:i];
-        else
-            [self.recentColors addObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
-        i++;
+        else if (![self.recentColors containsObject:[UIColor colorWithRed:self.currentRed
+                                                                  green:self.currentGreen
+                                                                   blue:self.currentBlue
+                                                                  alpha:self.currentOpacity]])
+
+        {
+            static NSInteger i = 0;
+            
+            if (i >= 10)
+                i = 0;
+            if (self.recentColors.count)
+                [self.recentColors insertObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity] atIndex:i];
+            else
+                [self.recentColors addObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
+            i++;
+        }
     }
 }
 

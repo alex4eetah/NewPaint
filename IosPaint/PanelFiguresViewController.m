@@ -31,33 +31,30 @@
     [super didReceiveMemoryWarning];
 }
 
-- (IBAction)didChangeFigure:(UISegmentedControl *)sender
-{
-    [self.delegate didSelectShape:sender.selectedSegmentIndex];
-    self.figurePanelOutlet.hidden = YES;
-    self.mainPanelOutlet.hidden = NO;
-}
-- (IBAction)penBeenChosen:(UIButton *)sender
-{
-    [self.delegate didSelectShape:6];
-    self.drawingPanelOutlet.hidden = YES;
-    self.mainPanelOutlet.hidden = NO;
-}
 
+# pragma mark - main menu options
 - (IBAction)mainSetOperationDidChanged:(UIButton *)sender
 {
-
-    switch (sender.tag)
+    if (sender.tag == 1)
     {
-        case 0:
-            self.mainPanelOutlet.hidden = YES;
-            self.OperationPanelOutlet.hidden = NO;
-            break;
-        case 1:
-            self.mainPanelOutlet.hidden = YES;
-            self.drawingPanelOutlet.hidden = NO;
-            break;
-        case 2:
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.mainPanelOutlet.alpha = 0.0;
+            weakSelf.OperationPanelOutlet.alpha = 1.0;
+        }];
+    }
+    else if (sender.tag == 2)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.mainPanelOutlet.alpha = 0.0;
+            weakSelf.drawingPanelOutlet.alpha = 1.0;
+        }];
+    }
+    else if (sender.tag == 3)
+    {
             //            self.drawingPanelOutlet.hidden = YES;
             //            self.figurePanelOutlet.hidden = NO;
             self.imagePickerController = [[UIImagePickerController alloc]init];
@@ -66,10 +63,94 @@
             
             [self presentModalViewController:self.imagePickerController animated:YES];
             
-            break;
-        default:
-            break;
     }
+}
+
+
+#pragma mark - Operation panel options
+- (IBAction)OperationDidChanged:(UISegmentedControl *)sender
+{
+    [self.delegate didSelectOperation:sender.selectedSegmentIndex];
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.OperationPanelOutlet.alpha = 0.0;
+        weakSelf.mainPanelOutlet.alpha = 1.0;
+    }];
+}
+
+- (IBAction)backFromOperationPanel:(id)sender
+{
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.OperationPanelOutlet.alpha = 0.0;
+        weakSelf.mainPanelOutlet.alpha = 1.0;
+    }];
+}
+- (IBAction)allClear:(id)sender
+{
+    [self.delegate allClear];
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.OperationPanelOutlet.alpha = 0.0;
+        weakSelf.mainPanelOutlet.alpha = 1.0;
+    }];
+}
+
+
+- (IBAction)DrawModeDidSelected:(UIButton *)sender ///////// more than needed
+{
+    if (sender.tag == 1)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.drawingPanelOutlet.alpha = 0.0;
+            weakSelf.mainPanelOutlet.alpha = 1.0;
+        }];
+    }
+    else     if (sender.tag == 2)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.drawingPanelOutlet.alpha = 0.0;
+            weakSelf.figurePanelOutlet.alpha = 1.0;
+        }];
+    }
+    else     if (sender.tag == 4)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.drawingPanelOutlet.alpha = 0.0;
+            weakSelf.mainPanelOutlet.alpha = 1.0;
+        }];
+    }
+}
+
+- (IBAction)didChangeFigure:(UISegmentedControl *)sender
+{
+    [self.delegate didSelectShape:sender.selectedSegmentIndex];
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.figurePanelOutlet.alpha = 0.0;
+        weakSelf.mainPanelOutlet.alpha = 1.0;
+    }];
+}
+
+- (IBAction)penBeenChosen:(UIButton *)sender
+{
+    [self.delegate didSelectShape:6];
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.drawingPanelOutlet.alpha = 0.0;
+        weakSelf.mainPanelOutlet.alpha = 1.0;
+    }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker
@@ -86,46 +167,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     
 }
-- (IBAction)backFromOperationPanel:(id)sender
-{
-    self.mainPanelOutlet.hidden = NO;
-    self.OperationPanelOutlet.hidden = YES;
-}
-- (IBAction)allClear:(id)sender
-{
-    [self.delegate allClear];
-    self.mainPanelOutlet.hidden = NO;
-    self.OperationPanelOutlet.hidden = YES;
-}
-
-- (IBAction)OperationDidChanged:(UISegmentedControl *)sender
-{
-    [self.delegate didSelectOperation:sender.selectedSegmentIndex];
-    self.mainPanelOutlet.hidden = NO;
-    self.OperationPanelOutlet.hidden = YES;
-}
-- (IBAction)DrawModeDidSelected:(UIButton *)sender
-{
-    switch (sender.tag)
-    {
-        case 1:
-            self.drawingPanelOutlet.hidden = YES;
-            self.mainPanelOutlet.hidden = NO;
-            break;
-            
-        case 2:
-            self.drawingPanelOutlet.hidden = YES;
-            self.figurePanelOutlet.hidden = NO;
-            break;
-            
-        case 4:
-            self.drawingPanelOutlet.hidden = YES;
-            self.mainPanelOutlet.hidden = NO;
-            break;
-        
-    }
-}
-
 /*
 #pragma mark - Navigation
 
