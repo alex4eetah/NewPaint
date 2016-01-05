@@ -505,13 +505,39 @@ typedef enum operationsType
     
 }
 
-- (void)highLightGivenLayerAtIndex:(NSUInteger)index
+- (void)highLightGivenLayerAtIndex:(NSInteger)index
 {
+    /*[self.view.subviews objectAtIndex:index].backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
+    self.myViews[index-3] = [self.view.subviews objectAtIndex:index];*/
     
+    FigureDrawer *currentFigure = self.myViews[index-3];
+    currentFigure.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
+    self.myViews[index-3] = currentFigure;
+    [currentFigure setNeedsDisplay];
+    
+    /*
     FigureDrawer * f = [self.view.subviews objectAtIndex:index];//subview at index
     [f removeFromSuperview];
     f.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
-    [self.view addSubview:f];
+    [self.view addSubview:f];*/
+}
+
+- (void)unHighlighGiventLayerAtIndex:(NSInteger)index
+{
+    /*[self.view.subviews objectAtIndex:index].backgroundColor = [UIColor clearColor];
+    self.myViews[index-3] = [self.view.subviews objectAtIndex:index];
+    [self.myViews[index-3] setNeedsDisplay];*/
+    
+    FigureDrawer *currentFigure = self.myViews[index-3];
+    currentFigure.backgroundColor = [UIColor clearColor];
+    self.myViews[index-3] = currentFigure;
+    [currentFigure setNeedsDisplay];
+    
+    /*
+    FigureDrawer * f = [self.view.subviews objectAtIndex:index];//subview at index
+    [f removeFromSuperview];
+    f.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:f];*/
 }
 
 

@@ -18,7 +18,8 @@
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
 
 - (void)setCurrentOperationWithNSNumber:(NSNumber*)number;
-- (void)highLightGivenLayerAtIndex:(NSUInteger)index;
+- (void)highLightGivenLayerAtIndex:(NSInteger)index;
+- (void)unHighlighGiventLayerAtIndex:(NSInteger)index;
 
 
 @end

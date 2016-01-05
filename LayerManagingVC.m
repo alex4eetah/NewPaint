@@ -11,9 +11,9 @@
 
 @interface LayerManagingVC()
 
-@property (strong, nonatomic) NSArray *arrayOfSubviews;
+@property (strong, nonatomic) NSDictionary *subviewsAndIndexes;
 @property (weak, nonatomic) IBOutlet UIPickerView *subviewPicker;
-@property (strong, nonatomic) FigureDrawer *currentLayer;
+@property (assign, nonatomic) NSInteger currentLayer;
 
 @end
 
@@ -29,16 +29,30 @@
 
 - (void) getArrayOfSubviews
 {
-    if (! self.arrayOfSubviews)
-        self.arrayOfSubviews = [[NSArray alloc] initWithArray:[self.layerDelegate takeArrayOfSubviews]];
+    if (! self.subviewsAndIndexes)
+        self.subviewsAndIndexes = [[NSDictionary alloc] initWithDictionary:[self.layerDelegate takeArrayOfSubviews]];
     else
-        self.arrayOfSubviews = [self.layerDelegate takeArrayOfSubviews];
+        self.subviewsAndIndexes = [self.layerDelegate takeArrayOfSubviews];
 
 }
 
 - (IBAction)changeOrderOfSubviews:(UIButton *)sender
 {
+    switch (sender.tag)
+    {
+        case 1:
+            [self.layerDelegate putUpCurrentLayerAtIndex:self.currentLayer];
+            break;
+        case 2:
+            [self.layerDelegate putDownCurrentLayerAtIndex:self.currentLayer];
+            break;
+            
+        default:
+            break;
+    }
     
+    [self.subviewPicker reloadAllComponents];
+    [self.subviewPicker selectRow:0 inComponent:0 animated:YES];
 }
 
 #pragma mark - pickerMethods
@@ -50,13 +64,65 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return self.arrayOfSubviews.count;
+    return self.subviewsAndIndexes.count;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [self.layerDelegate highLightLayerAtIndex:(NSUInteger)row];
-    //self.currentLayer = [self.arrayOfSubviews objectAtIndex:row];
+    row +=3;///HOWWW?????
+    
+    for (id key in self.subviewsAndIndexes)
+    {
+        if ([key integerValue] == row)
+        {
+            [self.layerDelegate highLightLayerAtIndex:row];
+            self.currentLayer = row;
+            return;
+        }
+        else
+            [self.layerDelegate unHighlightLayerAtIndex:row];
+    }
+    
+    /*NSArray *keys;
+    keys = [self.subviewsAndIndexes allKeys];
+    NSNumber *key;
+    FigureDrawer *value;
+    
+    
+    
+    
+    for (int i = 0; i < keys.count; i++)
+    {
+        key = [keys objectAtIndex: i];
+        value = [self.subviewsAndIndexes objectForKey: key];
+        
+        if ([key integerValue] == row)
+        {
+            [self.layerDelegate highLightLayerAtIndex:row];
+            self.currentLayer = row;
+            return;
+        }
+        else
+            [self.layerDelegate unHighlightLayerAtIndex:row];
+    }*/
+    
+    
+    
+    
+    
+    /*
+    
+    for (int i = 0; i < self.subviewsAndIndexes.count; i++)
+    {
+        if (self.subviewsAndIndexes.keyEnumerator == row)
+        {
+            [self.layerDelegate highLightLayerAtIndex:row];
+            self.currentLayer = row;
+            return;
+        }
+        else
+            [self.layerDelegate unHighlightLayerAtIndex:row];
+    }*/
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component

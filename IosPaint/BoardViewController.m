@@ -76,30 +76,100 @@
 
 - (void)resizeFileManagingContainerHeightTo:(CGFloat)height
 {
-    self.fileManagerPanelHeightConstraint.constant = height;
+
+    [self animateChangingOfConstraint:self.fileManagerPanelHeightConstraint
+                              ToValue:height];
 }
 
 - (void)resizeColorContainerHeightTo:(CGFloat)height
 {
-    self.colorPanelHeightConstraint.constant = height;
+    [self animateChangingOfConstraint:self.colorPanelHeightConstraint
+                              ToValue:height];
 }
 
 - (void)moveLayerManagingContainerLeftOnWidth:(CGFloat)width
 {
-    [UIView animateWithDuration:6.0
-                     animations:^{
-                         self.layerManagingContainerLeadingConstraint.constant = width;
-                     }];
+    [self animateChangingOfConstraint:self.layerManagingContainerLeadingConstraint
+                              ToValue:width];
 }
 
-- (NSArray *)takeArrayOfSubviews
+- (void)animateChangingOfConstraint:(NSLayoutConstraint *)constraint ToValue:(CGFloat)value
 {
-    return self.canvasVC.view.subviews;
+    constraint.constant = value;
+    [self.view setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
-- (void)highLightLayerAtIndex:(NSUInteger)index
+- (NSDictionary *)takeArrayOfSubviews
+{
+    NSMutableDictionary * subviewsAndIndexes = [[NSMutableDictionary alloc] init];
+    for (NSInteger i = 0; i < self.canvasVC.view.subviews.count; i++)
+    {
+        FigureDrawer* f = [self.canvasVC.view.subviews objectAtIndex:i];
+        if ([f isKindOfClass:[FigureDrawer class]])
+            [subviewsAndIndexes setObject:f forKey:[NSNumber numberWithInt:i]];
+    }
+    
+    
+  /*  NSMutableArray * arrayOfSubviews = [[NSMutableArray alloc] init];
+    for (FigureDrawer* f in self.canvasVC.view.subviews)
+    {
+        if ([f isKindOfClass:[FigureDrawer class]])
+            [arrayOfSubviews addObject:f];
+    }*/
+    
+    return subviewsAndIndexes;
+}
+
+- (void)highLightLayerAtIndex:(NSInteger)index
 {
     [self.canvasVC highLightGivenLayerAtIndex:index];
+}
+
+- (void)unHighlightLayerAtIndex:(NSInteger)index
+{
+    [self.canvasVC unHighlighGiventLayerAtIndex:index];
+}
+
+- (void)putUpCurrentLayerAtIndex:(NSInteger)index
+{
+    NSMutableArray * subviews = [[NSMutableArray alloc] initWithArray:self.canvasVC.view.subviews];
+    if (index < subviews.count-1)
+    {
+        [[self.canvasVC.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        FigureDrawer * CurrentFigure = [subviews objectAtIndex:index];
+        
+        [subviews removeObjectAtIndex:index];
+        [subviews insertObject:CurrentFigure atIndex:index+1];
+
+        for (int i = 0; i < subviews.count; i++)
+        {
+            id subview = [subviews objectAtIndex:i];
+            [self.canvasVC.view addSubview:subview];
+        }
+    }
+    
+}
+- (void)putDownCurrentLayerAtIndex:(NSInteger)index
+{
+    NSMutableArray * subviews = [[NSMutableArray alloc] initWithArray:self.canvasVC.view.subviews];
+    if (index > 3)
+    {
+        [[self.canvasVC.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        FigureDrawer * CurrentFigure = [subviews objectAtIndex:index];
+        
+        [subviews removeObjectAtIndex:index];
+        [subviews insertObject:CurrentFigure atIndex:index-1];
+
+        for (int i = 0; i < subviews.count; i++)
+        {
+            id subview = [subviews objectAtIndex:i];
+            [self.canvasVC.view addSubview:subview];
+        }
+    }
 }
 /*
 - (IBAction)ManagingOperationDidChanged:(UIButton *)sender
