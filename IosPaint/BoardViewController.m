@@ -135,6 +135,11 @@
 {
     [self.canvasVC putDownCurrentLayerAtIndex:index];
 }
+
+- (void)changeLayerName:(NSInteger)layer toName:(NSString *)name;
+{
+    [self.canvasVC changeFigureName:layer toName:name];
+}
 /*
 - (IBAction)ManagingOperationDidChanged:(UIButton *)sender
 {

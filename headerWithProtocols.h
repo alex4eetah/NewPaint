@@ -44,6 +44,7 @@
 
 @protocol LayerManagerGelegate <NSObject>
 
+- (void)changeLayerName:(NSInteger)layer toName:(NSString *)name;
 - (NSArray *)takeArrayOfSubviews;
 - (void)highLightLayerAtIndex:(NSInteger)index;
 - (void)unHighlightLayerAtIndex:(NSInteger)index;

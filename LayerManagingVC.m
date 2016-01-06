@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSArray *subviews;
 @property (weak, nonatomic) IBOutlet UIPickerView *subviewPicker;
 @property (assign, nonatomic) NSInteger currentLayer;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
 @end
 
@@ -63,6 +64,12 @@
     {
         [self.layerDelegate unHighlightLayerAtIndex:i];
     }
+}
+- (IBAction)changeLayerName:(UIButton *)sender
+{
+    [self.layerDelegate changeLayerName:self.currentLayer toName:self.nameTextField.text];
+    [self getArrayOfSubviews];
+    [self.subviewPicker reloadAllComponents];
 }
 
 #pragma mark - pickerMethods

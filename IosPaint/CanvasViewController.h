@@ -17,6 +17,7 @@
 
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
 
+- (void)changeFigureName:(NSInteger)layer toName:(NSString *)name;
 - (void)setCurrentOperationWithNSNumber:(NSNumber*)number;
 - (void)highLightGivenLayerAtIndex:(NSInteger)index;
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index;

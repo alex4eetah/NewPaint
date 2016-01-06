@@ -729,7 +729,10 @@ typedef enum operationsType
     self.managingViewOutlet.hidden = NO;
 }
 
-
+- (void)changeFigureName:(NSInteger)layer toName:(NSString *)name
+{
+    [[self.myViews objectAtIndex:layer] setFigureName:name];
+}
 
 #pragma mark - Navigation
 

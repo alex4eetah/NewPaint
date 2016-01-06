@@ -1129,34 +1129,61 @@
                                             <action selector="changeOrderOfSubviews:" destination="Gpd-F8-z9k" eventType="touchUpInside" id="39T-8W-EGN"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KuP-sr-8v7">
-                                        <rect key="frame" x="8" y="269" width="189" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KuP-sr-8v7">
+                                        <rect key="frame" x="8" y="275" width="189" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="03e-be-B6h"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change layer Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr7-ph-19T">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Change layer Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kr7-ph-19T">
                                         <rect key="frame" x="8" y="246" width="145" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="145" id="LR0-0U-V1H"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vh9-bZ-itv">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vh9-bZ-itv">
                                         <rect key="frame" x="166" y="241" width="31" height="30"/>
                                         <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="changeLayerName:" destination="Gpd-F8-z9k" eventType="touchUpInside" id="iS2-Uq-BfZ"/>
+                                        </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Move Layer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUR-OT-1pR">
+                                        <rect key="frame" x="58" y="350" width="89" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="KuP-sr-8v7" firstAttribute="top" secondItem="kr7-ph-19T" secondAttribute="bottom" constant="8" symbolic="YES" id="5JK-yy-ehn"/>
+                                    <constraint firstItem="vh9-bZ-itv" firstAttribute="top" secondItem="1j9-h5-YSc" secondAttribute="bottom" constant="8" symbolic="YES" id="9pa-GD-lJm"/>
                                     <constraint firstItem="rvr-qp-Lbm" firstAttribute="width" secondItem="978-BB-Y7G" secondAttribute="width" id="BC9-aF-Pqf"/>
                                     <constraint firstAttribute="trailing" secondItem="1j9-h5-YSc" secondAttribute="trailing" id="Cc0-Vb-Ok5"/>
                                     <constraint firstAttribute="bottom" secondItem="rvr-qp-Lbm" secondAttribute="bottom" constant="20" symbolic="YES" id="EYt-Rl-vTP"/>
                                     <constraint firstAttribute="trailing" secondItem="rp1-CG-OfL" secondAttribute="trailing" constant="20" symbolic="YES" id="Kvd-bw-sxo"/>
+                                    <constraint firstItem="KuP-sr-8v7" firstAttribute="top" secondItem="vh9-bZ-itv" secondAttribute="bottom" constant="4" id="PVC-7M-Jhi"/>
                                     <constraint firstAttribute="bottom" secondItem="978-BB-Y7G" secondAttribute="bottom" constant="20" symbolic="YES" id="TxT-j5-S89"/>
                                     <constraint firstItem="rvr-qp-Lbm" firstAttribute="leading" secondItem="978-BB-Y7G" secondAttribute="trailing" constant="8" symbolic="YES" id="XWG-nR-ZNU"/>
+                                    <constraint firstItem="kr7-ph-19T" firstAttribute="leading" secondItem="R51-NV-m4k" secondAttribute="leading" constant="20" symbolic="YES" id="aBi-zi-LMQ"/>
+                                    <constraint firstItem="JUR-OT-1pR" firstAttribute="leading" secondItem="R51-NV-m4k" secondAttribute="leading" constant="58" id="cT2-Wt-ggi"/>
                                     <constraint firstItem="1j9-h5-YSc" firstAttribute="leading" secondItem="R51-NV-m4k" secondAttribute="leading" id="db8-wS-vKc"/>
                                     <constraint firstItem="rp1-CG-OfL" firstAttribute="top" secondItem="R51-NV-m4k" secondAttribute="top" constant="20" symbolic="YES" id="g3X-Nn-fow"/>
                                     <constraint firstAttribute="trailing" secondItem="rvr-qp-Lbm" secondAttribute="trailing" constant="20" symbolic="YES" id="lL0-AH-LdE"/>
                                     <constraint firstItem="1j9-h5-YSc" firstAttribute="top" secondItem="rp1-CG-OfL" secondAttribute="bottom" constant="8" symbolic="YES" id="lbC-Xu-Ktn"/>
+                                    <constraint firstItem="kr7-ph-19T" firstAttribute="top" secondItem="1j9-h5-YSc" secondAttribute="bottom" constant="8" symbolic="YES" id="mzy-Ep-laV"/>
+                                    <constraint firstItem="rvr-qp-Lbm" firstAttribute="top" secondItem="JUR-OT-1pR" secondAttribute="bottom" constant="8" symbolic="YES" id="qz8-S5-dhU"/>
+                                    <constraint firstItem="vh9-bZ-itv" firstAttribute="leading" secondItem="kr7-ph-19T" secondAttribute="trailing" constant="8" symbolic="YES" id="rnf-D7-P4A"/>
+                                    <constraint firstAttribute="trailing" secondItem="JUR-OT-1pR" secondAttribute="trailing" constant="58" id="sPD-7X-hFE"/>
+                                    <constraint firstItem="KuP-sr-8v7" firstAttribute="leading" secondItem="R51-NV-m4k" secondAttribute="leading" constant="20" symbolic="YES" id="trp-O8-mA7"/>
+                                    <constraint firstAttribute="trailing" secondItem="vh9-bZ-itv" secondAttribute="trailing" constant="20" symbolic="YES" id="xWy-DW-bBi"/>
+                                    <constraint firstAttribute="trailing" secondItem="KuP-sr-8v7" secondAttribute="trailing" constant="20" symbolic="YES" id="yJb-Yg-tbV"/>
                                     <constraint firstItem="978-BB-Y7G" firstAttribute="leading" secondItem="R51-NV-m4k" secondAttribute="leading" constant="20" symbolic="YES" id="ykl-eO-VbD"/>
                                 </constraints>
                             </view>
@@ -1170,6 +1197,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="nameTextField" destination="KuP-sr-8v7" id="UwQ-9A-ObW"/>
                         <outlet property="subviewPicker" destination="1j9-h5-YSc" id="M8B-YF-rOa"/>
                     </connections>
                 </viewController>
