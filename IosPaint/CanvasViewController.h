@@ -20,6 +20,9 @@
 - (void)setCurrentOperationWithNSNumber:(NSNumber*)number;
 - (void)highLightGivenLayerAtIndex:(NSInteger)index;
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index;
+- (void)putUpCurrentLayerAtIndex:(NSInteger)index;
+- (void)putDownCurrentLayerAtIndex:(NSInteger)index;
+@property (nonatomic, strong) NSMutableArray *myViews;
 
 
 @end

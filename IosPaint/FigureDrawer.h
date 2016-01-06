@@ -10,6 +10,8 @@
 
 @interface FigureDrawer : UIView <NSCoding>
 
+@property (nonatomic, strong) NSString *figureName;
+
 - (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape collor:(UIColor*)collor dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *) LinePoints image:(UIImage *)image;
 
 

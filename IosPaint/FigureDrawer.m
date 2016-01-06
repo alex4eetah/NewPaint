@@ -73,6 +73,7 @@ typedef enum shapeTypes
         self.lineWidth = width;
         self.pointsOfLine = LinePoints;
         self.image = image;
+        self.figureName = [NSString stringWithFormat:@"Figure %p",self];
     }
     return self;
 }

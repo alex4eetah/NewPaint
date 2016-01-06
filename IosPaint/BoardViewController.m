@@ -103,25 +103,17 @@
     }];
 }
 
-- (NSDictionary *)takeArrayOfSubviews
+- (NSArray *)takeArrayOfSubviews
 {
-    NSMutableDictionary * subviewsAndIndexes = [[NSMutableDictionary alloc] init];
+   /* NSMutableArray * subviews = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < self.canvasVC.view.subviews.count; i++)
     {
         FigureDrawer* f = [self.canvasVC.view.subviews objectAtIndex:i];
         if ([f isKindOfClass:[FigureDrawer class]])
-            [subviewsAndIndexes setObject:f forKey:[NSNumber numberWithInt:i]];
-    }
-    
-    
-  /*  NSMutableArray * arrayOfSubviews = [[NSMutableArray alloc] init];
-    for (FigureDrawer* f in self.canvasVC.view.subviews)
-    {
-        if ([f isKindOfClass:[FigureDrawer class]])
-            [arrayOfSubviews addObject:f];
+            [subviews addObject:f];
     }*/
     
-    return subviewsAndIndexes;
+    return self.canvasVC.myViews;
 }
 
 - (void)highLightLayerAtIndex:(NSInteger)index
@@ -136,40 +128,12 @@
 
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index
 {
-    NSMutableArray * subviews = [[NSMutableArray alloc] initWithArray:self.canvasVC.view.subviews];
-    if (index < subviews.count-1)
-    {
-        [[self.canvasVC.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        FigureDrawer * CurrentFigure = [subviews objectAtIndex:index];
-        
-        [subviews removeObjectAtIndex:index];
-        [subviews insertObject:CurrentFigure atIndex:index+1];
-
-        for (int i = 0; i < subviews.count; i++)
-        {
-            id subview = [subviews objectAtIndex:i];
-            [self.canvasVC.view addSubview:subview];
-        }
-    }
-    
+    [self.canvasVC putUpCurrentLayerAtIndex:index];
 }
+
 - (void)putDownCurrentLayerAtIndex:(NSInteger)index
 {
-    NSMutableArray * subviews = [[NSMutableArray alloc] initWithArray:self.canvasVC.view.subviews];
-    if (index > 3)
-    {
-        [[self.canvasVC.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        FigureDrawer * CurrentFigure = [subviews objectAtIndex:index];
-        
-        [subviews removeObjectAtIndex:index];
-        [subviews insertObject:CurrentFigure atIndex:index-1];
-
-        for (int i = 0; i < subviews.count; i++)
-        {
-            id subview = [subviews objectAtIndex:i];
-            [self.canvasVC.view addSubview:subview];
-        }
-    }
+    [self.canvasVC putDownCurrentLayerAtIndex:index];
 }
 /*
 - (IBAction)ManagingOperationDidChanged:(UIButton *)sender

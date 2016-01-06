@@ -44,7 +44,7 @@
 
 @protocol LayerManagerGelegate <NSObject>
 
-- (NSDictionary *)takeArrayOfSubviews;
+- (NSArray *)takeArrayOfSubviews;
 - (void)highLightLayerAtIndex:(NSInteger)index;
 - (void)unHighlightLayerAtIndex:(NSInteger)index;
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index;

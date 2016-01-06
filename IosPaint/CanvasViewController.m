@@ -23,7 +23,7 @@ typedef enum operationsType
 
 @interface CanvasViewController ()
 
-@property (nonatomic, strong) NSMutableArray *myViews;
+
 
 @property (nonatomic, assign) NSInteger lineWidth;
 @property (nonatomic, strong) UIColor* currentColor;
@@ -425,6 +425,21 @@ typedef enum operationsType
                 [self.myViews removeLastObject];
                 [self.myViews addObject:currentView];
                 [currentView setNeedsDisplay];
+                
+                if (self.currentShape == 5)
+                {
+                    if (frame.size.height == self.currentImage.size.height &&
+                        frame.size.width == self.currentImage.size.width)
+                    {
+                        CGContextRef ctx = UIGraphicsGetCurrentContext();
+                        CGContextSetLineWidth(ctx, 0.5);
+                        CGContextMoveToPoint(ctx, self.stop.x, self.view.frame.origin.y);
+                        CGContextAddLineToPoint(ctx, self.stop.x, self.view.frame.size.height);
+                        CGContextMoveToPoint(ctx, self.view.frame.origin.x ,self.stop.y);
+                        CGContextAddLineToPoint(ctx, self.view.frame.size.width ,self.stop.y);
+                        CGContextStrokePath(ctx);
+                    }
+                }
             }
             break;
         case movement:
@@ -490,7 +505,9 @@ typedef enum operationsType
     NSMutableArray *toDelete = [[NSMutableArray alloc] init];
     for (FigureDrawer *f in self.myViews)
     {
-        if (f.frame.size.height == 0 && f.frame.size.width == 0)
+        if ([@(f.frame.size.height)  isEqual: @(self.lineWidth)] &&
+            [@(f.frame.size.width)  isEqual: @(self.lineWidth)]
+            )
         {
             [toDelete addObject:f];
             [f removeFromSuperview];
@@ -507,39 +524,47 @@ typedef enum operationsType
 
 - (void)highLightGivenLayerAtIndex:(NSInteger)index
 {
-    /*[self.view.subviews objectAtIndex:index].backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
-    self.myViews[index-3] = [self.view.subviews objectAtIndex:index];*/
-    
-    FigureDrawer *currentFigure = self.myViews[index-3];
-    currentFigure.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
-    self.myViews[index-3] = currentFigure;
+    FigureDrawer *currentFigure = self.myViews[index];
+    currentFigure.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];
+    self.myViews[index] = currentFigure;
     [currentFigure setNeedsDisplay];
-    
-    /*
-    FigureDrawer * f = [self.view.subviews objectAtIndex:index];//subview at index
-    [f removeFromSuperview];
-    f.backgroundColor = [UIColor colorWithRed:0.07 green:0.48 blue:0.95 alpha:0.1];
-    [self.view addSubview:f];*/
 }
 
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index
 {
-    /*[self.view.subviews objectAtIndex:index].backgroundColor = [UIColor clearColor];
-    self.myViews[index-3] = [self.view.subviews objectAtIndex:index];
-    [self.myViews[index-3] setNeedsDisplay];*/
-    
-    FigureDrawer *currentFigure = self.myViews[index-3];
+    FigureDrawer *currentFigure = self.myViews[index];
     currentFigure.backgroundColor = [UIColor clearColor];
-    self.myViews[index-3] = currentFigure;
+    self.myViews[index] = currentFigure;
     [currentFigure setNeedsDisplay];
-    
-    /*
-    FigureDrawer * f = [self.view.subviews objectAtIndex:index];//subview at index
-    [f removeFromSuperview];
-    f.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:f];*/
 }
 
+- (void)putUpCurrentLayerAtIndex:(NSInteger)index
+{
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    FigureDrawer * CurrentFigure = [self.myViews objectAtIndex:index];
+    [self.myViews removeObjectAtIndex:index];
+    [self.myViews insertObject:CurrentFigure atIndex:index+1];
+    
+    for (FigureDrawer *f in self.myViews)
+    {
+        [f setNeedsDisplay];
+        [self.view addSubview:f];
+    }
+}
+
+- (void)putDownCurrentLayerAtIndex:(NSInteger)index
+{
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    FigureDrawer * CurrentFigure = [self.myViews objectAtIndex:index];
+    [self.myViews removeObjectAtIndex:index];
+    [self.myViews insertObject:CurrentFigure atIndex:index-1];
+    
+    for (FigureDrawer *f in self.myViews)
+    {
+        [f setNeedsDisplay];
+        [self.view addSubview:f];
+    }
+}
 
 #pragma mark - delegate Methods
 
@@ -654,6 +679,10 @@ typedef enum operationsType
 
 - (void)saveFigureToGallery
 {
+    
+    /////////////////////////Alpha background ?
+    
+    
     [self.chosenArea removeFromSuperview];
     UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 1); //making image from view
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
