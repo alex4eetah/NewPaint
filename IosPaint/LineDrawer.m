@@ -10,52 +10,54 @@
 
 @interface LineDrawer()
 
-@property (nonatomic, strong) UIColor* collor;
-@property (nonatomic, strong) NSNumber* inset;
-@property (nonatomic, assign) NSInteger lineWidth;
-@property (nonatomic, assign) CGPoint startPoint;
-@property (nonatomic, assign) CGPoint endPoint;
-@property (nonatomic, assign) BOOL isit;
+@property (nonatomic, strong) UIColor* lineCollor;
+@property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, assign) CGPoint point;
+@property (nonatomic, strong) NSString* type;
 
 @end
 
 @implementation LineDrawer
 
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame point:(CGPoint)point typeOfLine:(NSString *)type
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor =  [UIColor whiteColor];
+    if (self)
+    {
+        self.lineCollor = [UIColor greenColor];
+        self.lineWidth = 1.0;
+        self.backgroundColor =  [UIColor clearColor];
+        self.point = point;
+        self.type = type;
+    }
     return self;
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    
-}
-
-- (void)drawPanLinefrom:(NSMutableArray*)points
-{
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextBeginPath(ctx);
-    CGContextSetLineWidth(ctx, self.lineWidth);
-    CGContextSetStrokeColorWithColor(ctx, [[UIColor blackColor] CGColor]);
-    NSValue *v = [points firstObject];
-    CGPoint firstPint = [v CGPointValue];
-    CGContextMoveToPoint(ctx, firstPint.x, firstPint.y);
-    
-    for (NSValue *v in points)
+    if ([self.type isEqualToString:@"horizontal"])
     {
-        if (v != [points firstObject])
-        {
-            CGPoint point = [v CGPointValue];
-            CGContextAddLineToPoint(ctx, point.x, point.y);
-        }
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(ctx, self.lineWidth);
+        CGContextSetLineCap(ctx, kCGLineCapRound);
+        CGContextSetStrokeColorWithColor(ctx, [self.lineCollor CGColor]);
+        
+        CGContextMoveToPoint(ctx, self.frame.origin.x ,self.point.y);
+        CGContextAddLineToPoint(ctx, self.frame.size.width ,self.point.y);
+        CGContextStrokePath(ctx);
     }
-    
-    
-    CGContextStrokePath(ctx);
-    //self.isit = YES;
+    else if ([self.type isEqualToString:@"vertical"])
+    {
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(ctx, self.lineWidth);
+        CGContextSetLineCap(ctx, kCGLineCapRound);
+        CGContextSetStrokeColorWithColor(ctx, [self.lineCollor CGColor]);
+        
+        CGContextMoveToPoint(ctx, self.point.x, self.frame.origin.y);
+        CGContextAddLineToPoint(ctx, self.point.x, self.frame.size.height);
+        CGContextStrokePath(ctx);
+    }
 }
 
 

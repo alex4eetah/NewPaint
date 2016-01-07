@@ -10,8 +10,6 @@
 
 @interface LineDrawer : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame;
-//@property (nonatomic, assign) NSInteger dekNum;
-- (void)drawPanLinefrom:(NSMutableArray*)points;
+- (instancetype)initWithFrame:(CGRect)frame point:(CGPoint)point typeOfLine:(NSString *)type;
 
 @end

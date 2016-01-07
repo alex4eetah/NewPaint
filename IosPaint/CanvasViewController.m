@@ -8,6 +8,7 @@
 
 #import "CanvasViewController.h"
 #import "FigureDrawer.h"
+#import "LineDrawer.h"
 
 
 
@@ -55,6 +56,7 @@ typedef enum operationsType
 @property (nonatomic, strong) UIView* handleToDelete;
 @property (nonatomic, assign) BOOL isInProgress;
 
+@property (nonatomic, strong) LineDrawer* helperLineCanvas;
 
 @property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
 @property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
@@ -428,17 +430,34 @@ typedef enum operationsType
                 
                 if (self.currentShape == 5)
                 {
-                    if (frame.size.height == self.currentImage.size.height &&
-                        frame.size.width == self.currentImage.size.width)
+                    if (fmodf(self.currentImage.size.height, frame.size.height) <= frame.size.height*0.05)
                     {
-                        CGContextRef ctx = UIGraphicsGetCurrentContext();
-                        CGContextSetLineWidth(ctx, 0.5);
-                        CGContextMoveToPoint(ctx, self.stop.x, self.view.frame.origin.y);
-                        CGContextAddLineToPoint(ctx, self.stop.x, self.view.frame.size.height);
-                        CGContextMoveToPoint(ctx, self.view.frame.origin.x ,self.stop.y);
-                        CGContextAddLineToPoint(ctx, self.view.frame.size.width ,self.stop.y);
-                        CGContextStrokePath(ctx);
+                        self.helperLineCanvas = [[LineDrawer alloc] initWithFrame:self.view.frame point:self.stop typeOfLine:@"horizontal"];
+                        [self.view addSubview:self.helperLineCanvas];
                     }
+                    if (fmodf(self.currentImage.size.width, frame.size.width) <= frame.size.width*0.05)
+                    {
+                        self.helperLineCanvas = [[LineDrawer alloc] initWithFrame:self.view.frame point:self.stop typeOfLine:@"vertical"];
+                        [self.view addSubview:self.helperLineCanvas];
+                    }
+                    else if (self.helperLineCanvas)
+                    {
+                        for (UIView *v in self.view.subviews)
+                        {
+                            if ([v isKindOfClass:[LineDrawer class]])
+                            {
+                                [v removeFromSuperview];
+                            }
+                        }
+                    }
+                    
+                   /* if (fmodf(self.currentImage.size.height, frame.size.height) <= frame.size.height*0.01 &&
+                        fmodf(self.currentImage.size.width, frame.size.width) <= frame.size.width*0.01)
+                    {
+                        self.helperLineCanvas = [[LineDrawer alloc] initWithFrame:self.view.frame point:self.stop];
+                        [self.view addSubview:self.helperLineCanvas];
+                    }*/
+                    
                 }
             }
             break;
@@ -514,6 +533,16 @@ typedef enum operationsType
         }
     }
     [self.myViews removeObjectsInArray:toDelete];
+    if (self.helperLineCanvas)
+    {
+        for (UIView *v in self.view.subviews)
+        {
+            if ([v isKindOfClass:[LineDrawer class]])
+            {
+                [v removeFromSuperview];
+            }
+        }
+    }
 }
 
 
