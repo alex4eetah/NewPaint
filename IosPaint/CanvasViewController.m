@@ -428,6 +428,7 @@ typedef enum operationsType
                 [self.myViews addObject:currentView];
                 [currentView setNeedsDisplay];
                 
+#pragma mark helper lines
                 if (self.currentShape == 5)
                 {
                     if (fmodf(self.currentImage.size.height, frame.size.height) <= frame.size.height*0.05)

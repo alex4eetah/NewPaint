@@ -26,7 +26,7 @@
     if (self)
     {
         self.lineCollor = [UIColor greenColor];
-        self.lineWidth = 1.0;
+        self.lineWidth = 0.5;
         self.backgroundColor =  [UIColor clearColor];
         self.point = point;
         self.type = type;
@@ -38,7 +38,9 @@
 {
     if ([self.type isEqualToString:@"horizontal"])
     {
+        CGFloat length[] = {1,1,1,1,3,1};
         CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetLineDash(ctx, 3, length, 6);
         CGContextSetLineWidth(ctx, self.lineWidth);
         CGContextSetLineCap(ctx, kCGLineCapRound);
         CGContextSetStrokeColorWithColor(ctx, [self.lineCollor CGColor]);
@@ -49,7 +51,9 @@
     }
     else if ([self.type isEqualToString:@"vertical"])
     {
+        CGFloat length[] = {1,1,1,1,3,1};
         CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetLineDash(ctx, 3, length, 6);
         CGContextSetLineWidth(ctx, self.lineWidth);
         CGContextSetLineCap(ctx, kCGLineCapRound);
         CGContextSetStrokeColorWithColor(ctx, [self.lineCollor CGColor]);
