@@ -22,5 +22,7 @@
 @property (nonatomic, assign) NSInteger numOfSides;
 @property (nonatomic, strong) UIImage* image;
 
+@property (nonatomic, assign) CGAffineTransform currentTransform;
+
 //@property (nonatomic, assign) CGRect *settedFrame;
 @end

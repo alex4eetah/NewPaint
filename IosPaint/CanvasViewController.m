@@ -242,6 +242,7 @@ typedef enum operationsType
     
     CGPoint location = [sender locationInView:sender.view];
     self.viewToScale = [sender.view hitTest:location withEvent:nil];
+    FigureDrawer * figureToScale = (FigureDrawer*)self.viewToScale;
     
     if (self.viewToScale  != self.view)
     {
@@ -249,12 +250,13 @@ typedef enum operationsType
         rotation = sender.rotation;
         CGAffineTransform transform = CGAffineTransformMakeRotation(rotation+netRotation);
         self.viewToScale.transform = transform;
+        figureToScale.currentTransform = transform;
     }
     
     else if (sender.state == UIGestureRecognizerStateEnded)
         netRotation += rotation;
-    [self.myViews addObject:self.viewToScale];
-    [self.viewToScale setNeedsDisplay];
+    [self.myViews addObject:figureToScale];
+    [figureToScale setNeedsDisplay];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

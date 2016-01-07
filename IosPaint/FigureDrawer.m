@@ -34,6 +34,7 @@ typedef enum shapeTypes
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+    [aCoder encodeObject: [NSValue valueWithCGAffineTransform:self.currentTransform] forKey:@"CurrentTransform"];
     [aCoder encodeObject: self.figureName forKey:@"figureName"];
     [aCoder encodeObject: [NSValue valueWithCGRect:self.frame] forKey:@"frame"];
     [aCoder encodeObject: [NSNumber numberWithLong: (int)self.shape] forKey:@"shape"];
@@ -50,6 +51,7 @@ typedef enum shapeTypes
 {
     if (self == [super initWithCoder:aDecoder])
     {
+        self.currentTransform = [[aDecoder decodeObjectForKey:@"CurrentTransform"] CGAffineTransformValue];
         self.figureName = [aDecoder decodeObjectForKey:@"figureName"];
         self.frame = [[aDecoder decodeObjectForKey:@"frame"] CGRectValue];
         self.shape = (int)[[aDecoder decodeObjectForKey:@"shape"] longValue];
@@ -69,6 +71,7 @@ typedef enum shapeTypes
     self = [super initWithFrame:frame];
     if (self)
     {
+       // self.currentTransform =
         self.shape = (int)shape;
         self.collor = collor;
         self.inset = inset;
@@ -218,26 +221,6 @@ static CGPoint controlPointForPoints(CGPoint p1, CGPoint p2)
     CGPoint controlPoint = midPointForPoints(p1, p2);
     return controlPoint;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - (void)drawRectangle:(CGRect)rect
 {
