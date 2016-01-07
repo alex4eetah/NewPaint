@@ -34,6 +34,7 @@ typedef enum shapeTypes
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+    [aCoder encodeObject: self.figureName forKey:@"figureName"];
     [aCoder encodeObject: [NSValue valueWithCGRect:self.frame] forKey:@"frame"];
     [aCoder encodeObject: [NSNumber numberWithLong: (int)self.shape] forKey:@"shape"];
     [aCoder encodeObject: self.collor forKey:@"collor"];
@@ -49,6 +50,7 @@ typedef enum shapeTypes
 {
     if (self == [super initWithCoder:aDecoder])
     {
+        self.figureName = [aDecoder decodeObjectForKey:@"figureName"];
         self.frame = [[aDecoder decodeObjectForKey:@"frame"] CGRectValue];
         self.shape = (int)[[aDecoder decodeObjectForKey:@"shape"] longValue];
         self.collor = [aDecoder decodeObjectForKey:@"collor"];

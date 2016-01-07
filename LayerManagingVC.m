@@ -43,13 +43,13 @@
         case 1:
             [self.layerDelegate putUpCurrentLayerAtIndex:self.currentLayer];
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
-            [self.layerDelegate highLightLayerAtIndex:self.currentLayer+1]; ///// WHY ??????
+            //[self.layerDelegate highLightLayerAtIndex:self.currentLayer+1]; ///// WHY ??????
             [self.subviewPicker selectRow:self.currentLayer+1 inComponent:0 animated:YES];
             break;
         case 2:
             [self.layerDelegate putDownCurrentLayerAtIndex:self.currentLayer];
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
-            [self.layerDelegate highLightLayerAtIndex:self.currentLayer-1];
+            //[self.layerDelegate highLightLayerAtIndex:self.currentLayer-1];
             [self.subviewPicker selectRow:self.currentLayer-1 inComponent:0 animated:YES];
             break;
             
@@ -67,7 +67,11 @@
 }
 - (IBAction)changeLayerName:(UIButton *)sender
 {
-    [self.layerDelegate changeLayerName:self.currentLayer toName:self.nameTextField.text];
+    if ([self.nameTextField.text isEqualToString:@""] || [self.nameTextField.text isEqualToString:@" "])
+        self.nameTextField.text = @"Enter name first!";
+    else
+        [self.layerDelegate changeLayerName:self.currentLayer toName:self.nameTextField.text];
+    
     [self getArrayOfSubviews];
     [self.subviewPicker reloadAllComponents];
 }
@@ -97,7 +101,7 @@
             [self.layerDelegate unHighlightLayerAtIndex:i];
     }
     
-    
+    self.nameTextField.text = @"";
     
     
     

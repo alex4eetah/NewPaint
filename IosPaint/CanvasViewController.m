@@ -663,9 +663,9 @@ typedef enum operationsType
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths firstObject];
-    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:@" "];
+    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
 
-    documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
+    
 
     
     NSMutableData *data = [[NSMutableData alloc] init];
