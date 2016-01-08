@@ -58,10 +58,15 @@
             //            self.drawingPanelOutlet.hidden = YES;
             //            self.figurePanelOutlet.hidden = NO;
             self.imagePickerController = [[UIImagePickerController alloc]init];
-            self.imagePickerController.delegate = self;
+            self.imagePickerController.delegate  = self;
             self.imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
+       /* dispatch_queue_t loadFhotoQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            dispatch_async(loadFhotoQueue, ^{
+                [self presentModalViewController:self.imagePickerController animated:YES];
+            });*/
+        [self presentViewController:self.imagePickerController animated:YES completion:^{
             
-            [self presentModalViewController:self.imagePickerController animated:YES];
+        }];
             
     }
 }
@@ -162,7 +167,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     //show the image view with the picked image
     [self.delegate didSelectImage:[info objectForKey:UIImagePickerControllerOriginalImage]];
     
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
     //UIImage *newImage = image;
     
     

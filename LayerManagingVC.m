@@ -20,12 +20,15 @@
 
 @implementation LayerManagingVC
 
+- (void)getPreparedForShowing
+{
+    [self getArrayOfSubviews];
+    self.subviewPicker.delegate = self;
+}
 
 - (IBAction)hideLayerSettings:(UIButton *)sender
 {
-    [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:-200];
-    [self getArrayOfSubviews];
-    self.subviewPicker.delegate = self;
+    [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:-250];
 }
 
 - (void) getArrayOfSubviews

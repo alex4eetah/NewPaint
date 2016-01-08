@@ -12,14 +12,7 @@
 
 
 
-typedef enum operationsType
-{
-    drawing,
-    movement,
-    scaleing,
-    rotating,
-    chosingArea
-} OperationType;
+
 
 
 @interface CanvasViewController ()
@@ -79,10 +72,10 @@ typedef enum operationsType
 
 @implementation CanvasViewController
 
--(void)setCurrentOperationWithNSNumber:(NSNumber*)number
+/*-(void)setCurrentOperationWithNSNumber:(NSNumber*)number
 {
     [self setCurrentOperation:[number intValue]];
-}
+}*/
 
 /*
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -240,9 +233,7 @@ typedef enum operationsType
 
 - (void)rotationDetected:(UIRotationGestureRecognizer *)sender
 {
-    
-    CGFloat netRotation = 0.0;
-    CGFloat rotation;
+    CGFloat rotation = 0.0;
     
     CGPoint location = [sender locationInView:sender.view];
     self.viewToScale = [sender.view hitTest:location withEvent:nil];
@@ -256,13 +247,10 @@ typedef enum operationsType
     {
         [self.myViews removeObject:self.viewToScale];
         rotation = sender.rotation;
-        CGAffineTransform transform = CGAffineTransformMakeRotation(rotation+netRotation);
+        CGAffineTransform transform = CGAffineTransformMakeRotation(rotation);
         self.viewToScale.transform = transform;
-        figureToScale.rotationAngle = rotation+netRotation;
+        figureToScale.rotationAngle = rotation;
     }
-    
-    else if (sender.state == UIGestureRecognizerStateEnded)
-        netRotation += rotation;
     [self.myViews addObject:figureToScale];
     [figureToScale setNeedsDisplay];
 }
@@ -733,7 +721,7 @@ typedef enum operationsType
     CGImageRef imageRef = CGImageCreateWithImageInRect([sourceImage CGImage], self.chosenArea.frame);
     UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
     
-    
+    CGImageRelease(imageRef);
     //now we will position the image, X/Y away from top left corner to get the portion we want
     /*UIGraphicsBeginImageContext(self.chosenArea.frame.size);
     [sourceImage drawAtPoint:CGPointMake(self.chosenArea.frame.origin.x, self.chosenArea.frame.origin.y)];

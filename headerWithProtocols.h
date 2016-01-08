@@ -33,6 +33,7 @@
 - (void)loadDataFromFile:(NSString *)docFilePath;
 - (void)Undo;
 - (void)allClear;
+- (void)setCurrentOperation:(NSInteger)value;
 
 @end
 
@@ -44,6 +45,7 @@
 
 @protocol LayerManagerGelegate <NSObject>
 
+- (void)prepareLayerPanel;
 - (void)changeLayerName:(NSInteger)layer toName:(NSString *)name;
 - (NSArray *)takeArrayOfSubviews;
 - (void)highLightLayerAtIndex:(NSInteger)index;

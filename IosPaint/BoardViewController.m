@@ -64,6 +64,7 @@
     }
     self.fileViewController.delegate = self.canvasVC;
     self.fileViewController.resizerDelegate = self;
+    self.fileViewController.layerDelegate = self;
     self.canvasVC.delegate = self.fileViewController;
     self.colorVC.delegate = self.canvasVC;
     self.colorVC.resizerDelegate = self;
@@ -79,6 +80,11 @@
 
     [self animateChangingOfConstraint:self.fileManagerPanelHeightConstraint
                               ToValue:height];
+}
+
+- (void)prepareLayerPanel
+{
+    [self.layerViewController getPreparedForShowing];
 }
 
 - (void)resizeColorContainerHeightTo:(CGFloat)height

@@ -54,6 +54,7 @@
 - (IBAction)showLayerSettings:(UIButton *)sender
 {
     [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:0];
+    [self.layerDelegate prepareLayerPanel];
 }
 
 #pragma mark - main menu settings
@@ -143,8 +144,6 @@
 {
     if (sender.tag == 1)
     {
-        /* self.savingOptionsViewOutlet.hidden = YES;
-         self.savingToFileViewOutlet.hidden = NO;*/
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
             
@@ -154,9 +153,7 @@
     }
     if (sender.tag == 2)
     {
-//        self.savingOptionsViewOutlet.hidden = YES;
-//        self.savingToGalleryViewOutlet.hidden = NO;
-        [self.delegate performSelector:@selector(setCurrentOperationWithNSNumber:) withObject:[NSNumber numberWithInt:4]];
+        [self.delegate setCurrentOperation:4];
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
             
@@ -178,9 +175,6 @@
         self.nameOfFileField.text = @"Enter file name!";
     }
     
-   /* self.savingToFileViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
-    */
     __typeof(self) __weak weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^() {
         

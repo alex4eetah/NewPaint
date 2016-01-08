@@ -11,14 +11,22 @@
 #import "PanelColorViewController.h"
 #import "LineDrawer.h"*/
 #import "headerWithProtocols.h"
-
+typedef enum operationsType
+{
+    drawing,
+    movement,
+    scaleing,
+    rotating,
+    chosingArea
+} OperationType;
 
 @interface CanvasViewController : UIViewController <PanelsDelegate>
 
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
 
 - (void)changeFigureName:(NSInteger)layer toName:(NSString *)name;
-- (void)setCurrentOperationWithNSNumber:(NSNumber*)number;
+//- (void)setCurrentOperationWithNSNumber:(NSNumber*)number;
+- (void)setCurrentOperation:(OperationType)value;
 - (void)highLightGivenLayerAtIndex:(NSInteger)index;
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index;
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index;

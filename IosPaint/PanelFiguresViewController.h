@@ -10,7 +10,7 @@
 #import "headerWithProtocols.h"
 
 
-@interface PanelFiguresViewController : UIViewController
+@interface PanelFiguresViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, weak) id <PanelsDelegate> delegate;
 

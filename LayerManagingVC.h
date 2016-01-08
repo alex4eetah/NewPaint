@@ -15,4 +15,6 @@
 @property (nonatomic, weak) id <ResizerProtocol> resizerDelegate;
 @property (nonatomic, weak) id <LayerManagerGelegate> layerDelegate;
 
+- (void)getPreparedForShowing;
+
 @end

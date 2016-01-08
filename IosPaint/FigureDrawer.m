@@ -51,7 +51,7 @@ typedef enum shapeTypes
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self == [super initWithCoder:aDecoder])
+    if (self = [super initWithCoder:aDecoder])
     {
         self.rotationAngle = [[aDecoder decodeObjectForKey:@"rotationAngle"] floatValue];
         if (self.rotationAngle)
@@ -86,6 +86,7 @@ typedef enum shapeTypes
     self = [super initWithFrame:frame];
     if (self)
     {
+       // self.currentTransform =
         self.shape = (int)shape;
         self.collor = collor;
         self.inset = inset;
@@ -280,39 +281,41 @@ static CGPoint controlPointForPoints(CGPoint p1, CGPoint p2)
     CGPoint STPoint;
     CGPoint LBPoint;
     CGPoint RBPoint;
-
     
-    if (self.dekNum == 1)
+    if (self.dekNum >= 1 && self.dekNum <= 4)
     {
-        STPoint = CGPointMake(0, insetRect.size.height);
-        LBPoint = CGPointMake(insetRect.size.width, insetRect.size.height/2);
-        RBPoint = CGPointMake(insetRect.size.width/2, 0);
+        if (self.dekNum == 1)
+        {
+            STPoint = CGPointMake(0, insetRect.size.height);
+            LBPoint = CGPointMake(insetRect.size.width, insetRect.size.height/2);
+            RBPoint = CGPointMake(insetRect.size.width/2, 0);
+        }
+        else if (self.dekNum == 2)
+        {
+            STPoint = CGPointMake(insetRect.size.width, insetRect.size.height);
+            LBPoint = CGPointMake(insetRect.size.width/2, 0);
+            RBPoint = CGPointMake(0, insetRect.size.height/2);
+        }
+        else if (self.dekNum == 3)
+        {
+            STPoint = CGPointMake(insetRect.size.width, 0);
+            LBPoint = CGPointMake(0, insetRect.size.height/2);
+            RBPoint = CGPointMake(insetRect.size.width/2, insetRect.size.height);
+        }
+        else 
+        {
+            STPoint = CGPointMake(0, 0);
+            LBPoint = CGPointMake(insetRect.size.width/2, insetRect.size.height);
+            RBPoint = CGPointMake(insetRect.size.width, insetRect.size.height/2);
+        }
+        
+        CGContextMoveToPoint(ctx, STPoint.x, STPoint.y);
+        CGContextAddLineToPoint(ctx, LBPoint.x, LBPoint.y);
+        CGContextAddLineToPoint(ctx, RBPoint.x, RBPoint.y);
+        CGContextAddLineToPoint(ctx, STPoint.x, STPoint.y);
+        
+        CGContextStrokePath(ctx);
     }
-    else if (self.dekNum == 2)
-    {
-        STPoint = CGPointMake(insetRect.size.width, insetRect.size.height);
-        LBPoint = CGPointMake(insetRect.size.width/2, 0);
-        RBPoint = CGPointMake(0, insetRect.size.height/2);
-    }
-    else if (self.dekNum == 3)
-    {
-        STPoint = CGPointMake(insetRect.size.width, 0);
-        LBPoint = CGPointMake(0, insetRect.size.height/2);
-        RBPoint = CGPointMake(insetRect.size.width/2, insetRect.size.height);
-    }
-    else if (self.dekNum == 4)
-    {
-        STPoint = CGPointMake(0, 0);
-        LBPoint = CGPointMake(insetRect.size.width/2, insetRect.size.height);
-        RBPoint = CGPointMake(insetRect.size.width, insetRect.size.height/2);
-    }
-    
-    CGContextMoveToPoint(ctx, STPoint.x, STPoint.y);
-    CGContextAddLineToPoint(ctx, LBPoint.x, LBPoint.y);
-    CGContextAddLineToPoint(ctx, RBPoint.x, RBPoint.y);
-    CGContextAddLineToPoint(ctx, STPoint.x, STPoint.y);
-    
-    CGContextStrokePath(ctx);
 }
 
 - (void)drawRight:(CGRect)rect

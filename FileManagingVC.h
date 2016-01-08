@@ -17,6 +17,7 @@
 
 @property (nonatomic, weak) id <PanelsDelegate> delegate;
 @property (nonatomic, weak) id <ResizerProtocol> resizerDelegate;
+@property (nonatomic, weak) id <LayerManagerGelegate> layerDelegate;
 
 @end
 
