@@ -22,7 +22,9 @@
 @property (nonatomic, assign) NSInteger numOfSides;
 @property (nonatomic, strong) UIImage* image;
 
-@property (nonatomic, assign) CGAffineTransform currentTransform;
+@property (nonatomic, assign) CGFloat rotationAngle;
+@property (nonatomic, assign) CGRect frameBeforeTransform;
+@property (nonatomic, assign) BOOL WasRorated;
 
 //@property (nonatomic, assign) CGRect *settedFrame;
 @end

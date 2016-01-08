@@ -34,9 +34,11 @@ typedef enum shapeTypes
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject: [NSValue valueWithCGAffineTransform:self.currentTransform] forKey:@"CurrentTransform"];
-    [aCoder encodeObject: self.figureName forKey:@"figureName"];
+    [aCoder encodeObject: [NSNumber numberWithFloat:self.rotationAngle] forKey:@"rotationAngle"];
+    [aCoder encodeObject: [NSValue valueWithCGRect:self.frameBeforeTransform] forKey:@"frameBeforeTransform"];
     [aCoder encodeObject: [NSValue valueWithCGRect:self.frame] forKey:@"frame"];
+    
+    [aCoder encodeObject: self.figureName forKey:@"figureName"];
     [aCoder encodeObject: [NSNumber numberWithLong: (int)self.shape] forKey:@"shape"];
     [aCoder encodeObject: self.collor forKey:@"collor"];
     [aCoder encodeObject: self.inset forKey:@"inset"];
@@ -51,9 +53,22 @@ typedef enum shapeTypes
 {
     if (self == [super initWithCoder:aDecoder])
     {
-        self.currentTransform = [[aDecoder decodeObjectForKey:@"CurrentTransform"] CGAffineTransformValue];
+        self.rotationAngle = [[aDecoder decodeObjectForKey:@"rotationAngle"] floatValue];
+        if (self.rotationAngle)
+        {
+            self.frameBeforeTransform = [[aDecoder decodeObjectForKey:@"frameBeforeTransform"] CGRectValue];
+            self.frame = self.frameBeforeTransform;
+            CGAffineTransform transform = CGAffineTransformMakeRotation(self.rotationAngle);
+            self.transform = transform;
+        }
+        else
+        {
+            self.frame = [[aDecoder decodeObjectForKey:@"frame"] CGRectValue];
+        }
+        
+        
+        
         self.figureName = [aDecoder decodeObjectForKey:@"figureName"];
-        self.frame = [[aDecoder decodeObjectForKey:@"frame"] CGRectValue];
         self.shape = (int)[[aDecoder decodeObjectForKey:@"shape"] longValue];
         self.collor = [aDecoder decodeObjectForKey:@"collor"];
         self.inset = [aDecoder decodeObjectForKey:@"inset"];
@@ -71,7 +86,6 @@ typedef enum shapeTypes
     self = [super initWithFrame:frame];
     if (self)
     {
-       // self.currentTransform =
         self.shape = (int)shape;
         self.collor = collor;
         self.inset = inset;
@@ -79,6 +93,7 @@ typedef enum shapeTypes
         self.pointsOfLine = LinePoints;
         self.image = image;
         self.figureName = [NSString stringWithFormat:@"Figure %p",self];
+        self.WasRorated = NO;
     }
     return self;
 }

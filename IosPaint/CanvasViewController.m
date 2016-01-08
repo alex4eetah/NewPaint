@@ -72,6 +72,9 @@ typedef enum operationsType
 @property (nonatomic, assign) BOOL didPreviousEventWasTap;
 
 @property (nonatomic, strong) UIView *chosenArea;
+
+
+
 @end
 
 @implementation CanvasViewController
@@ -237,20 +240,25 @@ typedef enum operationsType
 
 - (void)rotationDetected:(UIRotationGestureRecognizer *)sender
 {
+    
     CGFloat netRotation = 0.0;
     CGFloat rotation;
     
     CGPoint location = [sender locationInView:sender.view];
     self.viewToScale = [sender.view hitTest:location withEvent:nil];
     FigureDrawer * figureToScale = (FigureDrawer*)self.viewToScale;
-    
+    if (figureToScale.WasRorated == NO)
+    {
+        figureToScale.frameBeforeTransform = figureToScale.frame;
+        figureToScale.WasRorated = YES;
+    }
     if (self.viewToScale  != self.view)
     {
         [self.myViews removeObject:self.viewToScale];
         rotation = sender.rotation;
         CGAffineTransform transform = CGAffineTransformMakeRotation(rotation+netRotation);
         self.viewToScale.transform = transform;
-        figureToScale.currentTransform = transform;
+        figureToScale.rotationAngle = rotation+netRotation;
     }
     
     else if (sender.state == UIGestureRecognizerStateEnded)
