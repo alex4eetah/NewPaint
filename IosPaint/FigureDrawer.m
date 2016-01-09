@@ -32,6 +32,58 @@ typedef enum shapeTypes
 
 @implementation FigureDrawer
 
+- (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape collor:(UIColor*)collor dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *)LinePoints image:(UIImage *)image
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+       // self.currentTransform =
+        self.shape = (int)shape;
+        self.collor = collor;
+        self.inset = inset;
+        self.lineWidth = width;
+        self.pointsOfLine = LinePoints;
+        self.image = image;
+        self.figureName = [NSString stringWithFormat:@"Figure %p",self];
+        self.WasRorated = NO;
+    }
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+    
+    
+    switch (self.shape)
+    {
+        case linesShape:
+            [self drawLines:rect];
+            break;
+        case rectangleShape:
+            [self drawRectangle:rect];
+            break;
+        case circleShape:
+            [self drawCircle:rect];
+            break;
+        case triangleShape:
+            [self drawTriangle:rect];
+            break;
+        case rightShape:
+            [self drawRight:rect];
+            break;
+        case imageShape:
+            [self addImage:rect];
+            break;
+        case panLine:
+            [self drawPanLine:self.pointsOfLine];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject: [NSNumber numberWithFloat:self.rotationAngle] forKey:@"rotationAngle"];
@@ -81,73 +133,6 @@ typedef enum shapeTypes
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape collor:(UIColor*)collor dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *)LinePoints image:(UIImage *)image
-{
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-       // self.currentTransform =
-        self.shape = (int)shape;
-        self.collor = collor;
-        self.inset = inset;
-        self.lineWidth = width;
-        self.pointsOfLine = LinePoints;
-        self.image = image;
-        self.figureName = [NSString stringWithFormat:@"Figure %p",self];
-        self.WasRorated = NO;
-    }
-    return self;
-}
-
-
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-    
-    
-    switch (self.shape)
-    {
-        case linesShape:
-            [self drawLines:rect];
-            break;
-        case rectangleShape:
-            [self drawRectangle:rect];
-            break;
-        case circleShape:
-            [self drawCircle:rect];
-            break;
-        case triangleShape:
-            [self drawTriangle:rect];
-            break;
-        case rightShape:
-            [self drawRight:rect];
-            break;
-        case imageShape:
-            [self addImage:rect];
-            break;
-        case panLine:
-           [self drawPanLine:self.pointsOfLine];
-            break;
-        default:
-            break;
-    }
-    
-    /*CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetLineWidth(context, 2.0);
-    
-    CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
-    
-    if ([self.shape isEqualToString:@"elipce"])
-    {
-        CGContextAddEllipseInRect(context, CGRectInset(rect, 2.0, 2.0));
-    }
-    
-    
-    
-    CGContextStrokePath(context);*/
-}
-
 - (void)drawLines:(CGRect)rect
 {
     CGRect newRect = CGRectInset(rect, 0, 0);
@@ -172,75 +157,50 @@ typedef enum shapeTypes
     
 }
 
-/*- (void)drawPanLine:(NSArray*)points
-{
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextBeginPath(ctx);
-    CGContextSetLineWidth(ctx, self.lineWidth);
-    CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
-    
-    NSValue *v = [points firstObject];
-    CGPoint firstPint = [v CGPointValue];
-    CGContextMoveToPoint(ctx, firstPint.x, firstPint.y);
-    
-    for (NSValue *v in points)
-    {
-        if (v != [points firstObject])
-        {
-            CGPoint point = [v CGPointValue];
-            CGContextAddLineToPoint(ctx, point.x, point.y);
-        }
-    }
-    
-    
-    CGContextStrokePath(ctx);
-}*/
-
 - (void) drawPanLine:(NSArray *)points
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [self.collor setStroke];
     path.lineWidth = self.lineWidth;
-    //path.lineCapStyle =
+    path.lineCapStyle = kCGLineCapRound;
+    path.lineJoinStyle = kCGLineJoinRound;
     
     NSValue *value = [points firstObject];
-    CGPoint p1 = [value CGPointValue];
-    [path moveToPoint:p1];
-    
-    if (points.count == 2) {
-        value = points[1];
-        CGPoint p2 = [value CGPointValue];
-        [path addLineToPoint:p2];
-        [path stroke];
-        return;
+    CGPoint firstPoint = [value CGPointValue];
+    [path moveToPoint:firstPoint];
+
+    if (points.count > 2)
+    {
+        [path addLineToPoint:[self getMidPointBetweenPointA:firstPoint
+                                                       andB:[[points objectAtIndex:1] CGPointValue]]];
+        for (int i = 1; i < points.count-1; i++)
+        {
+            CGPoint midpoint = [self getMidPointBetweenPointA:[[points objectAtIndex:i] CGPointValue]
+                                                         andB:[[points objectAtIndex:i+1] CGPointValue]];
+            [path addQuadCurveToPoint:midpoint
+                         controlPoint:[[points objectAtIndex:i] CGPointValue]];
+        }
+        [path addLineToPoint:[[points lastObject] CGPointValue]];
     }
-    
-    for (int i = 1; i < points.count; i++) {
-        value = points[i];
-        CGPoint p2 = [value CGPointValue];
-        
-        CGPoint midPoint = midPointForPoints(p1, p2);
-        [path addQuadCurveToPoint:midPoint controlPoint:controlPointForPoints(p1, midPoint)];
-        [path addQuadCurveToPoint:p2 controlPoint:controlPointForPoints(midPoint, p2)];
-        
-        p1 = p2;
+    else if (points.count == 2)
+    {
+        [path addLineToPoint:[self getMidPointBetweenPointA:firstPoint andB:[[points objectAtIndex:1] CGPointValue]]];
+    }
+    else
+    {
+        [path addLineToPoint:firstPoint];
     }
     [path stroke];
 }
 
-static CGPoint midPointForPoints(CGPoint p1, CGPoint p2) {
-    return CGPointMake((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+- (CGPoint) getMidPointBetweenPointA:(CGPoint)a andB:(CGPoint)b
+{
+    return CGPointMake((a.x + b.x)/2, (a.y + b.y)/2);
 }
 
-static CGPoint controlPointForPoints(CGPoint p1, CGPoint p2)
+- (void) drawRectangle:(CGRect)rect
 {
-    CGPoint controlPoint = midPointForPoints(p1, p2);
-    return controlPoint;
-}
-
-- (void)drawRectangle:(CGRect)rect
-{
-    
+ 
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, self.lineWidth);
     CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);

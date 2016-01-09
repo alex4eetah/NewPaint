@@ -272,7 +272,7 @@
                 [self.currentPointsOfLine addObject: [NSValue valueWithCGPoint:self.start]];
                 
                 frame = CGRectMake(self.view.frame.origin.x,
-                                          self.view.frame.origin.y+50,
+                                          self.view.frame.origin.y,
                                           self.view.frame.size.width,
                                           self.view.frame.size.height);
                 FigureDrawer *currentView = [[FigureDrawer alloc] initWithFrame:frame

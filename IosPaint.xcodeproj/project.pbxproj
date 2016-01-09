@@ -83,7 +83,7 @@
 		2634EEA31C1ED460007E6ED5 /* IosPaint */ = {
 			isa = PBXGroup;
 			children = (
-				ED286FB01C4005260010BA84 /* Views */,
+				ED286FB01C4005260010BA84 /* Views(eg.WhatIsDrawn) */,
 				ED286FAF1C4005140010BA84 /* ViewControllers */,
 				26A35E7C1C207372008C9565 /* Main.storyboard */,
 				2634EEB21C1ED460007E6ED5 /* LaunchScreen.storyboard */,
@@ -129,7 +129,7 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		ED286FB01C4005260010BA84 /* Views */ = {
+		ED286FB01C4005260010BA84 /* Views(eg.WhatIsDrawn) */ = {
 			isa = PBXGroup;
 			children = (
 				26DF4F371C1EE55D00AC03D0 /* FigureDrawer.h */,
@@ -137,7 +137,7 @@
 				265B478A1C2ED013005024A1 /* LineDrawer.h */,
 				265B478B1C2ED013005024A1 /* LineDrawer.m */,
 			);
-			name = Views;
+			name = "Views(eg.WhatIsDrawn)";
 			sourceTree = "<group>";
 		};
 		ED286FB11C4005CB0010BA84 /* Canvas */ = {
