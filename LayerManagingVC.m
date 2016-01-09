@@ -44,16 +44,20 @@
     switch (sender.tag)
     {
         case 1:
-            [self.layerDelegate putUpCurrentLayerAtIndex:self.currentLayer];
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
-            //[self.layerDelegate highLightLayerAtIndex:self.currentLayer+1]; ///// WHY ??????
+            [self.layerDelegate putUpCurrentLayerAtIndex:self.currentLayer];
+          /*  [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
+            
             [self.subviewPicker selectRow:self.currentLayer+1 inComponent:0 animated:YES];
+            [self.layerDelegate highLightLayerAtIndex:self.currentLayer+1]; ///// WHY ??????*/
             break;
         case 2:
-            [self.layerDelegate putDownCurrentLayerAtIndex:self.currentLayer];
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
-            //[self.layerDelegate highLightLayerAtIndex:self.currentLayer-1];
+            [self.layerDelegate putDownCurrentLayerAtIndex:self.currentLayer];
+            /*[self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
+            
             [self.subviewPicker selectRow:self.currentLayer-1 inComponent:0 animated:YES];
+            [self.layerDelegate highLightLayerAtIndex:self.currentLayer-1];*/
             break;
             
         default:
@@ -75,6 +79,12 @@
     else
         [self.layerDelegate changeLayerName:self.currentLayer toName:self.nameTextField.text];
     
+    [self getArrayOfSubviews];
+    [self.subviewPicker reloadAllComponents];
+}
+- (IBAction)deleteLayer:(id)sender
+{
+    [self.layerDelegate deleteLayerAtIndex:self.currentLayer];
     [self getArrayOfSubviews];
     [self.subviewPicker reloadAllComponents];
 }

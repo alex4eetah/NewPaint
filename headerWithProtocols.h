@@ -34,12 +34,14 @@
 - (void)Undo;
 - (void)allClear;
 - (void)setCurrentOperation:(NSInteger)value;
+- (void)setNumOfSides:(NSInteger)numOfSides;
 
 @end
 
 @protocol FileManagerGelegate <NSObject>
 
 - (void)showCurrentOperation:(NSString *)operation;
+- (void)showCurrentShape:(NSString *)shape;
 
 @end
 
@@ -52,5 +54,6 @@
 - (void)unHighlightLayerAtIndex:(NSInteger)index;
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index;
 - (void)putDownCurrentLayerAtIndex:(NSInteger)index;
+- (void)deleteLayerAtIndex:(NSInteger)index;
 
 @end

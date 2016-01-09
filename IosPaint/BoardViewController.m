@@ -146,6 +146,11 @@
 {
     [self.canvasVC changeFigureName:layer toName:name];
 }
+
+- (void)deleteLayerAtIndex:(NSInteger)index
+{
+    [self.canvasVC deleteLayerAtIndex:index];
+}
 /*
 - (IBAction)ManagingOperationDidChanged:(UIButton *)sender
 {

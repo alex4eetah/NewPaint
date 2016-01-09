@@ -43,10 +43,10 @@
 @property (nonatomic, strong) UIRotationGestureRecognizer *rotationGesture;
 @property (nonatomic, assign) OperationType currentOperation;
 
-@property (strong, nonatomic) IBOutlet UILabel *currentOperationOutlet;
 
-@property (nonatomic, strong) UIView* handleToMove;
-@property (nonatomic, strong) UIView* handleToDelete;
+
+@property (nonatomic, strong) UIImageView* handleToMove;
+@property (nonatomic, strong) UIImageView* handleToDelete;
 @property (nonatomic, assign) BOOL isInProgress;
 
 @property (nonatomic, strong) LineDrawer* helperLineCanvas;
@@ -71,6 +71,11 @@
 @end
 
 @implementation CanvasViewController
+
+- (void)setNumOfSides:(NSInteger)numOfSides
+{
+    _numOfSides = numOfSides;
+}
 
 /*-(void)setCurrentOperationWithNSNumber:(NSNumber*)number
 {
@@ -111,7 +116,7 @@
     
     self.lineWidth = 5;
     self.inset = [[NSNumber alloc] initWithDouble:self.lineWidth/2];
-    self.currentOperationOutlet.text = @"drawing";
+
     
     self.isInProgress = NO;
     
@@ -140,39 +145,38 @@
             if ([sender.view hitTest:location withEvent:nil] != self.view &&
                 [[sender.view hitTest:location withEvent:nil] isKindOfClass:[FigureDrawer class]])
                 self.viewToMove = [sender.view hitTest:location withEvent:nil];
+            
             else
                 return;
+            NSLog(@"viewtomove %@",self.viewToMove);
             [self.viewToMove removeFromSuperview];
             [self.view addSubview:self.viewToMove];
-            
-            self.handleToMove = [[UIView alloc] initWithFrame:CGRectMake(
-                                                                         self.viewToMove.frame.size.width/2-45/2,
-                                                                         self.viewToMove.frame.size.height/2-45/2, 45, 45)];
-            self.handleToMove.backgroundColor = [UIColor greenColor];
-            /*self.handleToMove = [[FigureDrawer alloc] initWithFrame:CGRectMake(
-                                                                               self.viewToMove.frame.size.width/2-45/2,
-                                                                               self.viewToMove.frame.size.height/2-45/2, 45, 45)
-                                                              shape:1
-                                                             collor:[UIColor greenColor]
-                                                       dekartSystem:4
-                                                          withInset:[NSNumber numberWithInt:2]
-                                                          lineWidth:2
-                                                       pointsOfLine:nil
-                                                              image:nil];*/
-            self.handleToDelete = [[UIView alloc] initWithFrame:CGRectMake(
-                                                                           self.viewToMove.frame.size.width-45,
-                                                                           0, 45, 45)];
-            self.handleToDelete.backgroundColor = [UIColor redColor];
-            /*self.handleToDelete = [[FigureDrawer alloc] initWithFrame:CGRectMake(
-                                                                                 self.viewToMove.frame.size.width-45,
-                                                                                 0, 45, 45)
-                                                                shape:1
-                                                               collor:[UIColor redColor]
-                                                         dekartSystem:4
-                                                            withInset:[NSNumber numberWithInt:2]
-                                                            lineWidth:2
-                                                         pointsOfLine:nil
-                                                                image:nil];*/
+            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90)
+            {
+                self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
+                                                                                  self.viewToMove.frame.size.width/2-45/2,
+                                                                                  self.viewToMove.frame.size.height/2-45/2, 45, 45)];
+                self.handleToDelete = [[UIImageView alloc] initWithFrame:CGRectMake(
+                                                                                    self.viewToMove.frame.size.width-45,
+                                                                                    0, 45, 45)];
+            }
+            else
+            {
+                self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
+                                                                                  self.viewToMove.frame.size.width-self.viewToMove.bounds.size.width,
+                                                                                  self.viewToMove.frame.size.height-self.viewToMove.bounds.size.height,
+                                                                                  self.viewToMove.frame.size.width/2-1,
+                                                                                  self.viewToMove.frame.size.height)];
+                self.handleToDelete = [[UIImageView alloc] initWithFrame:CGRectMake(
+                                                                                    self.viewToMove.frame.size.width-self.viewToMove.bounds.size.width/2,
+                                                                                    self.viewToMove.frame.size.height-self.viewToMove.bounds.size.height,
+                                                                                    self.viewToMove.frame.size.width/2,
+                                                                                    self.viewToMove.frame.size.height)];
+            }
+            self.handleToMove.image = [UIImage imageNamed:@"move4545.png"];
+            self.handleToMove.tag = 101;
+            self.handleToDelete.image = [UIImage imageNamed:@"Delete-icon4545.png"];
+            self.handleToDelete.tag = 109;
             [self.viewToMove addSubview:self.handleToMove];
             [self.viewToMove addSubview:self.handleToDelete];
             self.isInProgress =YES;
@@ -320,27 +324,21 @@
                 self.hitTheMoovingHandle = NO;
                 self.isInProgress = NO;
             }
-            //if you tap to the centre of figure
-            if ([touch.view.superview isEqual:self.viewToMove] &&
-                (locationOfTouch.x>touch.view.frame.size.width/2-20) &&
-                (locationOfTouch.x<touch.view.frame.size.width/2+20) &&
-                (locationOfTouch.y>(touch.view.frame.size.height/2-20)) &&
-                (locationOfTouch.y<(touch.view.frame.size.height/2+20)))
+            
+            BOOL isPointInsideMove = CGRectContainsPoint(self.handleToMove.frame, locationOfTouch);
+            BOOL isPointInsideDelete = CGRectContainsPoint(self.handleToDelete.frame, locationOfTouch);
+            NSLog(@"move %@",self.handleToMove);
+            if (isPointInsideMove)
             {
-                //self.viewToMove = touch.view;
                 self.hitTheMoovingHandle = YES;
                 self.isInProgress = NO;
             }
-            else if ([touch.view.superview isEqual:self.viewToMove] &&
-                     (locationOfTouch.x>touch.view.frame.size.width-45) &&
-                     (locationOfTouch.x<touch.view.frame.size.width) &&
-                     (locationOfTouch.y>(touch.view.frame.origin.y)) &&
-                     (locationOfTouch.y<(touch.view.frame.origin.y+45)))
+            else if (isPointInsideDelete)
             {
-                //delete
                 [self.viewToMove removeFromSuperview];
                 [self.myViews removeObject:self.viewToMove];
                 self.isInProgress = NO;
+
             }
             break;
           
@@ -376,9 +374,6 @@
     switch (self.currentOperation)
     {
         case drawing:
-            
-            
-            
             if (self.currentShape == 6)
             {
                 [self.currentPointsOfLine addObject: [NSValue valueWithCGPoint:self.stop]];
@@ -404,7 +399,7 @@
                 }
                 else
                 {
-                    frame = CGRectMake(x, y, MAX(fabs(width), self.inset.doubleValue) , MAX(fabs(height), self.inset.doubleValue));
+                    frame = CGRectMake(x, y, MAX(fabs(width), self.inset.doubleValue*2) , MAX(fabs(height), self.inset.doubleValue*2));
                 }
                 
                 
@@ -421,7 +416,9 @@
                 currentView = self.myViews.lastObject;
                 currentView.frame = frame;
                 currentView.dekNum = dekNum;
-                currentView.numOfSides = 3;
+                /*NSString *s = @"4";
+                NSInteger num = [s integerValue];*/
+                currentView.numOfSides = self.numOfSides;
                 [self.myViews removeLastObject];
                 [self.myViews addObject:currentView];
                 [currentView setNeedsDisplay];
@@ -449,14 +446,6 @@
                             }
                         }
                     }
-                    
-                   /* if (fmodf(self.currentImage.size.height, frame.size.height) <= frame.size.height*0.01 &&
-                        fmodf(self.currentImage.size.width, frame.size.width) <= frame.size.width*0.01)
-                    {
-                        self.helperLineCanvas = [[LineDrawer alloc] initWithFrame:self.view.frame point:self.stop];
-                        [self.view addSubview:self.helperLineCanvas];
-                    }*/
-                    
                 }
             }
             break;
@@ -553,7 +542,11 @@
 - (void)highLightGivenLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
-    currentFigure.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];
+    UIView *light = [[UIView alloc] initWithFrame:currentFigure.bounds];
+    light.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];
+    if (currentFigure.subviews.count == 0)
+        [currentFigure addSubview:light];
+    /*currentFigure.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];*/
     self.myViews[index] = currentFigure;
     [currentFigure setNeedsDisplay];
 }
@@ -561,37 +554,60 @@
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
-    currentFigure.backgroundColor = [UIColor clearColor];
+    [[currentFigure subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    //currentFigure.backgroundColor = [UIColor clearColor];
     self.myViews[index] = currentFigure;
     [currentFigure setNeedsDisplay];
 }
 
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index
 {
-    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    FigureDrawer * CurrentFigure = [self.myViews objectAtIndex:index];
-    [self.myViews removeObjectAtIndex:index];
-    [self.myViews insertObject:CurrentFigure atIndex:index+1];
-    
-    for (FigureDrawer *f in self.myViews)
+    if (index < self.myViews.count-1)
     {
-        [f setNeedsDisplay];
-        [self.view addSubview:f];
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        FigureDrawer * CurrentFigure = [self.myViews objectAtIndex:index];
+        [self.myViews removeObjectAtIndex:index];
+        [self.myViews insertObject:CurrentFigure atIndex:index+1];
+        
+        for (FigureDrawer *f in self.myViews)
+        {
+            [f setNeedsDisplay];
+            [self.view addSubview:f];
+        }
     }
 }
 
 - (void)putDownCurrentLayerAtIndex:(NSInteger)index
 {
-    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    FigureDrawer * CurrentFigure = [self.myViews objectAtIndex:index];
-    [self.myViews removeObjectAtIndex:index];
-    [self.myViews insertObject:CurrentFigure atIndex:index-1];
-    
-    for (FigureDrawer *f in self.myViews)
+    if (index > 0)
     {
-        [f setNeedsDisplay];
-        [self.view addSubview:f];
+        [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        FigureDrawer * CurrentFigure = [self.myViews objectAtIndex:index];
+        [self.myViews removeObjectAtIndex:index];
+        [self.myViews insertObject:CurrentFigure atIndex:index-1];
+        
+        for (FigureDrawer *f in self.myViews)
+        {
+            [f setNeedsDisplay];
+            [self.view addSubview:f];
+        }
     }
+}
+
+- (void)deleteLayerAtIndex:(NSInteger)index
+{
+    if (index >= 0)
+    {
+        if (self.myViews.count != 0)
+        {
+            if (index <=self.myViews.count-1)
+            {
+                [[self.myViews objectAtIndex:index] removeFromSuperview];
+                [self.myViews removeObjectAtIndex:index];
+            }
+        }
+    }
+    
 }
 
 #pragma mark - delegate Methods
@@ -616,12 +632,40 @@
 - (void)didSelectShape:(NSInteger)shape
 {
     self.currentShape = shape;
+    switch (shape)
+    {
+        case 0://circleShape,
+            [self.delegate showCurrentShape:@"Circle"];
+            break;
+        case 1://rectangleShape,
+            [self.delegate showCurrentShape:@"Rectangle"];
+            break;
+        case 2://linesShape,
+            [self.delegate showCurrentShape:@"Line"];
+            break;
+        case 3://triangleShape,
+            [self.delegate showCurrentShape:@"Triangle"];
+            break;
+        case 4://rightShape,
+            [self.delegate showCurrentShape:@"N-angular"];
+            break;
+        case 5://imageShape,
+            [self.delegate showCurrentShape:@"Image"];
+            break;
+        case 6://panLine
+            [self.delegate showCurrentShape:@"any Line"];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didSelectImage:(UIImage *)image
 {
     self.currentImage = image;
     self.currentShape = 5;
+    [self.delegate showCurrentShape:@"Image"];
 }
 
 - (void)didSelectOperation:(NSInteger)operation

@@ -25,6 +25,7 @@
 @property (strong, nonatomic)  NSArray *fileList;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentOperationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentShapeLabel;
 
 @end
 
@@ -229,23 +230,17 @@
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     [self.currentOperationLabel.layer addAnimation:animation
                                             forKey:@"changeTextTransition"];
-    /*
-    CATransition *ColorAnimation = [CATransition animation];
-    [ColorAnimation setDelegate:self]; //important
-    [ColorAnimation setRemovedOnCompletion:YES]; //better to remove the animation
-    [ColorAnimation setBeginTime:CACurrentMediaTime()]; //not really needed
-    [ColorAnimation setDuration:0.4];
-    [ColorAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
-    [ColorAnimation setType:kCATransitionFade];
-    
-    //you can specify any key name or keep it nil. doesn't make a difference
-    [self.currentOperationLabel.layer addAnimation:ColorAnimation forKey:@"changeTextColor"];*/
-    
     self.currentOperationLabel.text = operation;
-    //[self.currentOperationLabel setTextColor:[UIColor greenColor]];
-    
-    
-    
+}
+- (void)showCurrentShape:(NSString *)shape
+{
+    CATransition *animation = [CATransition animation];
+    animation.duration = 1.0;
+    animation.type = kCATransitionMoveIn;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    [self.currentShapeLabel.layer addAnimation:animation
+                                            forKey:@"changeTextTransition"];
+    self.currentShapeLabel.text = shape;
 }
 
 /*

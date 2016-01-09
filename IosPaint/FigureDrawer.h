@@ -26,5 +26,5 @@
 @property (nonatomic, assign) CGRect frameBeforeTransform;
 @property (nonatomic, assign) BOOL WasRorated;
 
-//@property (nonatomic, assign) CGRect *settedFrame;
+//- (void)fillFigureWithColor;
 @end

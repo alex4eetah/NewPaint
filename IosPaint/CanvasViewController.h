@@ -25,12 +25,11 @@ typedef enum operationsType
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
 
 - (void)changeFigureName:(NSInteger)layer toName:(NSString *)name;
-//- (void)setCurrentOperationWithNSNumber:(NSNumber*)number;
-- (void)setCurrentOperation:(OperationType)value;
 - (void)highLightGivenLayerAtIndex:(NSInteger)index;
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index;
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index;
 - (void)putDownCurrentLayerAtIndex:(NSInteger)index;
+- (void)deleteLayerAtIndex:(NSInteger)index;
 @property (nonatomic, strong) NSMutableArray *myViews;
 
 

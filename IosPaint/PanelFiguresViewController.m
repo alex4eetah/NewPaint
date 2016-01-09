@@ -10,12 +10,14 @@
 
 @interface PanelFiguresViewController ()
 
-@property (strong, nonatomic) IBOutlet UISegmentedControl *figurePanelOutlet;
+@property (strong, nonatomic) IBOutlet UIView *figurePanelOutlet;
 @property (strong, nonatomic) IBOutlet UIView *mainPanelOutlet;
 @property (strong, nonatomic) IBOutlet UIView *OperationPanelOutlet;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *operationSegmentControll;
 @property (strong, nonatomic) IBOutlet UIView *drawingPanelOutlet;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (weak, nonatomic) IBOutlet UITextField *NangularNumOfSidesTextField;
+@property (weak, nonatomic) IBOutlet UIView *NangularNumOfSidesPanelOutlet;
 
 @end
 
@@ -55,19 +57,12 @@
     }
     else if (sender.tag == 3)
     {
-            //            self.drawingPanelOutlet.hidden = YES;
-            //            self.figurePanelOutlet.hidden = NO;
-            self.imagePickerController = [[UIImagePickerController alloc]init];
-            self.imagePickerController.delegate  = self;
-            self.imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
-       /* dispatch_queue_t loadFhotoQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            dispatch_async(loadFhotoQueue, ^{
-                [self presentModalViewController:self.imagePickerController animated:YES];
-            });*/
+        self.imagePickerController = [[UIImagePickerController alloc]init];
+        self.imagePickerController.delegate  = self;
+        self.imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:self.imagePickerController animated:YES completion:^{
             
         }];
-            
     }
 }
 
@@ -116,7 +111,7 @@
             weakSelf.mainPanelOutlet.alpha = 1.0;
         }];
     }
-    else     if (sender.tag == 2)
+    else if (sender.tag == 2)
     {
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
@@ -125,7 +120,16 @@
             weakSelf.figurePanelOutlet.alpha = 1.0;
         }];
     }
-    else     if (sender.tag == 4)
+    else if (sender.tag == 3)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.drawingPanelOutlet.alpha = 0.0;
+            weakSelf.mainPanelOutlet.alpha = 1.0;
+        }];
+    }
+    else if (sender.tag == 4)
     {
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
@@ -136,15 +140,43 @@
     }
 }
 
-- (IBAction)didChangeFigure:(UISegmentedControl *)sender
+- (IBAction)didChangeFigure:(UIButton *)sender
 {
-    [self.delegate didSelectShape:sender.selectedSegmentIndex];
-    __typeof(self) __weak weakSelf = self;
-    [UIView animateWithDuration:0.3 animations:^() {
-        
-        weakSelf.figurePanelOutlet.alpha = 0.0;
-        weakSelf.mainPanelOutlet.alpha = 1.0;
-    }];
+    if (sender.tag == 4)//n-angular
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.figurePanelOutlet.alpha = 0.0;
+            weakSelf.NangularNumOfSidesPanelOutlet.alpha = 1.0;
+        }];
+
+    }
+    else
+    {
+        [self.delegate didSelectShape:sender.tag];
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.3 animations:^() {
+            
+            weakSelf.figurePanelOutlet.alpha = 0.0;
+            weakSelf.mainPanelOutlet.alpha = 1.0;
+        }];
+    }
+}
+- (IBAction)nangularDidChoseNumOfsides:(id)sender
+{
+   if ([self TextIsNumeric:self.NangularNumOfSidesTextField.text])
+   {
+       [self.delegate didSelectShape:4];
+       NSInteger num = [self.NangularNumOfSidesTextField.text integerValue];
+       [self.delegate setNumOfSides:num];
+       __typeof(self) __weak weakSelf = self;
+       [UIView animateWithDuration:0.3 animations:^() {
+           
+           weakSelf.NangularNumOfSidesPanelOutlet.alpha = 0.0;
+           weakSelf.mainPanelOutlet.alpha = 1.0;
+       }];
+   }
 }
 
 - (IBAction)penBeenChosen:(UIButton *)sender
@@ -158,19 +190,21 @@
     }];
 }
 
+- (BOOL) TextIsNumeric:(NSString *)text
+{
+    BOOL result = false;
+    NSString *pattern = @"^\\d+$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pattern];
+    result = [test evaluateWithObject:text];
+    return result;
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
-    // Dismiss the image selection, hide the picker and
-    
-    //show the image view with the picked image
     [self.delegate didSelectImage:[info objectForKey:UIImagePickerControllerOriginalImage]];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
-    //UIImage *newImage = image;
-    
-    
 }
 /*
 #pragma mark - Navigation

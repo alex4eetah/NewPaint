@@ -25,7 +25,7 @@ typedef enum shapeTypes
 @property (nonatomic, strong) UIColor* collor;
 @property (nonatomic, strong) NSNumber* inset;
 @property (nonatomic, assign) NSInteger lineWidth;
-
+//@property (nonatomic, assign) BOOL fillThePath;
 
 
 @end
@@ -46,6 +46,7 @@ typedef enum shapeTypes
         self.image = image;
         self.figureName = [NSString stringWithFormat:@"Figure %p",self];
         self.WasRorated = NO;
+       // self.fillThePath = YES;
     }
     return self;
 }
@@ -223,11 +224,14 @@ typedef enum shapeTypes
     
     CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
     CGContextSetLineWidth(ctx, self.lineWidth);
+    /*if (self.fillThePath)
+        CGContextSetFillColorWithColor(ctx, [self.collor CGColor]);*/
     
     CGContextAddEllipseInRect(ctx, CGRectInset(rect, self.inset.doubleValue, self.inset.doubleValue));
     
     
     CGContextStrokePath(ctx);
+    //CGContextFillPath(ctx);
 }
 
 - (void)drawTriangle:(CGRect)rect
@@ -236,6 +240,8 @@ typedef enum shapeTypes
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, self.lineWidth);
+    CGContextSetLineCap(ctx, kCGLineCapRound);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
     CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
     
     CGPoint STPoint;
@@ -280,43 +286,43 @@ typedef enum shapeTypes
 
 - (void)drawRight:(CGRect)rect
 {
-    CGRect insetRect = CGRectInset(rect, 5, 5);
+    CGFloat inset = [self.inset floatValue];
+    CGRect insetRect = CGRectMake(rect.origin.x + inset, rect.origin.y + inset, rect.size.width - inset, rect.size.height - inset);
     
     CGFloat side = (insetRect.size.width/2);
     CGPoint newZeroCoordinate = CGPointMake(insetRect.size.width/2, insetRect.size.height/2);
 
     CGFloat alpha;
     
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();///&&&&&&&&&&&&&&??????????????
+    CGContextSetLineCap(ctx, kCGLineCapRound);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
     CGContextSetLineWidth(ctx, self.lineWidth);
     CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
     
     for (int i = 0; i <= self.numOfSides; i++)
     {
-        alpha = 2*M_PI*i/self.numOfSides;
+        alpha = 2*M_PI*i/self.numOfSides; /// about NULL here
         CGPoint p = CGPointMake(side*cos(alpha)+newZeroCoordinate.x, side*sin(alpha)+newZeroCoordinate.y);
-        (i == 0) ? CGContextMoveToPoint(ctx, p.x, p.y):
-        CGContextAddLineToPoint(ctx, p.x, p.y);
+        if(i == 0)
+            CGContextMoveToPoint(ctx, p.x, p.y);
+        else
+            CGContextAddLineToPoint(ctx, p.x, p.y);
     }
 
-    
+    CGContextClosePath(ctx);
     CGContextStrokePath(ctx);
 }
 
 - (void)addImage:(CGRect)rect
 {
-//    NSString* path = @"//Users//olexander_chechetkin//Desktop//image.png";
-//    NSData *data = [NSData dataWithContentsOfFile:path];
-//    UIImage *img = [[UIImage alloc] initWithData:data];
     [self.image drawInRect:CGRectMake(0.0, 0.0, rect.size.width, rect.size.height)];
-
-    
-   /* UIImage *image = [[UIImage alloc] init];
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    [iv setImage:image];
-    [v addSubview:iv];*/
 }
+
+/*- (void)fillFigureWithColor
+{
+    self.fillThePath = YES;
+    [self setNeedsDisplay];
+}*/
 
 @end
