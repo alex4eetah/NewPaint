@@ -46,6 +46,7 @@ typedef enum shapeTypes
         self.image = image;
         self.figureName = [NSString stringWithFormat:@"Figure %p",self];
         self.WasRorated = NO;
+        //self.frameBeforeTransform = self.frame;
        // self.fillThePath = YES;
     }
     return self;

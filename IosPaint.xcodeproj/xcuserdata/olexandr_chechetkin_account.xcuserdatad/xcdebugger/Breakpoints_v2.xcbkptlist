@@ -10,27 +10,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IosPaint/CanvasViewController.m"
-            timestampString = "474056512.918836"
+            timestampString = "474212200.9386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "564"
-            endingLineNumber = "564"
-            landmarkName = "-putUpCurrentLayerAtIndex:"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
+            landmarkName = "-touchesMoved:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IosPaint/FigureDrawer.m"
+            timestampString = "474212708.408869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "-drawTriangle:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IosPaint/CanvasViewController.m"
-            timestampString = "474053950.113332"
+            timestampString = "474214107.493434"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "-LongPressDetected:"
             landmarkType = "5">
          </BreakpointContent>

@@ -42,6 +42,7 @@
 
 - (void)showCurrentOperation:(NSString *)operation;
 - (void)showCurrentShape:(NSString *)shape;
+- (void)HighLightCurrentOperation;
 
 @end
 

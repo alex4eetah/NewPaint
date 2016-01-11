@@ -24,11 +24,20 @@
 {
     [self getArrayOfSubviews];
     self.subviewPicker.delegate = self;
+    if ([self.subviews firstObject])
+    {
+        self.currentLayer = 0;
+        [self.layerDelegate highLightLayerAtIndex:self.currentLayer];
+    }
 }
 
 - (IBAction)hideLayerSettings:(UIButton *)sender
 {
     [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:-250];
+    for (int i = 0; i < self.subviews.count; i++)
+    {
+        [self.layerDelegate unHighlightLayerAtIndex:i];
+    }
 }
 
 - (void) getArrayOfSubviews

@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *filePicker;
 @property (strong, nonatomic) NSString *CurrentFileToLoad;
 @property (strong, nonatomic)  NSArray *fileList;
+@property (weak, nonatomic) IBOutlet UIButton *loadFileButton;
+@property (weak, nonatomic) IBOutlet UIButton *DeleteFileButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentOperationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentShapeLabel;
@@ -48,6 +50,11 @@
     
     NSFileManager *manager = [NSFileManager defaultManager];
     self.fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+    if (self.fileList.count == 0)
+    {
+        self.loadFileButton.enabled = NO;
+        self.DeleteFileButton.enabled = NO;
+    }
 }
 
 
@@ -90,6 +97,7 @@
         }];
         
         [self getArrayOfPaths];
+        self.CurrentFileToLoad = [self.fileList firstObject];
         self.filePicker.delegate = self;
     }
     else if (sender.tag == 3)
@@ -128,6 +136,7 @@
     
     [self getArrayOfPaths];
     [self.filePicker reloadAllComponents];
+    self.CurrentFileToLoad = [self.fileList firstObject];
 }
 - (IBAction)backFromLoadingpanel:(id)sender
 {
@@ -136,6 +145,15 @@
     [UIView animateWithDuration:0.3 animations:^() {
         
         weakSelf.loadingViewOutlet.alpha = 0.0;
+        weakSelf.managingViewOutlet.alpha = 1.0;
+    }];
+}
+- (IBAction)backFromOptionsSavingPanel:(id)sender
+{
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.savingOptionsViewOutlet.alpha = 0.0;
         weakSelf.managingViewOutlet.alpha = 1.0;
     }];
 }
@@ -232,6 +250,20 @@
                                             forKey:@"changeTextTransition"];
     self.currentOperationLabel.text = operation;
 }
+
+- (void)HighLightCurrentOperation
+{
+    [self.currentOperationLabel setBackgroundColor:[UIColor redColor]];
+    
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
+                   {
+                       //code to be executed on the main queue after delay
+                       [self.currentOperationLabel setBackgroundColor:[UIColor clearColor]];
+                   });
+}
+
 - (void)showCurrentShape:(NSString *)shape
 {
     CATransition *animation = [CATransition animation];

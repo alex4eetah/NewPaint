@@ -30,7 +30,7 @@
 
 @property (nonatomic, assign) CGPoint startOfMove;
 @property (nonatomic, assign) CGPoint stopOfMove;
-@property (nonatomic, strong) UIView *viewToMove;
+@property (nonatomic, strong) FigureDrawer *viewToMove;
 @property (nonatomic,assign) BOOL hitTheMoovingHandle;
 
 @property (nonatomic, strong) UIView *viewToScale;
@@ -144,14 +144,14 @@
             CGPoint location = [sender locationInView:sender.view];
             if ([sender.view hitTest:location withEvent:nil] != self.view &&
                 [[sender.view hitTest:location withEvent:nil] isKindOfClass:[FigureDrawer class]])
-                self.viewToMove = [sender.view hitTest:location withEvent:nil];
+                self.viewToMove = (FigureDrawer *)[sender.view hitTest:location withEvent:nil];
             
             else
                 return;
             NSLog(@"viewtomove %@",self.viewToMove);
             [self.viewToMove removeFromSuperview];
             [self.view addSubview:self.viewToMove];
-            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90)
+            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90 && !self.viewToMove.WasRorated)
             {
                 self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
                                                                                   self.viewToMove.frame.size.width/2-45/2,
@@ -195,10 +195,18 @@
     if (sender.state == UIGestureRecognizerStateBegan)
     {
         CGPoint location = [sender locationInView:sender.view];
-        if ([sender.view hitTest:location withEvent:nil] != self.view)
+        if ([[sender.view hitTest:location withEvent:nil] isKindOfClass:[FigureDrawer class]])
+        {
+            //static BOOL isViewGoodToMove = NO;
             self.viewToScale = [sender.view hitTest:location withEvent:nil];
+           /* if ([self.viewToScale isKindOfClass:[FigureDrawer class]])
+                isViewGoodToMove = YES;*/
+        }
         else
+        {
+            [self.delegate HighLightCurrentOperation];
             return;
+        }
         self.viewToScale.backgroundColor = [UIColor colorWithRed:0.23 green:0.67 blue:0.94 alpha:0.2];
         [self.myViews removeObject:self.viewToScale];
         [self.myViews addObject:self.viewToScale];
@@ -242,18 +250,23 @@
     CGPoint location = [sender locationInView:sender.view];
     self.viewToScale = [sender.view hitTest:location withEvent:nil];
     FigureDrawer * figureToScale = (FigureDrawer*)self.viewToScale;
-    if (figureToScale.WasRorated == NO)
-    {
-        figureToScale.frameBeforeTransform = figureToScale.frame;
-        figureToScale.WasRorated = YES;
-    }
     if (self.viewToScale  != self.view)
     {
+        if (figureToScale.WasRorated == NO)
+        {
+            figureToScale.frameBeforeTransform = figureToScale.frame;
+            figureToScale.WasRorated = YES;
+        }
+        
         [self.myViews removeObject:self.viewToScale];
         rotation = sender.rotation;
         CGAffineTransform transform = CGAffineTransformMakeRotation(rotation);
         self.viewToScale.transform = transform;
         figureToScale.rotationAngle = rotation;
+    }
+    else if (self.viewToScale  == self.view)
+    {
+        [self.delegate HighLightCurrentOperation];
     }
     [self.myViews addObject:figureToScale];
     [figureToScale setNeedsDisplay];
@@ -328,6 +341,7 @@
             BOOL isPointInsideMove = CGRectContainsPoint(self.handleToMove.frame, locationOfTouch);
             BOOL isPointInsideDelete = CGRectContainsPoint(self.handleToDelete.frame, locationOfTouch);
             NSLog(@"move %@",self.handleToMove);
+            NSLog(@"touch x:%f y:%f",locationOfTouch.x, locationOfTouch.y);
             if (isPointInsideMove)
             {
                 self.hitTheMoovingHandle = YES;
@@ -340,13 +354,22 @@
                 self.isInProgress = NO;
 
             }
+            
+            if (!self.hitTheMoovingHandle && !isPointInsideMove && !isPointInsideDelete)
+            {
+                [self.delegate HighLightCurrentOperation];
+            }
             break;
           
         case scaleing:
             
+                [self.delegate HighLightCurrentOperation];
+            
             break;
             
         case rotating:
+            
+            [self.delegate HighLightCurrentOperation];
             
             break;
             
@@ -454,14 +477,15 @@
             if (self.hitTheMoovingHandle)
             {
                 self.stopOfMove = [touch locationInView:self.view];
-                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.frame.size.width/2,
-                                          self.stopOfMove.y - self.viewToMove.frame.size.height/2,
-                                          self.viewToMove.frame.size.width, self.viewToMove.frame.size.height);
+                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.bounds.size.width/2,
+                                          self.stopOfMove.y - self.viewToMove.bounds.size.height/2,
+                                          self.viewToMove.bounds.size.width, self.
+                                          viewToMove.bounds.size.height);
                 
                 [self.myViews removeObject:self.viewToMove];
                 self.viewToMove.frame = frame;
                 [self.myViews addObject:self.viewToMove];
-                [self.viewToMove setNeedsDisplay];
+                //[self.viewToMove setNeedsDisplay];
             }
             
             break;

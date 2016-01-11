@@ -8,6 +8,22 @@
 
 #import "PanelFiguresViewController.h"
 
+@interface NonRotatingUIImagePickerController : UIImagePickerController
+
+@end
+
+@implementation NonRotatingUIImagePickerController
+// Disable Landscape mode.
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
+- (NSUInteger)supportedInterfaceOrientations
+#else
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+#endif
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
+@end
+
 @interface PanelFiguresViewController ()
 
 @property (strong, nonatomic) IBOutlet UIView *figurePanelOutlet;
@@ -57,7 +73,7 @@
     }
     else if (sender.tag == 3)
     {
-        self.imagePickerController = [[UIImagePickerController alloc]init];
+        self.imagePickerController = [[NonRotatingUIImagePickerController alloc]init];
         self.imagePickerController.delegate  = self;
         self.imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:self.imagePickerController animated:YES completion:^{
