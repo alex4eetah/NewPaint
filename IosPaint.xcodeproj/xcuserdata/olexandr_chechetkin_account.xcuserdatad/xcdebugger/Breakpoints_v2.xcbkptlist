@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IosPaint/CanvasViewController.m"
-            timestampString = "474212200.9386"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
-            landmarkName = "-touchesMoved:withEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "IosPaint/FigureDrawer.m"
             timestampString = "474212708.408869"
             startingColumnNumber = "9223372036854775807"
@@ -42,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IosPaint/CanvasViewController.m"
-            timestampString = "474214107.493434"
+            timestampString = "474379190.83262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "-LongPressDetected:"
+            startingLineNumber = "489"
+            endingLineNumber = "489"
+            landmarkName = "-touchesMoved:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

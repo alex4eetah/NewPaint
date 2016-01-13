@@ -14,14 +14,14 @@
 
 @implementation NonRotatingUIImagePickerController
 // Disable Landscape mode.
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
+/*#if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
 - (NSUInteger)supportedInterfaceOrientations
 #else
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 #endif
 {
     return UIInterfaceOrientationMaskLandscape;
-}
+}*/
 @end
 
 @interface PanelFiguresViewController ()
@@ -34,6 +34,7 @@
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (weak, nonatomic) IBOutlet UITextField *NangularNumOfSidesTextField;
 @property (weak, nonatomic) IBOutlet UIView *NangularNumOfSidesPanelOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *sourceViewButtonForImagePicker;
 
 @end
 
@@ -73,12 +74,13 @@
     }
     else if (sender.tag == 3)
     {
-        self.imagePickerController = [[NonRotatingUIImagePickerController alloc]init];
+        self.imagePickerController = [[UIImagePickerController alloc]init];
         self.imagePickerController.delegate  = self;
         self.imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:self.imagePickerController animated:YES completion:^{
-            
-        }];
+        self.imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
+        self.imagePickerController.popoverPresentationController.sourceView = self.sourceViewButtonForImagePicker;
+        self.imagePickerController.popoverPresentationController.sourceRect = self.sourceViewButtonForImagePicker.bounds;
+        [self presentViewController:self.imagePickerController animated:YES completion:nil];
     }
 }
 

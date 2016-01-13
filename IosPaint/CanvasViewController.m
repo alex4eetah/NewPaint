@@ -151,13 +151,13 @@
             NSLog(@"viewtomove %@",self.viewToMove);
             [self.viewToMove removeFromSuperview];
             [self.view addSubview:self.viewToMove];
-            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90 && !self.viewToMove.WasRorated)
+            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90 /*&& !self.viewToMove.WasRorated*/)
             {
                 self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
-                                                                                  self.viewToMove.frame.size.width/2-45/2,
-                                                                                  self.viewToMove.frame.size.height/2-45/2, 45, 45)];
+                                                                                  self.viewToMove.bounds.size.width/2-45/2,
+                                                                                  self.viewToMove.bounds.size.height/2-45/2, 45, 45)];
                 self.handleToDelete = [[UIImageView alloc] initWithFrame:CGRectMake(
-                                                                                    self.viewToMove.frame.size.width-45,
+                                                                                    self.viewToMove.bounds.size.width-45,
                                                                                     0, 45, 45)];
             }
             else
@@ -181,8 +181,8 @@
             [self.viewToMove addSubview:self.handleToDelete];
             self.isInProgress =YES;
             CGRect frame = CGRectMake(0, 0,
-                                      self.viewToMove.frame.size.width,
-                                      self.viewToMove.frame.size.height);
+                                      self.viewToMove.bounds.size.width,
+                                      self.viewToMove.bounds.size.height);
             
             UIView *background = [[UIView alloc] initWithFrame:frame];
             background.backgroundColor = [UIColor colorWithRed:0.23 green:0.67 blue:0.94 alpha:0.2];
@@ -476,14 +476,17 @@
             
             if (self.hitTheMoovingHandle)
             {
+                ////
                 self.stopOfMove = [touch locationInView:self.view];
-                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.bounds.size.width/2,
-                                          self.stopOfMove.y - self.viewToMove.bounds.size.height/2,
-                                          self.viewToMove.bounds.size.width, self.
-                                          viewToMove.bounds.size.height);
+                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.frame.size.width/2,
+                                          self.stopOfMove.y - self.viewToMove.frame.size.height/2,
+                                          self.viewToMove.frame.size.width, self.// Это меняется КАК????
+                                          viewToMove.frame.size.height);
+                /////
+                self.stopOfMove = [touch locationInView:self.view];
                 
                 [self.myViews removeObject:self.viewToMove];
-                self.viewToMove.frame = frame;
+                self.viewToMove.center = self.stopOfMove;
                 [self.myViews addObject:self.viewToMove];
                 //[self.viewToMove setNeedsDisplay];
             }
