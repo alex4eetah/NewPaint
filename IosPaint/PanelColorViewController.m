@@ -134,11 +134,11 @@
     if (indicator == self.widthAndOpacityViewIndicator)
         CGContextSetLineWidth(UIGraphicsGetCurrentContext(),self.currentWidth);
     else if (indicator == self.colorViewIndicator)
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(),40);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(),50);
     
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), self.currentRed, self.currentGreen, self.currentBlue, self.currentOpacity);
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 20, 20);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 20, 20);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 25, 25);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 25, 25);
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     if (indicator == self.widthAndOpacityViewIndicator)
         self.widthAndOpacityViewIndicator.image = UIGraphicsGetImageFromCurrentImageContext();
@@ -181,7 +181,7 @@
             [self.delegate didSelectColor:self.thisColor];
         else
             [self.delegate didSelectColor:[UIColor blackColor]];
-        [self.resizerDelegate resizeColorContainerHeightTo:40];
+        [self.resizerDelegate resizeColorContainerHeightTo:50];
         
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
@@ -197,7 +197,7 @@
         {
             self.recentColors = [[NSMutableArray alloc] init];
         }
-        else if (![self.recentColors containsObject:[UIColor colorWithRed:self.currentRed
+        if (![self.recentColors containsObject:[UIColor colorWithRed:self.currentRed
                                                                   green:self.currentGreen
                                                                    blue:self.currentBlue
                                                                   alpha:self.currentOpacity]])
@@ -269,38 +269,25 @@
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *title = @"To apply push this ->";
     NSAttributedString *attString;
     if (self.recentColors.count)
     {
-        attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:self.recentColors[row]}];
+        self.thisColor = self.recentColors[row];
+        const CGFloat* components = CGColorGetComponents(self.thisColor.CGColor);
+        CGFloat thisRed = components[0];
+        CGFloat thisGreen = components[1];
+        CGFloat thisBlue = components[2];
+        CGFloat thisOpacity = CGColorGetAlpha(self.thisColor.CGColor);
+
+        attString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Red:%f Green:%f Blue:%f Alpha:%f",thisRed,thisGreen,thisBlue,thisOpacity] attributes:@{NSForegroundColorAttributeName:self.recentColors[row]}];
     }
     else
     {
-        attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+        attString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Red:%d Green:%d Blue:%d Alpha:%d",0,0,0,0] attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     }
-    [self pickerView:self.colorPicker didSelectRow:1 inComponent:1];
+    [self pickerView:self.colorPicker didSelectRow:0 inComponent:0];
     
     return attString;
     
 }
-
-
-
-/*
-- (void)setCurrentColor:(UIColor *)currentColor
-{
-    [self.delegate didSelectColor:currentColor];
-}*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

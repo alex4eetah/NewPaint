@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.currentShapeLabel.text = @"Circle";
     
 }
 
@@ -71,9 +72,6 @@
 {
     if (sender.tag == 1)
     {
-        /*self.managingViewOutlet.hidden = NO;
-        self.savingOptionsViewOutlet.hidden = NO;
-        self.savingOptionsViewOutlet.alpha = 0.0;*/
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
             

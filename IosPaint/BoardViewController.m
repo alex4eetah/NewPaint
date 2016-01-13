@@ -111,14 +111,6 @@
 
 - (NSArray *)takeArrayOfSubviews
 {
-   /* NSMutableArray * subviews = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < self.canvasVC.view.subviews.count; i++)
-    {
-        FigureDrawer* f = [self.canvasVC.view.subviews objectAtIndex:i];
-        if ([f isKindOfClass:[FigureDrawer class]])
-            [subviews addObject:f];
-    }*/
-    
     return self.canvasVC.myViews;
 }
 
@@ -151,45 +143,5 @@
 {
     [self.canvasVC deleteLayerAtIndex:index];
 }
-/*
-- (IBAction)ManagingOperationDidChanged:(UIButton *)sender
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths firstObject];
-    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:@"wtf.txt"];
-   
-    
-    
-    
-    
-    if (sender.tag == 0)
-    {
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-        
-        [archiver encodeObject:self.canvasVC forKey:@"myCanvas"];
-        [archiver finishEncoding];
-        [data writeToFile:documentFile atomically:YES];
-    }
-    else if (sender.tag == 1)
-    {
-        NSData *loadedData = [[NSData alloc] initWithContentsOfFile:documentFile];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
-        self.canvasVC = [unarchiver decodeObjectForKey:@"myCanvas"];
-        
-    }
-}
-*/
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -439,8 +439,6 @@
                 currentView = self.myViews.lastObject;
                 currentView.frame = frame;
                 currentView.dekNum = dekNum;
-                /*NSString *s = @"4";
-                NSInteger num = [s integerValue];*/
                 currentView.numOfSides = self.numOfSides;
                 [self.myViews removeLastObject];
                 [self.myViews addObject:currentView];
@@ -476,13 +474,13 @@
             
             if (self.hitTheMoovingHandle)
             {
-                ////
-                self.stopOfMove = [touch locationInView:self.view];
-                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.frame.size.width/2,
-                                          self.stopOfMove.y - self.viewToMove.frame.size.height/2,
-                                          self.viewToMove.frame.size.width, self.// Это меняется КАК????
-                                          viewToMove.frame.size.height);
-                /////
+//                ////
+//                self.stopOfMove = [touch locationInView:self.view];
+//                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.frame.size.width/2,
+//                                          self.stopOfMove.y - self.viewToMove.frame.size.height/2,
+//                                          self.viewToMove.frame.size.width, self.// Это меняется КАК????
+//                                          viewToMove.frame.size.height);
+//                /////
                 self.stopOfMove = [touch locationInView:self.view];
                 
                 [self.myViews removeObject:self.viewToMove];

@@ -118,7 +118,7 @@
 }
 
 
-- (IBAction)DrawModeDidSelected:(UIButton *)sender ///////// more than needed
+- (IBAction)DrawModeDidSelected:(UIButton *)sender 
 {
     if (sender.tag == 1)
     {

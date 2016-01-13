@@ -202,39 +202,70 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQF-vx-RRA">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WcT-XV-ntp">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WcT-XV-ntp">
+                                        <rect key="frame" x="0.0" y="0.0" width="154" height="50"/>
                                         <animations/>
-                                        <state key="normal" image="rainbowbow.png"/>
+                                        <state key="normal" image="color.png">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Color">
+                                                    <attributes>
+                                                        <font key="NSFont" size="30" name="IowanOldStyle-BoldItalic"/>
+                                                        <font key="NSOriginalFont" size="38" name="IowanOldStyle-BoldItalic"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
                                         <connections>
                                             <action selector="ColorMenuItemDidChanged:" destination="v79-HU-1CI" eventType="touchUpInside" id="FeU-Pt-dzo"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pph-rg-P8x">
-                                        <rect key="frame" x="200" y="0.0" width="200" height="50"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pph-rg-P8x">
+                                        <rect key="frame" x="154" y="0.0" width="293" height="50"/>
                                         <animations/>
-                                        <state key="normal" title="Opacity/Width"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="293" id="Apz-AV-yi5"/>
+                                        </constraints>
+                                        <state key="normal" image="width:alpha.png">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="width/alpha">
+                                                    <attributes>
+                                                        <font key="NSFont" size="30" name="IowanOldStyle-BoldItalic"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
                                         <connections>
                                             <action selector="ColorMenuItemDidChanged:" destination="v79-HU-1CI" eventType="touchUpInside" id="yE0-hT-qcK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZX-zE-clb">
-                                        <rect key="frame" x="400" y="0.0" width="200" height="50"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZX-zE-clb">
+                                        <rect key="frame" x="447" y="0.0" width="153" height="50"/>
                                         <animations/>
-                                        <state key="normal" title="RecentSettings"/>
+                                        <state key="normal" image="recent.png">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Recent">
+                                                    <attributes>
+                                                        <font key="NSFont" size="30" name="IowanOldStyle-BoldItalic"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
                                         <connections>
                                             <action selector="ColorMenuItemDidChanged:" destination="v79-HU-1CI" eventType="touchUpInside" id="Vd6-uE-npA"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="0.81631360555949972" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Pph-rg-P8x" secondAttribute="bottom" id="4bi-Hd-aRO"/>
                                     <constraint firstAttribute="trailing" secondItem="CZX-zE-clb" secondAttribute="trailing" id="6hW-qt-02J"/>
                                     <constraint firstItem="CZX-zE-clb" firstAttribute="top" secondItem="KQF-vx-RRA" secondAttribute="top" id="ERT-ka-57V"/>
                                     <constraint firstItem="Pph-rg-P8x" firstAttribute="top" secondItem="KQF-vx-RRA" secondAttribute="top" id="Ee3-5R-G72"/>
                                     <constraint firstItem="CZX-zE-clb" firstAttribute="width" secondItem="WcT-XV-ntp" secondAttribute="width" id="KEp-lm-Vat"/>
+                                    <constraint firstItem="WcT-XV-ntp" firstAttribute="width" secondItem="CZX-zE-clb" secondAttribute="width" id="M9N-hZ-rMd"/>
                                     <constraint firstItem="CZX-zE-clb" firstAttribute="leading" secondItem="Pph-rg-P8x" secondAttribute="trailing" id="MdN-Gw-PvB"/>
                                     <constraint firstItem="WcT-XV-ntp" firstAttribute="top" secondItem="KQF-vx-RRA" secondAttribute="top" id="OXk-HI-RiS"/>
                                     <constraint firstAttribute="bottom" secondItem="WcT-XV-ntp" secondAttribute="bottom" id="QdI-na-UhV"/>
@@ -243,19 +274,25 @@
                                     <constraint firstItem="Pph-rg-P8x" firstAttribute="width" secondItem="WcT-XV-ntp" secondAttribute="width" id="rlh-NM-n7U"/>
                                     <constraint firstAttribute="bottom" secondItem="CZX-zE-clb" secondAttribute="bottom" id="wig-rz-bxD"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="rlh-NM-n7U"/>
+                                        <exclude reference="KEp-lm-Vat"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMS-gN-a9P">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
                                     <slider opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Eg2-ue-uS3">
-                                        <rect key="frame" x="280" y="15" width="122" height="31"/>
+                                        <rect key="frame" x="273" y="15" width="119" height="31"/>
                                         <animations/>
                                         <connections>
                                             <action selector="colorDidChanged:" destination="v79-HU-1CI" eventType="valueChanged" id="Qvh-Zj-A99"/>
                                         </connections>
                                     </slider>
                                     <slider opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TEK-Ep-GxC">
-                                        <rect key="frame" x="146" y="15" width="123" height="31"/>
+                                        <rect key="frame" x="143" y="15" width="119" height="31"/>
                                         <animations/>
                                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
@@ -263,7 +300,7 @@
                                         </connections>
                                     </slider>
                                     <slider opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="4YN-b9-Qfl">
-                                        <rect key="frame" x="13" y="15" width="122" height="31"/>
+                                        <rect key="frame" x="13" y="15" width="119" height="31"/>
                                         <animations/>
                                         <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
@@ -280,14 +317,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView tag="-1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uxU-QJ-HaP">
-                                        <rect key="frame" x="415" y="0.0" width="40" height="50"/>
+                                        <rect key="frame" x="405" y="0.0" width="50" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="6lf-4A-Lqz"/>
+                                            <constraint firstAttribute="width" constant="50" id="6lf-4A-Lqz"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="0.81631360559999999" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="9uW-gE-nd6" firstAttribute="top" secondItem="qMS-gN-a9P" secondAttribute="top" constant="5" id="5XV-Ct-Pks"/>
                                     <constraint firstAttribute="trailing" secondItem="uxU-QJ-HaP" secondAttribute="trailing" constant="5" id="8Nl-Fj-s3h"/>
@@ -318,7 +355,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wg1-8G-M34">
-                                        <rect key="frame" x="212" y="5" width="46" height="40"/>
+                                        <rect key="frame" x="207" y="5" width="46" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="t35-sl-F3c"/>
                                         </constraints>
@@ -336,7 +373,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="x9W-Hf-hX8">
-                                        <rect key="frame" x="68" y="5" width="136" height="41"/>
+                                        <rect key="frame" x="68" y="5" width="131" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="163" id="OvS-Oa-vdM"/>
                                         </constraints>
@@ -349,8 +386,8 @@
                                             <action selector="didOpacityGetChanged:" destination="v79-HU-1CI" eventType="valueChanged" id="P2d-od-134"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="GcU-Hm-amM">
-                                        <rect key="frame" x="261" y="5" width="136" height="41"/>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="GcU-Hm-amM">
+                                        <rect key="frame" x="256" y="5" width="131" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="160" id="Z2R-nR-5H6"/>
                                         </constraints>
@@ -373,14 +410,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView tag="-2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sbV-Sf-tc5">
-                                        <rect key="frame" x="405" y="0.0" width="40" height="50"/>
+                                        <rect key="frame" x="395" y="0.0" width="50" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="I7G-dU-Dvw"/>
+                                            <constraint firstAttribute="width" constant="50" id="I7G-dU-Dvw"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="0.81631360559999999" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="x9W-Hf-hX8" firstAttribute="leading" secondItem="wkH-aF-IHE" secondAttribute="trailing" constant="15" id="1yr-Df-hYV"/>
                                     <constraint firstItem="GcU-Hm-amM" firstAttribute="leading" secondItem="Wg1-8G-M34" secondAttribute="trailing" constant="5" id="3Tr-Kg-sue"/>
@@ -432,12 +469,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ibl-co-qbA">
-                                        <rect key="frame" x="20" y="0.0" width="392" height="50"/>
+                                        <rect key="frame" x="20" y="0.0" width="342" height="50"/>
                                     </pickerView>
                                     <imageView tag="-3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rpV-yU-U6c">
-                                        <rect key="frame" x="420" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="370" y="0.0" width="100" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="jEP-TZ-u1w"/>
+                                            <constraint firstAttribute="width" constant="100" id="jEP-TZ-u1w"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="◁ Tap to apply" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACp-l2-fqy">
@@ -450,7 +487,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="0.81631360559999999" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="rpV-yU-U6c" secondAttribute="bottom" id="7Iy-fN-Fy5"/>
                                     <constraint firstAttribute="bottom" secondItem="ACp-l2-fqy" secondAttribute="bottom" id="Ba3-YF-NtF"/>
@@ -536,7 +573,7 @@
                                                 <fragment content="Modify">
                                                     <attributes>
                                                         <font key="NSFont" size="38" name="IowanOldStyle-BoldItalic"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="38"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -553,7 +590,7 @@
                                                 <fragment content="Image">
                                                     <attributes>
                                                         <font key="NSFont" size="38" name="IowanOldStyle-BoldItalic"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="38"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -570,7 +607,7 @@
                                                 <fragment content="Draw">
                                                     <attributes>
                                                         <font key="NSFont" size="53" name="IowanOldStyle-BoldItalic"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="53"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -731,36 +768,36 @@
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-8D-RY1">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pk-jO-UgA">
-                                        <rect key="frame" x="9" y="0.0" width="97" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pk-jO-UgA">
+                                        <rect key="frame" x="8" y="0.0" width="99" height="50"/>
                                         <state key="normal" image="circle.png"/>
                                         <connections>
                                             <action selector="didChangeFigure:" destination="aJl-4N-bi7" eventType="touchUpInside" id="WO4-eL-7h5"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgE-Zq-3L8">
-                                        <rect key="frame" x="140" y="0.0" width="50" height="50"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgE-Zq-3L8">
+                                        <rect key="frame" x="115" y="0.0" width="99" height="50"/>
                                         <state key="normal" image="rect.png"/>
                                         <connections>
                                             <action selector="didChangeFigure:" destination="aJl-4N-bi7" eventType="touchUpInside" id="u1c-LK-2Za"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCj-by-XRc">
-                                        <rect key="frame" x="246" y="0.0" width="50" height="50"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCj-by-XRc">
+                                        <rect key="frame" x="222" y="0.0" width="98" height="50"/>
                                         <state key="normal" image="line.png"/>
                                         <connections>
                                             <action selector="didChangeFigure:" destination="aJl-4N-bi7" eventType="touchUpInside" id="hNi-FS-94e"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSF-tc-l4t">
-                                        <rect key="frame" x="460" y="0.0" width="50" height="50"/>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSF-tc-l4t">
+                                        <rect key="frame" x="435" y="0.0" width="99" height="50"/>
                                         <state key="normal" image="poligon.png"/>
                                         <connections>
                                             <action selector="didChangeFigure:" destination="aJl-4N-bi7" eventType="touchUpInside" id="caJ-fU-3jI"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKo-GM-a4q">
-                                        <rect key="frame" x="353" y="0.0" width="50" height="50"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKo-GM-a4q">
+                                        <rect key="frame" x="328" y="0.0" width="99" height="50"/>
                                         <state key="normal" image="triangle.png"/>
                                         <connections>
                                             <action selector="didChangeFigure:" destination="aJl-4N-bi7" eventType="touchUpInside" id="gVc-kN-68V"/>
@@ -801,13 +838,13 @@
                                     <constraint firstItem="dKo-GM-a4q" firstAttribute="top" secondItem="bhh-8D-RY1" secondAttribute="top" id="uzm-QD-vxg"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BlA-Lq-eHP">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="45"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BlA-Lq-eHP">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCP-KV-7Hh">
-                                        <rect key="frame" x="270" y="0.0" width="99" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCP-KV-7Hh">
+                                        <rect key="frame" x="270" y="0.0" width="108" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="Wl2-Vl-Cl6"/>
+                                            <constraint firstAttribute="width" constant="108" id="Wl2-Vl-Cl6"/>
                                         </constraints>
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <state key="normal">
@@ -823,16 +860,16 @@
                                             <action selector="nangularDidChoseNumOfsides:" destination="aJl-4N-bi7" eventType="touchUpInside" id="kMS-hI-60v"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nxn-w2-1dU">
-                                        <rect key="frame" x="204" y="0.0" width="58" height="45"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nxn-w2-1dU">
+                                        <rect key="frame" x="204" y="0.0" width="58" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="58" id="TlY-d7-tsE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Enter number of sides:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmy-ES-c5P">
-                                        <rect key="frame" x="20" y="0.0" width="176" height="45"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter number of sides:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmy-ES-c5P">
+                                        <rect key="frame" x="20" y="0.0" width="176" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="176" id="aiR-lt-TRI"/>
                                         </constraints>
@@ -1635,6 +1672,7 @@
         <image name="Save.png" width="50" height="50"/>
         <image name="Settings-icon.png" width="50" height="50"/>
         <image name="circle.png" width="50" height="50"/>
+        <image name="color.png" width="50" height="53"/>
         <image name="draw.png" width="50" height="50"/>
         <image name="image.png" width="50" height="50"/>
         <image name="layers.png" width="50" height="50"/>
@@ -1642,12 +1680,13 @@
         <image name="load.png" width="50" height="50"/>
         <image name="pen.png" width="50" height="50"/>
         <image name="poligon.png" width="50" height="50"/>
-        <image name="rainbowbow.png" width="200" height="50"/>
+        <image name="recent.png" width="50" height="50"/>
         <image name="rect.png" width="50" height="50"/>
         <image name="rotate.png" width="50" height="50"/>
         <image name="scale.png" width="50" height="50"/>
         <image name="shapes.png" width="50" height="50"/>
         <image name="triangle.png" width="50" height="50"/>
         <image name="undo.png" width="50" height="50"/>
+        <image name="width:alpha.png" width="100" height="50"/>
     </resources>
 </document>

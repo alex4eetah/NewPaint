@@ -88,6 +88,7 @@
     else
         [self.layerDelegate changeLayerName:self.currentLayer toName:self.nameTextField.text];
     
+    self.nameTextField.text = @"";
     [self getArrayOfSubviews];
     [self.subviewPicker reloadAllComponents];
 }
