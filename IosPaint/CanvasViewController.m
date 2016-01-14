@@ -144,7 +144,11 @@
         CGPoint location = [sender locationInView:sender.view];
         if ([[sender.view hitTest:location withEvent:nil] isKindOfClass:[FigureDrawer class]])
         {
-            self.viewToScale = [sender.view hitTest:location withEvent:nil];
+            FigureDrawer *f = (FigureDrawer *)[sender.view hitTest:location withEvent:nil];
+            if (f.shape != 6)//pan line
+                self.viewToScale = [sender.view hitTest:location withEvent:nil];
+            else
+                return;
         }
         else
         {
