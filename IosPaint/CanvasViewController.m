@@ -98,7 +98,7 @@
                 return;
             [self.viewToMove removeFromSuperview];
             [self.view addSubview:self.viewToMove];
-            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90 /*&& !self.viewToMove.WasRorated*/)
+            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90)
             {
                 self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
                                                                                   self.viewToMove.bounds.size.width/2-45/2,
@@ -112,13 +112,8 @@
                 self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
                                                                                   self.viewToMove.frame.size.width-self.viewToMove.bounds.size.width,
                                                                                   self.viewToMove.frame.size.height-self.viewToMove.bounds.size.height,
-                                                                                  self.viewToMove.frame.size.width/2-1,
+                                                                                  self.viewToMove.frame.size.width,
                                                                                   self.viewToMove.frame.size.height)];
-                self.handleToDelete = [[UIImageView alloc] initWithFrame:CGRectMake(
-                                                                                    self.viewToMove.frame.size.width-self.viewToMove.bounds.size.width/2,
-                                                                                    self.viewToMove.frame.size.height-self.viewToMove.bounds.size.height,
-                                                                                    self.viewToMove.frame.size.width/2,
-                                                                                    self.viewToMove.frame.size.height)];
             }
             self.handleToMove.image = [UIImage imageNamed:@"move4545.png"];
             self.handleToMove.tag = 101;
