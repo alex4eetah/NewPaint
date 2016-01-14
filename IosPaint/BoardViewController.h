@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-//
-
 #import "headerWithProtocols.h"
 
 
 @interface BoardViewController : UIViewController  <ResizerProtocol, LayerManagerGelegate>
-
-
-
-
 
 @end

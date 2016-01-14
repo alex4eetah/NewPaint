@@ -8,25 +8,47 @@
 
 #import "FigureDrawer.h"
 
-typedef enum shapeTypes
+@interface UIColor (randomizator)
+
++ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color;
+
+@end
+
+@implementation UIColor (randomizator)
+
++ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color
 {
-    circleShape,
-    rectangleShape,
-    linesShape,
-    triangleShape,
-    rightShape,
-    imageShape,
-    panLine
-} ShapeType;
+    UIColor *thisColor = [self generateRandome];
+    
+    if (![thisColor isEqual:color])
+        return thisColor;
+    else
+        return [self generateRandomColorWithoutColor:color];
+}
+
++ (UIColor *)generateRandome
+{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+@end
+
+
+
+
+
+
+
+
 
 @interface FigureDrawer()
 
-@property (nonatomic) ShapeType shape;
 @property (nonatomic, strong) UIColor* collor;
 @property (nonatomic, strong) NSNumber* inset;
 @property (nonatomic, assign) NSInteger lineWidth;
-//@property (nonatomic, assign) BOOL fillThePath;
-
+@property (nonatomic, strong) UIColor *highlitedColor;
 
 @end
 
@@ -78,7 +100,10 @@ typedef enum shapeTypes
             [self addImage:rect];
             break;
         case panLine:
-            [self drawPanLine:self.pointsOfLine];
+            if (self.highlitedColor)
+                [self drawPanLine:self.pointsOfLine andColor:self.highlitedColor];
+            else
+                [self drawPanLine:self.pointsOfLine andColor:nil];
             break;
         default:
             break;
@@ -159,10 +184,13 @@ typedef enum shapeTypes
     
 }
 
-- (void) drawPanLine:(NSArray *)points
+- (void) drawPanLine:(NSArray *)points andColor:(UIColor *)color
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
-    [self.collor setStroke];
+    if (color)
+        [color setStroke];
+    else
+        [self.collor setStroke];
     path.lineWidth = self.lineWidth;
     path.lineCapStyle = kCGLineCapRound;
     path.lineJoinStyle = kCGLineJoinRound;
@@ -225,14 +253,8 @@ typedef enum shapeTypes
     
     CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
     CGContextSetLineWidth(ctx, self.lineWidth);
-    /*if (self.fillThePath)
-        CGContextSetFillColorWithColor(ctx, [self.collor CGColor]);*/
-    
     CGContextAddEllipseInRect(ctx, CGRectInset(rect, self.inset.doubleValue, self.inset.doubleValue));
-    
-    
     CGContextStrokePath(ctx);
-    //CGContextFillPath(ctx);
 }
 
 - (void)drawTriangle:(CGRect)rect
@@ -320,10 +342,17 @@ typedef enum shapeTypes
     [self.image drawInRect:CGRectMake(0.0, 0.0, rect.size.width, rect.size.height)];
 }
 
-/*- (void)fillFigureWithColor
+- (void)highLightPenLine
 {
-    self.fillThePath = YES;
+    self.highlitedColor = [[UIColor alloc] init];
+    self.highlitedColor = [UIColor generateRandomColorWithoutColor:self.collor];
     [self setNeedsDisplay];
-}*/
+}
+
+- (void)unHighLightPenLine
+{
+    self.highlitedColor = nil;
+    [self setNeedsDisplay];
+}
 
 @end

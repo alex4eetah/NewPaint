@@ -28,14 +28,14 @@
 
 @implementation BoardViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -73,18 +73,13 @@
     self.layerViewController.layerDelegate = self;
 }
 
-#pragma mark - delegate methods
+#pragma mark - ResizerProtocol methods
 
 - (void)resizeFileManagingContainerHeightTo:(CGFloat)height
 {
 
     [self animateChangingOfConstraint:self.fileManagerPanelHeightConstraint
                               ToValue:height];
-}
-
-- (void)prepareLayerPanel
-{
-    [self.layerViewController getPreparedForShowing];
 }
 
 - (void)resizeColorContainerHeightTo:(CGFloat)height
@@ -98,6 +93,15 @@
     [self animateChangingOfConstraint:self.layerManagingContainerLeadingConstraint
                               ToValue:width];
 }
+
+#pragma mark - LayerManagerGelegate methods
+
+- (void)prepareLayerPanel
+{
+    [self.layerViewController getPreparedForShowing];
+}
+
+
 
 - (void)animateChangingOfConstraint:(NSLayoutConstraint *)constraint ToValue:(CGFloat)value
 {

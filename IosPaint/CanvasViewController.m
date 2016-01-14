@@ -10,14 +10,7 @@
 #import "FigureDrawer.h"
 #import "LineDrawer.h"
 
-
-
-
-
-
 @interface CanvasViewController ()
-
-
 
 @property (nonatomic, assign) NSInteger lineWidth;
 @property (nonatomic, strong) UIColor* currentColor;
@@ -66,9 +59,8 @@
 
 @property (nonatomic, strong) UIView *chosenArea;
 
-
-
 @end
+
 
 @implementation CanvasViewController
 
@@ -76,63 +68,19 @@
 {
     _numOfSides = numOfSides;
 }
-
-/*-(void)setCurrentOperationWithNSNumber:(NSNumber*)number
-{
-    [self setCurrentOperation:[number intValue]];
-}*/
-
-/*
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-    
-    [aCoder encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self)
-    {
-        self.myViews = [aDecoder decodeObjectForKey:@"arrayOfFigureDrawers"];
-        [self viewDidLoad];
-    }
-    return self;
-}*/
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.numOfSides = 0;
     self.currentShape = 0;
-  //  self.isMoveStarted = NO;
-   /* self.lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGestures:)];
-    self.lpgr.minimumPressDuration = 1.0f;
-    self.lpgr.allowableMovement = 100.0f;
-    self.isSkaleStarted = NO;
-    self.isMoveFinished = NO;
-    
-    [self.view addGestureRecognizer:self.lpgr];*/
-    
     self.lineWidth = 5;
     self.inset = [[NSNumber alloc] initWithDouble:self.lineWidth/2];
-
-    
     self.isInProgress = NO;
-    
 }
-
-
-
-
-
-
-
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)LongPressDetected:(UILongPressGestureRecognizer *)sender
@@ -197,10 +145,7 @@
         CGPoint location = [sender locationInView:sender.view];
         if ([[sender.view hitTest:location withEvent:nil] isKindOfClass:[FigureDrawer class]])
         {
-            //static BOOL isViewGoodToMove = NO;
             self.viewToScale = [sender.view hitTest:location withEvent:nil];
-           /* if ([self.viewToScale isKindOfClass:[FigureDrawer class]])
-                isViewGoodToMove = YES;*/
         }
         else
         {
@@ -223,7 +168,6 @@
     {
         [self.myViews removeObject:self.viewToScale];
         CGFloat scale = sender.scale;
-        //self.viewToScale.transform = CGAffineTransformScale(self.viewToScale.transform, scale, scale);
         CGFloat xDiferance = self.viewToScale.frame.size.width - self.viewToScale.frame.size.width*scale;
         CGFloat yDiferance = self.viewToScale.frame.size.height - self.viewToScale.frame.size.height*scale;
         
@@ -233,12 +177,8 @@
                                   self.viewToScale.frame.size.height*scale);
         
         self.viewToScale.frame = frame;
-        
-        
         [self.myViews addObject:self.viewToScale];
         [self.viewToScale setNeedsDisplay];
-        
-        
         sender.scale = 1.0;
     }
 }
@@ -475,19 +415,11 @@
             
             if (self.hitTheMoovingHandle)
             {
-//                ////
-//                self.stopOfMove = [touch locationInView:self.view];
-//                CGRect frame = CGRectMake(self.stopOfMove.x - self.viewToMove.frame.size.width/2,
-//                                          self.stopOfMove.y - self.viewToMove.frame.size.height/2,
-//                                          self.viewToMove.frame.size.width, self.// Это меняется КАК????
-//                                          viewToMove.frame.size.height);
-//                /////
                 self.stopOfMove = [touch locationInView:self.view];
                 
                 [self.myViews removeObject:self.viewToMove];
                 self.viewToMove.center = self.stopOfMove;
                 [self.myViews addObject:self.viewToMove];
-                //[self.viewToMove setNeedsDisplay];
             }
             
             break;
@@ -513,11 +445,6 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    if (self.currentShape == 6)
-    {
-        
-    }
-    
     if (self.currentOperation == chosingArea)
     {
         self.currentOperation = drawing;
@@ -568,22 +495,34 @@
 - (void)highLightGivenLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
-    UIView *light = [[UIView alloc] initWithFrame:currentFigure.bounds];
-    light.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];
-    if (currentFigure.subviews.count == 0)
-        [currentFigure addSubview:light];
-    /*currentFigure.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];*/
-    self.myViews[index] = currentFigure;
-    [currentFigure setNeedsDisplay];
+    if (currentFigure.shape == 6)
+    {
+        [currentFigure highLightPenLine];
+    }
+    else
+    {
+        UIView *light = [[UIView alloc] initWithFrame:currentFigure.bounds];
+        light.backgroundColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.44];
+        if (currentFigure.subviews.count == 0)
+            [currentFigure addSubview:light];
+        self.myViews[index] = currentFigure;
+        [currentFigure setNeedsDisplay];
+    }
 }
 
 - (void)unHighlighGiventLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
-    [[currentFigure subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    //currentFigure.backgroundColor = [UIColor clearColor];
-    self.myViews[index] = currentFigure;
-    [currentFigure setNeedsDisplay];
+    if (currentFigure.shape == 6)
+    {
+        [currentFigure unHighLightPenLine];
+    }
+    else
+    {
+        [[currentFigure subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        self.myViews[index] = currentFigure;
+        [currentFigure setNeedsDisplay];
+    }
 }
 
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index
@@ -636,7 +575,7 @@
     
 }
 
-#pragma mark - delegate Methods
+#pragma mark - PanelsDelegate Methods
 
 - (void)Undo
 {
@@ -822,21 +761,6 @@
 {
     [[self.myViews objectAtIndex:layer] setFigureName:name];
 }
-
-#pragma mark - Navigation
-
-
-/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSString * segueName = segue.identifier;
-    
-    if ([segueName isEqualToString: @"fileManagment"])
-    {
-        self.fileViewController = (FileManagingVC *) [segue destinationViewController];
-    }
-    self.fileViewController.delegate = self;
-
-}*/
 
 
 @end

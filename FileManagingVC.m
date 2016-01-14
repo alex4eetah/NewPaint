@@ -7,11 +7,6 @@
 //
 
 #import "FileManagingVC.h"
-
-
-
-
-
 @interface FileManagingVC ()
 
 @property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
@@ -83,10 +78,6 @@
     else if (sender.tag == 2)
     {
         [self.resizerDelegate resizeFileManagingContainerHeightTo:100];
-        
-        /*self.managingViewOutlet.hidden = YES;
-        self.loadingViewOutlet.hidden = NO;*/
-        
         __typeof(self) __weak weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^() {
             
@@ -112,9 +103,6 @@
     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:self.CurrentFileToLoad];
     [self.delegate loadDataFromFile:documentFile];
     [self.resizerDelegate resizeFileManagingContainerHeightTo:50];
-    
-//    self.loadingViewOutlet.hidden = YES;
-//    self.managingViewOutlet.hidden = NO;
     
     __typeof(self) __weak weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^() {
@@ -203,8 +191,6 @@
 - (IBAction)saveToGallery:(UIButton *)sender
 {
     [self.delegate saveFigureToGallery];
-    /*self.savingToGalleryViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;*/
     
     __typeof(self) __weak weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^() {
@@ -236,7 +222,7 @@
     return [self.fileList objectAtIndex:row];
 }
 
-#pragma mark - delegate methods
+#pragma mark - FileManagerGelegate methods
 
 - (void)showCurrentOperation:(NSString *)operation
 {
@@ -255,10 +241,10 @@
     
     double delayInSeconds = 1.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    __typeof(self) __weak weakSelf = self;
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
                    {
-                       //code to be executed on the main queue after delay
-                       [self.currentOperationLabel setBackgroundColor:[UIColor clearColor]];
+                       [weakSelf.currentOperationLabel setBackgroundColor:[UIColor clearColor]];
                    });
 }
 
@@ -272,15 +258,5 @@
                                             forKey:@"changeTextTransition"];
     self.currentShapeLabel.text = shape;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

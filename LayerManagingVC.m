@@ -38,6 +38,7 @@
     {
         [self.layerDelegate unHighlightLayerAtIndex:i];
     }
+    [self.subviewPicker reloadAllComponents];
 }
 
 - (void) getArrayOfSubviews
@@ -55,18 +56,10 @@
         case 1:
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
             [self.layerDelegate putUpCurrentLayerAtIndex:self.currentLayer];
-          /*  [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
-            
-            [self.subviewPicker selectRow:self.currentLayer+1 inComponent:0 animated:YES];
-            [self.layerDelegate highLightLayerAtIndex:self.currentLayer+1]; ///// WHY ??????*/
             break;
         case 2:
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
             [self.layerDelegate putDownCurrentLayerAtIndex:self.currentLayer];
-            /*[self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
-            
-            [self.subviewPicker selectRow:self.currentLayer-1 inComponent:0 animated:YES];
-            [self.layerDelegate highLightLayerAtIndex:self.currentLayer-1];*/
             break;
             
         default:
@@ -125,64 +118,6 @@
     }
     
     self.nameTextField.text = @"";
-    
-    
-    
-    
-    /*
-    row +=3;///HOWWW?????
-    
-    for (id key in self.subviewsAndIndexes)
-    {
-        if ([key integerValue] == row)
-        {
-            [self.layerDelegate highLightLayerAtIndex:row];
-            self.currentLayer = row;
-        }
-        else
-            [self.layerDelegate unHighlightLayerAtIndex:row];
-    }
-    
-    NSArray *keys;
-    keys = [self.subviewsAndIndexes allKeys];
-    NSNumber *key;
-    FigureDrawer *value;
-    
-    
-    
-    
-    for (int i = 0; i < keys.count; i++)
-    {
-        key = [keys objectAtIndex: i];
-        value = [self.subviewsAndIndexes objectForKey: key];
-        
-        if ([key integerValue] == row)
-        {
-            [self.layerDelegate highLightLayerAtIndex:row];
-            self.currentLayer = row;
-            return;
-        }
-        else
-            [self.layerDelegate unHighlightLayerAtIndex:row];
-    }*/
-    
-    
-    
-    
-    
-    /*
-    
-    for (int i = 0; i < self.subviewsAndIndexes.count; i++)
-    {
-        if (self.subviewsAndIndexes.keyEnumerator == row)
-        {
-            [self.layerDelegate highLightLayerAtIndex:row];
-            self.currentLayer = row;
-            return;
-        }
-        else
-            [self.layerDelegate unHighlightLayerAtIndex:row];
-    }*/
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component

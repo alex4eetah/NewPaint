@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-/*#import "PanelFiguresViewController.h"
-#import "PanelColorViewController.h"
-#import "LineDrawer.h"*/
 #import "headerWithProtocols.h"
+
 typedef enum operationsType
 {
     drawing,
@@ -23,6 +21,7 @@ typedef enum operationsType
 @interface CanvasViewController : UIViewController <PanelsDelegate>
 
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
+@property (nonatomic, strong) NSMutableArray *myViews;
 
 - (void)changeFigureName:(NSInteger)layer toName:(NSString *)name;
 - (void)highLightGivenLayerAtIndex:(NSInteger)index;
@@ -30,8 +29,6 @@ typedef enum operationsType
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index;
 - (void)putDownCurrentLayerAtIndex:(NSInteger)index;
 - (void)deleteLayerAtIndex:(NSInteger)index;
-@property (nonatomic, strong) NSMutableArray *myViews;
-
 
 @end
 

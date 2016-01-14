@@ -10,7 +10,7 @@
 #define headerWithProtocols_h
 
 
-#endif /* headerWithProtocols_h */
+#endif
 #import "FigureDrawer.h"
 
 @protocol ResizerProtocol <NSObject>

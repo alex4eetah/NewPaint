@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IosPaint/FigureDrawer.m"
-            timestampString = "474212708.408869"
+            timestampString = "474478498.262176"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
-            landmarkName = "-drawTriangle:"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "+generateRandomColorWithoutColor:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IosPaint/FigureDrawer.m"
+            timestampString = "474478499.054274"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "+generateRandome"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
