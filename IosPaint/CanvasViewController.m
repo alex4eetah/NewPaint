@@ -280,8 +280,6 @@
             
             BOOL isPointInsideMove = CGRectContainsPoint(self.handleToMove.frame, locationOfTouch);
             BOOL isPointInsideDelete = CGRectContainsPoint(self.handleToDelete.frame, locationOfTouch);
-            NSLog(@"move %@",self.handleToMove);
-            NSLog(@"touch x:%f y:%f",locationOfTouch.x, locationOfTouch.y);
             if (isPointInsideMove)
             {
                 self.hitTheMoovingHandle = YES;

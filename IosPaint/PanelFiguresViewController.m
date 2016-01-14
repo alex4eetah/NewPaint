@@ -90,17 +90,29 @@
 - (IBAction)OperationDidChanged:(UISegmentedControl *)sender
 {
     [self.delegate didSelectOperation:sender.selectedSegmentIndex];
-    __typeof(self) __weak weakSelf = self;
-    [UIView animateWithDuration:0.5 animations:^{
-        weakSelf.OperationPanelOutlet.alpha = 0.0;
-        weakSelf.massegePanelOutlet.alpha = 1.0;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:3.0 animations:^() {
-            
-            weakSelf.massegePanelOutlet.alpha = 0.0;
+    if (sender.selectedSegmentIndex == 1)
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.5 animations:^{
+            weakSelf.OperationPanelOutlet.alpha = 0.0;
+            weakSelf.massegePanelOutlet.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:3.0 animations:^() {
+                
+                weakSelf.massegePanelOutlet.alpha = 0.0;
+                weakSelf.mainPanelOutlet.alpha = 1.0;
+            }];
+        }];
+    }
+    else
+    {
+        __typeof(self) __weak weakSelf = self;
+        [UIView animateWithDuration:0.5 animations:^{
+            weakSelf.OperationPanelOutlet.alpha = 0.0;
             weakSelf.mainPanelOutlet.alpha = 1.0;
-        }];;
-    }];
+        }];
+    }
+    
     
     
 }
