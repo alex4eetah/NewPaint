@@ -59,7 +59,6 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-       // self.currentTransform =
         self.shape = (int)shape;
         self.collor = collor;
         self.inset = inset;
@@ -68,8 +67,6 @@
         self.image = image;
         self.figureName = [NSString stringWithFormat:@"Figure %p",self];
         self.WasRorated = NO;
-        //self.frameBeforeTransform = self.frame;
-       // self.fillThePath = YES;
     }
     return self;
 }
@@ -317,7 +314,7 @@
 
     CGFloat alpha;
     
-    CGContextRef ctx = UIGraphicsGetCurrentContext();///&&&&&&&&&&&&&&??????????????
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetLineCap(ctx, kCGLineCapRound);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
     CGContextSetLineWidth(ctx, self.lineWidth);
@@ -325,7 +322,7 @@
     
     for (int i = 0; i <= self.numOfSides; i++)
     {
-        alpha = 2*M_PI*i/self.numOfSides; /// about NULL here
+        alpha = 2*M_PI*i/self.numOfSides;
         CGPoint p = CGPointMake(side*cos(alpha)+newZeroCoordinate.x, side*sin(alpha)+newZeroCoordinate.y);
         if(i == 0)
             CGContextMoveToPoint(ctx, p.x, p.y);

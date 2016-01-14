@@ -96,7 +96,6 @@
             
             else
                 return;
-            NSLog(@"viewtomove %@",self.viewToMove);
             [self.viewToMove removeFromSuperview];
             [self.view addSubview:self.viewToMove];
             if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90 /*&& !self.viewToMove.WasRorated*/)
@@ -449,12 +448,12 @@
     {
         self.currentOperation = drawing;
     }
-    
-    if (self.hitTheMoovingHandle)
+    if (self.currentOperation == movement)
     {
         [[self.viewToMove subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [self.viewToMove setNeedsDisplay];
         self.viewToMove = nil;
+        self.isInProgress = NO;
         self.hitTheMoovingHandle = NO;
     }
     [self removeGarbage];
