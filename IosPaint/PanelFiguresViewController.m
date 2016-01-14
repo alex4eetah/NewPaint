@@ -29,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UIView *figurePanelOutlet;
 @property (strong, nonatomic) IBOutlet UIView *mainPanelOutlet;
 @property (strong, nonatomic) IBOutlet UIView *OperationPanelOutlet;
+@property (weak, nonatomic) IBOutlet UIView *massegePanelOutlet;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *operationSegmentControll;
 @property (strong, nonatomic) IBOutlet UIView *drawingPanelOutlet;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
@@ -90,11 +91,18 @@
 {
     [self.delegate didSelectOperation:sender.selectedSegmentIndex];
     __typeof(self) __weak weakSelf = self;
-    [UIView animateWithDuration:0.3 animations:^() {
-        
+    [UIView animateWithDuration:0.5 animations:^{
         weakSelf.OperationPanelOutlet.alpha = 0.0;
-        weakSelf.mainPanelOutlet.alpha = 1.0;
+        weakSelf.massegePanelOutlet.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:3.0 animations:^() {
+            
+            weakSelf.massegePanelOutlet.alpha = 0.0;
+            weakSelf.mainPanelOutlet.alpha = 1.0;
+        }];;
     }];
+    
+    
 }
 
 - (IBAction)backFromOperationPanel:(id)sender
@@ -194,6 +202,19 @@
            weakSelf.NangularNumOfSidesPanelOutlet.alpha = 0.0;
            weakSelf.mainPanelOutlet.alpha = 1.0;
        }];
+       self.NangularNumOfSidesTextField.text = @"";
+   }
+   else
+   {
+       [self.NangularNumOfSidesTextField setBackgroundColor:[UIColor redColor]];
+       
+       double delayInSeconds = 0.5;
+       dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds*NSEC_PER_SEC);
+       __typeof(self) __weak weakSelf = self;
+       dispatch_after(popTime, dispatch_get_main_queue(), ^{
+           [weakSelf.NangularNumOfSidesTextField setBackgroundColor:[UIColor clearColor]];
+           weakSelf.NangularNumOfSidesTextField.text = @"";
+       });
    }
 }
 

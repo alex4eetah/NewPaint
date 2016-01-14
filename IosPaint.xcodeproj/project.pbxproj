@@ -19,6 +19,7 @@
 		2662B9831C2432FC004C0719 /* PanelColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B9821C2432FC004C0719 /* PanelColorViewController.m */; };
 		26A35E7E1C207372008C9565 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26A35E7C1C207372008C9565 /* Main.storyboard */; };
 		26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */; };
+		ED2F31291C47E29300FBE2E0 /* move:remove.png in Resources */ = {isa = PBXBuildFile; fileRef = ED2F31281C47E29300FBE2E0 /* move:remove.png */; };
 		ED30F9DA1C43F5C40070B865 /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = ED30F9D91C43F5C40070B865 /* Save.png */; };
 		ED30F9DC1C43F87C0070B865 /* load.png in Resources */ = {isa = PBXBuildFile; fileRef = ED30F9DB1C43F87C0070B865 /* load.png */; };
 		ED30F9DE1C43F9E50070B865 /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = ED30F9DD1C43F9E50070B865 /* undo.png */; };
@@ -67,6 +68,7 @@
 		26A35E7D1C207372008C9565 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = IosPaint/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26DF4F371C1EE55D00AC03D0 /* FigureDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FigureDrawer.h; sourceTree = "<group>"; };
 		26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FigureDrawer.m; sourceTree = "<group>"; };
+		ED2F31281C47E29300FBE2E0 /* move:remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "move:remove.png"; sourceTree = "<group>"; };
 		ED30F9D91C43F5C40070B865 /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save.png; sourceTree = "<group>"; };
 		ED30F9DB1C43F87C0070B865 /* load.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load.png; sourceTree = "<group>"; };
 		ED30F9DD1C43F9E50070B865 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		2634EEA41C1ED460007E6ED5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ED2F31281C47E29300FBE2E0 /* move:remove.png */,
 				ED8779E11C468F4200E327DF /* width:alpha.png */,
 				ED8779DD1C468BB600E327DF /* recent.png */,
 				ED8779DB1C468AE500E327DF /* color.png */,
@@ -314,6 +317,7 @@
 				ED30F9E21C4417010070B865 /* draw.png in Resources */,
 				ED30F9E61C441A810070B865 /* Settings-icon.png in Resources */,
 				ED8779D21C464D9B00E327DF /* Delete-icon4545.png in Resources */,
+				ED2F31291C47E29300FBE2E0 /* move:remove.png in Resources */,
 				ED8779DC1C468AE500E327DF /* color.png in Resources */,
 				ED8779E21C468F4200E327DF /* width:alpha.png in Resources */,
 				ED30F9DE1C43F9E50070B865 /* undo.png in Resources */,

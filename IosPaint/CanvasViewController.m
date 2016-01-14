@@ -269,6 +269,7 @@
         [self.delegate HighLightCurrentOperation];
     }
     [self.myViews addObject:figureToScale];
+    
     [figureToScale setNeedsDisplay];
 }
 
@@ -776,10 +777,6 @@
 
 - (void)saveFigureToGallery
 {
-    
-    /////////////////////////Alpha background ?
-    
-    
     [self.chosenArea removeFromSuperview];
     UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 1); //making image from view
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -791,12 +788,7 @@
     UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
     
     CGImageRelease(imageRef);
-    //now we will position the image, X/Y away from top left corner to get the portion we want
-    /*UIGraphicsBeginImageContext(self.chosenArea.frame.size);
-    [sourceImage drawAtPoint:CGPointMake(self.chosenArea.frame.origin.x, self.chosenArea.frame.origin.y)];
-    UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-*/
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImageWriteToSavedPhotosAlbum(croppedImage, nil, nil, nil);
     });

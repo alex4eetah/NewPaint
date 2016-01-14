@@ -647,7 +647,7 @@
                                             <action selector="backFromOperationPanel:" destination="aJl-4N-bi7" eventType="touchUpInside" id="dJX-aQ-pjM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVX-Cs-lEC">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVX-Cs-lEC">
                                         <rect key="frame" x="530" y="0.0" width="70" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="MOr-PN-29b"/>
@@ -656,7 +656,7 @@
                                             <attributedString key="attributedTitle">
                                                 <fragment content="AC">
                                                     <attributes>
-                                                        <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                        <font key="NSFont" size="38" name="IowanOldStyle-BoldItalic"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
                                                 </fragment>
@@ -671,7 +671,7 @@
                                         <animations/>
                                         <segments>
                                             <segment title="" image="draw.png"/>
-                                            <segment title="move/remove"/>
+                                            <segment title="" image="move:remove.png"/>
                                             <segment title="" image="scale.png"/>
                                             <segment title="" image="rotate.png"/>
                                         </segments>
@@ -891,6 +891,31 @@
                                     <constraint firstAttribute="bottom" secondItem="MCP-KV-7Hh" secondAttribute="bottom" id="ufi-JI-1C6"/>
                                 </constraints>
                             </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sL-AS-Z3I">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpJ-IR-yPd">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Press with duration on desired view">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="38" name="IowanOldStyle-BoldItalic"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="wpJ-IR-yPd" firstAttribute="top" secondItem="0sL-AS-Z3I" secondAttribute="top" id="XkF-SM-0fT"/>
+                                    <constraint firstAttribute="bottom" secondItem="wpJ-IR-yPd" secondAttribute="bottom" id="a53-BY-5r7"/>
+                                    <constraint firstItem="wpJ-IR-yPd" firstAttribute="leading" secondItem="0sL-AS-Z3I" secondAttribute="leading" id="hKe-pw-S8K"/>
+                                    <constraint firstAttribute="trailing" secondItem="wpJ-IR-yPd" secondAttribute="trailing" id="sKk-7x-z6H"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -901,8 +926,11 @@
                             <constraint firstAttribute="trailing" secondItem="bhh-8D-RY1" secondAttribute="trailing" id="8g1-Ci-r47"/>
                             <constraint firstItem="rWv-TL-Tmr" firstAttribute="top" secondItem="bhh-8D-RY1" secondAttribute="bottom" id="DeZ-0c-c0G"/>
                             <constraint firstItem="Qw1-ff-agi" firstAttribute="leading" secondItem="SMS-wr-dB3" secondAttribute="leading" id="Hk3-p8-JkJ"/>
+                            <constraint firstItem="0sL-AS-Z3I" firstAttribute="top" secondItem="coY-ZJ-kNr" secondAttribute="bottom" id="IKk-sA-KNL"/>
+                            <constraint firstItem="rWv-TL-Tmr" firstAttribute="top" secondItem="0sL-AS-Z3I" secondAttribute="bottom" id="K8w-GX-8GQ"/>
                             <constraint firstItem="rWv-TL-Tmr" firstAttribute="top" secondItem="Idj-WG-CuF" secondAttribute="bottom" id="KLP-hl-Abj"/>
                             <constraint firstItem="bhh-8D-RY1" firstAttribute="leading" secondItem="SMS-wr-dB3" secondAttribute="leading" id="Kjm-4O-H4b"/>
+                            <constraint firstItem="0sL-AS-Z3I" firstAttribute="leading" secondItem="SMS-wr-dB3" secondAttribute="leading" id="SJ3-6v-VZx"/>
                             <constraint firstItem="4Ge-zR-k4o" firstAttribute="top" secondItem="coY-ZJ-kNr" secondAttribute="bottom" id="TW9-Fo-hfq"/>
                             <constraint firstAttribute="trailing" secondItem="BlA-Lq-eHP" secondAttribute="trailing" id="U9I-X8-zbF"/>
                             <constraint firstItem="Idj-WG-CuF" firstAttribute="leading" secondItem="SMS-wr-dB3" secondAttribute="leading" id="VRu-2C-4EG"/>
@@ -910,6 +938,7 @@
                             <constraint firstItem="BlA-Lq-eHP" firstAttribute="leading" secondItem="SMS-wr-dB3" secondAttribute="leading" id="YDQ-gk-wjP"/>
                             <constraint firstAttribute="trailing" secondItem="Qw1-ff-agi" secondAttribute="trailing" id="gsm-69-Lfs"/>
                             <constraint firstItem="rWv-TL-Tmr" firstAttribute="top" secondItem="4Ge-zR-k4o" secondAttribute="bottom" id="hnB-NZ-nys"/>
+                            <constraint firstAttribute="trailing" secondItem="0sL-AS-Z3I" secondAttribute="trailing" id="jr0-wd-tWy"/>
                             <constraint firstItem="4Ge-zR-k4o" firstAttribute="leading" secondItem="SMS-wr-dB3" secondAttribute="leading" id="mPq-wS-REr"/>
                             <constraint firstItem="rWv-TL-Tmr" firstAttribute="top" secondItem="BlA-Lq-eHP" secondAttribute="bottom" id="mcS-xL-B80"/>
                             <constraint firstItem="Qw1-ff-agi" firstAttribute="top" secondItem="coY-ZJ-kNr" secondAttribute="bottom" id="rCB-Od-dBQ"/>
@@ -924,6 +953,7 @@
                         <outlet property="drawingPanelOutlet" destination="Idj-WG-CuF" id="qP9-vF-ReO"/>
                         <outlet property="figurePanelOutlet" destination="bhh-8D-RY1" id="Gov-Z5-Wd0"/>
                         <outlet property="mainPanelOutlet" destination="4Ge-zR-k4o" id="SF9-W8-bM2"/>
+                        <outlet property="massegePanelOutlet" destination="0sL-AS-Z3I" id="MPy-kd-x5C"/>
                         <outlet property="operationSegmentControll" destination="tuJ-mz-7Ii" id="jB4-st-vS1"/>
                         <outlet property="sourceViewButtonForImagePicker" destination="NUf-Zu-eU2" id="bhO-wD-tBU"/>
                     </connections>
@@ -1340,7 +1370,7 @@
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
-                                                <fragment content="To Galary">
+                                                <fragment content="To Gallery">
                                                     <attributes>
                                                         <font key="NSFont" size="36" name="Chalkduster"/>
                                                     </attributes>
@@ -1486,8 +1516,9 @@
                                             <constraint firstAttribute="width" constant="46" id="PUu-GK-cTz"/>
                                             <constraint firstAttribute="height" constant="30" id="Vtd-RJ-qx6"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Hide">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="hideLayerSettings:" destination="Gpd-F8-z9k" eventType="touchUpInside" id="LBX-L5-dIf"/>
@@ -1666,6 +1697,23 @@
             </objects>
             <point key="canvasLocation" x="-30" y="60"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="jF2-yK-yl1">
+            <objects>
+                <viewController id="lNf-SO-dJa" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8Bf-aJ-7Ol"/>
+                        <viewControllerLayoutGuide type="bottom" id="eBh-7A-Jfi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LR4-Ze-sqy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="saw-hb-CIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="Delete-icon4545.png" width="45" height="45"/>
@@ -1678,6 +1726,7 @@
         <image name="layers.png" width="50" height="50"/>
         <image name="line.png" width="50" height="50"/>
         <image name="load.png" width="50" height="50"/>
+        <image name="move:remove.png" width="100" height="50"/>
         <image name="pen.png" width="50" height="50"/>
         <image name="poligon.png" width="50" height="50"/>
         <image name="recent.png" width="50" height="50"/>
