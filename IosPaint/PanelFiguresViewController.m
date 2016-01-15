@@ -8,22 +8,6 @@
 
 #import "PanelFiguresViewController.h"
 
-@interface NonRotatingUIImagePickerController : UIImagePickerController
-
-@end
-
-@implementation NonRotatingUIImagePickerController
-// Disable Landscape mode.
-/*#if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
-- (NSUInteger)supportedInterfaceOrientations
-#else
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-#endif
-{
-    return UIInterfaceOrientationMaskLandscape;
-}*/
-@end
-
 @interface PanelFiguresViewController ()
 
 @property (strong, nonatomic) IBOutlet UIView *figurePanelOutlet;
