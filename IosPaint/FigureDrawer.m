@@ -326,7 +326,7 @@
         CGPoint p = CGPointMake(side*cos(alpha)+newZeroCoordinate.x, side*sin(alpha)+newZeroCoordinate.y);
             if(i == 0)
             {
-                if (p.x != NAN && p.y != NAN)
+                if (!isnan(p.x) && !isnan(p.y))
                 {
                     CGContextMoveToPoint(ctx, p.x, p.y);
                 }
@@ -334,8 +334,6 @@
             else
                 CGContextAddLineToPoint(ctx, p.x, p.y);
     }
-
-    CGContextClosePath(ctx);
     CGContextStrokePath(ctx);
 }
 
