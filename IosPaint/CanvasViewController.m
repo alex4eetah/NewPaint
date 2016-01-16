@@ -68,6 +68,7 @@
 {
     _numOfSides = numOfSides;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -76,6 +77,13 @@
     self.lineWidth = 5;
     self.inset = [[NSNumber alloc] initWithDouble:self.lineWidth/2];
     self.isInProgress = NO;
+    
+
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -571,7 +579,9 @@
     
 }
 
-#pragma mark - PanelsDelegate Methods
+
+
+#pragma mark - PanelsDelegate methods
 
 - (void)Undo
 {
@@ -698,9 +708,6 @@
     NSString *documentDirectory = [paths firstObject];
     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
 
-    
-
-    
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
@@ -730,10 +737,13 @@
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
-- (void)loadDataFromFile:(NSString *)docFilePath
+- (void)loadDataFromFile:(NSString *)pathComponent
 {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths firstObject];
+    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
     
-    NSData *loadedData = [[NSData alloc] initWithContentsOfFile:docFilePath];
+    NSData *loadedData = [[NSData alloc] initWithContentsOfFile:documentFile];
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
     self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
     for (UIView *v in self.view.subviews)

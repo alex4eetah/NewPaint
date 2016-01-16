@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentOperationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentShapeLabel;
 
+@property (nonatomic, strong, readonly) NSString *systemSavingPath;
+
 @end
 
 @implementation FileManagingVC
@@ -32,7 +34,22 @@
     [super viewDidLoad];
     self.currentShapeLabel.text = @"Circle";
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(saveData)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(restoreData)
+                                                 name:UIApplicationDidFinishLaunchingNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(restoreData)
+                                                 name:UIApplicationWillTerminateNotification
+                                            object:nil];
+    _systemSavingPath = @"systemSavingFile.drwng";
+    
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -84,7 +101,6 @@
             weakSelf.managingViewOutlet.alpha = 0.0;
             weakSelf.loadingViewOutlet.alpha = 1.0;
         }];
-        
         [self getArrayOfPaths];
         self.CurrentFileToLoad = [self.fileList firstObject];
         self.filePicker.delegate = self;
@@ -95,13 +111,23 @@
     }
 }
 
+#pragma mark - persistance
+
+- (void)saveData
+{
+    [self.delegate writeFigureToFile:self.systemSavingPath];
+}
+
+- (void)restoreData
+{
+    [self.delegate loadDataFromFile:self.systemSavingPath];
+}
+
 #pragma mark - loading menu settings
 - (IBAction)loadFromFile:(UIButton *)sender
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths firstObject];
-    NSString *documentFile = [documentDirectory stringByAppendingPathComponent:self.CurrentFileToLoad];
-    [self.delegate loadDataFromFile:documentFile];
+    
+    [self.delegate loadDataFromFile:self.CurrentFileToLoad];
     [self.resizerDelegate resizeFileManagingContainerHeightTo:50];
     
     __typeof(self) __weak weakSelf = self;
@@ -171,7 +197,7 @@
 
 - (IBAction)saveToFile:(UIButton *)sender
 {
-    if (![self.nameOfFileField.text  isEqual: @""])
+    if (![self.nameOfFileField.text  isEqual: @""] && ![self.nameOfFileField.text  isEqual: @"systemSavingFile.drwng"])
     {
         [self.delegate writeFigureToFile:self.nameOfFileField.text];
     }

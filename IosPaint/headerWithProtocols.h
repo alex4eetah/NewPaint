@@ -30,7 +30,7 @@
 - (void)didSelectOperation:(NSInteger)operation;
 - (void)writeFigureToFile:(NSString *)pathComponent;
 - (void)saveFigureToGallery;
-- (void)loadDataFromFile:(NSString *)docFilePath;
+- (void)loadDataFromFile:(NSString *)pathComponent;
 - (void)Undo;
 - (void)allClear;
 - (void)setCurrentOperation:(NSInteger)value;

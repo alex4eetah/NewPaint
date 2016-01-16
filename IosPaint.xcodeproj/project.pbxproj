@@ -14,11 +14,12 @@
 		2634EEB41C1ED460007E6ED5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2634EEB21C1ED460007E6ED5 /* LaunchScreen.storyboard */; };
 		265B478C1C2ED013005024A1 /* LineDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 265B478B1C2ED013005024A1 /* LineDrawer.m */; };
 		2662B97A1C2426EB004C0719 /* BoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B9791C2426EB004C0719 /* BoardViewController.m */; };
-		2662B97D1C242C9C004C0719 /* CanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B97C1C242C9C004C0719 /* CanvasViewController.m */; };
 		2662B9801C242EB2004C0719 /* PanelFiguresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B97F1C242EB2004C0719 /* PanelFiguresViewController.m */; };
 		2662B9831C2432FC004C0719 /* PanelColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B9821C2432FC004C0719 /* PanelColorViewController.m */; };
 		26A35E7E1C207372008C9565 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26A35E7C1C207372008C9565 /* Main.storyboard */; };
 		26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */; };
+		6AC6B5BC1C4AF6FC00D3B1E4 /* FileManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */; };
+		6AC6B5C01C4AF73D00D3B1E4 /* CanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6B5BF1C4AF73D00D3B1E4 /* CanvasViewController.m */; };
 		ED2F31291C47E29300FBE2E0 /* move:remove.png in Resources */ = {isa = PBXBuildFile; fileRef = ED2F31281C47E29300FBE2E0 /* move:remove.png */; };
 		ED30F9DA1C43F5C40070B865 /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = ED30F9D91C43F5C40070B865 /* Save.png */; };
 		ED30F9DC1C43F87C0070B865 /* load.png in Resources */ = {isa = PBXBuildFile; fileRef = ED30F9DB1C43F87C0070B865 /* load.png */; };
@@ -41,7 +42,6 @@
 		ED8779DC1C468AE500E327DF /* color.png in Resources */ = {isa = PBXBuildFile; fileRef = ED8779DB1C468AE500E327DF /* color.png */; };
 		ED8779DE1C468BB600E327DF /* recent.png in Resources */ = {isa = PBXBuildFile; fileRef = ED8779DD1C468BB600E327DF /* recent.png */; };
 		ED8779E21C468F4200E327DF /* width:alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = ED8779E11C468F4200E327DF /* width:alpha.png */; };
-		EDC6AB811C357C1A004B9B18 /* FileManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */; };
 		EDE88B261C3AB3F7004CBB54 /* LayerManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE88B251C3AB3F7004CBB54 /* LayerManagingVC.m */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +59,6 @@
 		265B478B1C2ED013005024A1 /* LineDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineDrawer.m; sourceTree = "<group>"; };
 		2662B9781C2426EB004C0719 /* BoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardViewController.h; sourceTree = "<group>"; };
 		2662B9791C2426EB004C0719 /* BoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardViewController.m; sourceTree = "<group>"; };
-		2662B97B1C242C9C004C0719 /* CanvasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasViewController.h; sourceTree = "<group>"; };
-		2662B97C1C242C9C004C0719 /* CanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasViewController.m; sourceTree = "<group>"; };
 		2662B97E1C242EB2004C0719 /* PanelFiguresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelFiguresViewController.h; sourceTree = "<group>"; };
 		2662B97F1C242EB2004C0719 /* PanelFiguresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelFiguresViewController.m; sourceTree = "<group>"; };
 		2662B9811C2432FC004C0719 /* PanelColorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelColorViewController.h; sourceTree = "<group>"; };
@@ -68,6 +66,11 @@
 		26A35E7D1C207372008C9565 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = IosPaint/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26DF4F371C1EE55D00AC03D0 /* FigureDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FigureDrawer.h; sourceTree = "<group>"; };
 		26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FigureDrawer.m; sourceTree = "<group>"; };
+		6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManagingVC.m; sourceTree = "<group>"; };
+		6AC6B5BB1C4AF6FC00D3B1E4 /* FileManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagingVC.h; sourceTree = "<group>"; };
+		6AC6B5BD1C4AF71400D3B1E4 /* headerWithProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = headerWithProtocols.h; sourceTree = "<group>"; };
+		6AC6B5BE1C4AF73D00D3B1E4 /* CanvasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasViewController.h; sourceTree = "<group>"; };
+		6AC6B5BF1C4AF73D00D3B1E4 /* CanvasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasViewController.m; sourceTree = "<group>"; };
 		ED2F31281C47E29300FBE2E0 /* move:remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "move:remove.png"; sourceTree = "<group>"; };
 		ED30F9D91C43F5C40070B865 /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save.png; sourceTree = "<group>"; };
 		ED30F9DB1C43F87C0070B865 /* load.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load.png; sourceTree = "<group>"; };
@@ -90,9 +93,6 @@
 		ED8779DB1C468AE500E327DF /* color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = color.png; sourceTree = "<group>"; };
 		ED8779DD1C468BB600E327DF /* recent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recent.png; sourceTree = "<group>"; };
 		ED8779E11C468F4200E327DF /* width:alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "width:alpha.png"; sourceTree = "<group>"; };
-		EDC6AB7F1C357C1A004B9B18 /* FileManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileManagingVC.h; path = ../FileManagingVC.h; sourceTree = "<group>"; };
-		EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileManagingVC.m; path = ../FileManagingVC.m; sourceTree = "<group>"; };
-		EDE88B231C3A8525004CBB54 /* headerWithProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = headerWithProtocols.h; path = ../headerWithProtocols.h; sourceTree = "<group>"; };
 		EDE88B241C3AB3F7004CBB54 /* LayerManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayerManagingVC.h; path = ../LayerManagingVC.h; sourceTree = "<group>"; };
 		EDE88B251C3AB3F7004CBB54 /* LayerManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LayerManagingVC.m; path = ../LayerManagingVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,7 +132,7 @@
 				26A35E7C1C207372008C9565 /* Main.storyboard */,
 				2634EEB21C1ED460007E6ED5 /* LaunchScreen.storyboard */,
 				2634EEB01C1ED460007E6ED5 /* Assets.xcassets */,
-				EDE88B231C3A8525004CBB54 /* headerWithProtocols.h */,
+				6AC6B5BD1C4AF71400D3B1E4 /* headerWithProtocols.h */,
 				2634EEA41C1ED460007E6ED5 /* Supporting Files */,
 			);
 			path = IosPaint;
@@ -209,8 +209,8 @@
 		ED286FB11C4005CB0010BA84 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
-				2662B97B1C242C9C004C0719 /* CanvasViewController.h */,
-				2662B97C1C242C9C004C0719 /* CanvasViewController.m */,
+				6AC6B5BE1C4AF73D00D3B1E4 /* CanvasViewController.h */,
+				6AC6B5BF1C4AF73D00D3B1E4 /* CanvasViewController.m */,
 			);
 			name = Canvas;
 			sourceTree = "<group>";
@@ -227,8 +227,8 @@
 		ED286FB31C40061E0010BA84 /* FileManaging */ = {
 			isa = PBXGroup;
 			children = (
-				EDC6AB7F1C357C1A004B9B18 /* FileManagingVC.h */,
-				EDC6AB801C357C1A004B9B18 /* FileManagingVC.m */,
+				6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */,
+				6AC6B5BB1C4AF6FC00D3B1E4 /* FileManagingVC.h */,
 			);
 			name = FileManaging;
 			sourceTree = "<group>";
@@ -344,15 +344,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDE88B261C3AB3F7004CBB54 /* LayerManagingVC.m in Sources */,
+				6AC6B5C01C4AF73D00D3B1E4 /* CanvasViewController.m in Sources */,
 				265B478C1C2ED013005024A1 /* LineDrawer.m in Sources */,
 				26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */,
-				EDC6AB811C357C1A004B9B18 /* FileManagingVC.m in Sources */,
 				2662B97A1C2426EB004C0719 /* BoardViewController.m in Sources */,
-				2662B97D1C242C9C004C0719 /* CanvasViewController.m in Sources */,
 				2662B9831C2432FC004C0719 /* PanelColorViewController.m in Sources */,
 				2662B9801C242EB2004C0719 /* PanelFiguresViewController.m in Sources */,
 				2634EEAC1C1ED460007E6ED5 /* ViewController.m in Sources */,
 				2634EEA91C1ED460007E6ED5 /* AppDelegate.m in Sources */,
+				6AC6B5BC1C4AF6FC00D3B1E4 /* FileManagingVC.m in Sources */,
 				2634EEA61C1ED460007E6ED5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
