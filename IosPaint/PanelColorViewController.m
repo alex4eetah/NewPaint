@@ -18,10 +18,10 @@
 
 + (UIColor *)generateRandomColorWithoutColor:(UIColor *)color
 {
-    UIColor *thisColor = [self generateRandom];
+    UIColor *randomColor = [self generateRandom];
     
-    if (![thisColor isEqual:color])
-        return thisColor;
+    if (![randomColor isEqual:color])
+        return randomColor;
     else
         return [self generateRandomColorWithoutColor:color];
 }
@@ -43,18 +43,20 @@
 @property (strong, nonatomic) IBOutlet UIView *colorMenuOutlet;
 @property (strong, nonatomic) IBOutlet UIView *widthAndOpacityMenuOutlet;
 @property (weak, nonatomic) IBOutlet UIView *recentSettingsOutlet;
+
 @property (assign, nonatomic) CGFloat currentRed;
 @property (assign, nonatomic) CGFloat currentGreen;
 @property (assign, nonatomic) CGFloat currentBlue;
 @property (assign, nonatomic) CGFloat currentOpacity;
 @property (assign, nonatomic) CGFloat currentWidth;
+
 @property (weak, nonatomic) IBOutlet UIImageView *colorViewIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *widthAndOpacityViewIndicator;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *colorPicker;
 @property (strong, nonatomic) NSMutableArray *recentColors;//10 max
 @property (weak, nonatomic) IBOutlet UIImageView *recentColorViewIndicator;
-@property (strong, nonatomic) UIColor * thisColor;
+@property (strong, nonatomic) UIColor * colorChosenWithPicker;
 
 @end
 
@@ -75,21 +77,6 @@
                                             action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleFingerTap];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-//- (void)makeAnimatableTransitionUsingAlphaFromView1:(UIView *)view1 ToView2:(UIView *)view2
-//{
-//    __typeof(self) __weak weakSelf = self;
-//    [UIView animateWithDuration:0.3 animations:^() {
-//        
-//        view1.alpha = 0.0;
-//        weakSelf.randomOrRealColorSettings.alpha = 1.0;
-//    }];
-//}
 
 #pragma mark - main menu settings
 - (IBAction)ColorMenuItemDidChanged:(UIButton *)sender
@@ -252,8 +239,8 @@
     else if ([sender.view hitTest:location withEvent:nil].tag == -3)
     {
         [self.delegate didSelectWidth:self.currentWidth];
-        if (self.thisColor)
-            [self.delegate didSelectColor:self.thisColor];
+        if (self.colorChosenWithPicker)
+            [self.delegate didSelectColor:self.colorChosenWithPicker];
         else
             [self.delegate didSelectColor:[UIColor blackColor]];
         [self.resizerDelegate resizeColorContainerHeightTo:50];
@@ -269,6 +256,7 @@
     
 }
 
+#pragma mark - filling Recent Colors array
 - (void)insertInRecentColorsColorWithRed:(CGFloat)red Green:(CGFloat)green Blue:(CGFloat)blue Alpha:(CGFloat)alpha
 {
     if (!self.recentColors)
@@ -301,7 +289,6 @@
 }
 
 #pragma mark - pickerMethods
-
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
@@ -324,12 +311,12 @@
     
     if (self.recentColors.count)
     {
-        self.thisColor = self.recentColors[row];
-        const CGFloat* components = CGColorGetComponents(self.thisColor.CGColor);
+        self.colorChosenWithPicker = self.recentColors[row];
+        const CGFloat* components = CGColorGetComponents(self.colorChosenWithPicker.CGColor);
         thisRed = components[0];
         thisGreen = components[1];
         thisBlue = components[2];
-        thisOpacity = CGColorGetAlpha(self.thisColor.CGColor);
+        thisOpacity = CGColorGetAlpha(self.colorChosenWithPicker.CGColor);
     }
     else
     {
@@ -356,12 +343,12 @@
     NSAttributedString *attString;
     if (self.recentColors.count)
     {
-        self.thisColor = self.recentColors[row];
-        const CGFloat* components = CGColorGetComponents(self.thisColor.CGColor);
+        self.colorChosenWithPicker = self.recentColors[row];
+        const CGFloat* components = CGColorGetComponents(self.colorChosenWithPicker.CGColor);
         CGFloat thisRed = components[0];
         CGFloat thisGreen = components[1];
         CGFloat thisBlue = components[2];
-        CGFloat thisOpacity = CGColorGetAlpha(self.thisColor.CGColor);
+        CGFloat thisOpacity = CGColorGetAlpha(self.colorChosenWithPicker.CGColor);
 
         attString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Red:%f Green:%f Blue:%f Alpha:%f",thisRed,thisGreen,thisBlue,thisOpacity] attributes:@{NSForegroundColorAttributeName:self.recentColors[row]}];
     }

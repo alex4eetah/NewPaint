@@ -1619,20 +1619,26 @@
                                             </label>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="978-BB-Y7G">
                                                 <rect key="frame" x="8" y="32" width="108" height="30"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="f9l-OK-abn"/>
                                                 </constraints>
-                                                <state key="normal" title="UP"/>
+                                                <state key="normal" title="UP">
+                                                    <color key="titleColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="changeOrderOfSubviews:" destination="Gpd-F8-z9k" eventType="touchUpInside" id="qDd-ur-eFJ"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvr-qp-Lbm">
                                                 <rect key="frame" x="124" y="32" width="108" height="30"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="ZEd-Rs-KpQ"/>
                                                 </constraints>
-                                                <state key="normal" title="DOWN"/>
+                                                <state key="normal" title="DOWN">
+                                                    <color key="titleColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="changeOrderOfSubviews:" destination="Gpd-F8-z9k" eventType="touchUpInside" id="39T-8W-EGN"/>
                                                 </connections>

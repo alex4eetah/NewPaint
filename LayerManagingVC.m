@@ -20,6 +20,7 @@
 
 @implementation LayerManagingVC
 
+#pragma mark - prepare for showing
 - (void)getPreparedForShowing
 {
     [self getArrayOfSubviews];
@@ -49,6 +50,7 @@
         self.subviews = [self.layerDelegate takeArrayOfSubviews];
 }
 
+#pragma mark - working with layers
 - (IBAction)changeOrderOfSubviews:(UIButton *)sender
 {
     switch (sender.tag)
@@ -95,7 +97,6 @@
 }
 
 #pragma mark - pickerMethods
-
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;

@@ -13,16 +13,18 @@
 @property (weak, nonatomic) IBOutlet UIView *savingOptionsViewOutlet;
 @property (weak, nonatomic) IBOutlet UIView *savingToFileViewOutlet;
 @property (weak, nonatomic) IBOutlet UIView *savingToGalleryViewOutlet;
-@property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
 @property (weak, nonatomic) IBOutlet UIView *loadingViewOutlet;
+
+@property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
 @property (weak, nonatomic) IBOutlet UIPickerView *filePicker;
 @property (strong, nonatomic) NSString *CurrentFileToLoad;
-@property (strong, nonatomic)  NSArray *fileList;
-@property (weak, nonatomic) IBOutlet UIButton *loadFileButton;
-@property (weak, nonatomic) IBOutlet UIButton *DeleteFileButton;
+@property (strong, nonatomic)  NSMutableArray *fileList;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentOperationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentShapeLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *loadFileButton;
+@property (weak, nonatomic) IBOutlet UIButton *DeleteFileButton;
 
 @property (nonatomic, strong, readonly) NSString *systemSavingPath;
 
@@ -50,19 +52,18 @@
     
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+#pragma mark - prepare for showing
 - (void)getArrayOfPaths
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
     
     NSFileManager *manager = [NSFileManager defaultManager];
-    self.fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+    self.fileList = [[manager contentsOfDirectoryAtPath:documentsDirectory error:nil] mutableCopy];
+    
+    if ([self.fileList containsObject:self.systemSavingPath])// for not to show system saving file
+        [self.fileList removeObject:self.systemSavingPath];
+    
     if (self.fileList.count == 0)
     {
         self.loadFileButton.enabled = NO;
@@ -71,8 +72,6 @@
     }
 }
 
-
-
 - (IBAction)showLayerSettings:(UIButton *)sender
 {
     [self.resizerDelegate moveLayerManagingContainerLeftOnWidth:0];
@@ -80,7 +79,6 @@
 }
 
 #pragma mark - main menu settings
-
 - (IBAction)managingFileOperations:(UIButton *)sender
 {
     if (sender.tag == 1)
@@ -113,7 +111,6 @@
 }
 
 #pragma mark - persistance
-
 - (void)saveData
 {
     [self.delegate writeFigureToFile:self.systemSavingPath];
@@ -158,15 +155,6 @@
     [UIView animateWithDuration:0.3 animations:^() {
         
         weakSelf.loadingViewOutlet.alpha = 0.0;
-        weakSelf.managingViewOutlet.alpha = 1.0;
-    }];
-}
-- (IBAction)backFromOptionsSavingPanel:(id)sender
-{
-    __typeof(self) __weak weakSelf = self;
-    [UIView animateWithDuration:0.3 animations:^() {
-        
-        weakSelf.savingOptionsViewOutlet.alpha = 0.0;
         weakSelf.managingViewOutlet.alpha = 1.0;
     }];
 }
@@ -227,8 +215,17 @@
     }];
 }
 
-#pragma mark - pickerMethods
+- (IBAction)backFromOptionsSavingPanel:(id)sender
+{
+    __typeof(self) __weak weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^() {
+        
+        weakSelf.savingOptionsViewOutlet.alpha = 0.0;
+        weakSelf.managingViewOutlet.alpha = 1.0;
+    }];
+}
 
+#pragma mark - pickerMethods
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
@@ -250,7 +247,6 @@
 }
 
 #pragma mark - FileManagerGelegate methods
-
 - (void)showCurrentOperation:(NSString *)operation
 {
     CATransition *animation = [CATransition animation];
