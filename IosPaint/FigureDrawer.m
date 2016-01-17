@@ -76,7 +76,7 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject: [NSNumber numberWithFloat:self.rotationAngle] forKey:@"rotationAngle"];
-    [aCoder encodeObject: [NSValue valueWithCGRect:self.frameBeforeTransform] forKey:@"frameBeforeTransform"];
+    [aCoder encodeObject: [NSValue valueWithCGRect:self.frameBeforeRotation] forKey:@"frameBeforeRotation"];
     [aCoder encodeObject: [NSValue valueWithCGRect:self.frame] forKey:@"frame"];
     
     [aCoder encodeObject: self.figureName forKey:@"figureName"];
@@ -97,8 +97,8 @@
         self.rotationAngle = [[aDecoder decodeObjectForKey:@"rotationAngle"] floatValue];
         if (self.rotationAngle)
         {
-            self.frameBeforeTransform = [[aDecoder decodeObjectForKey:@"frameBeforeTransform"] CGRectValue];
-            self.frame = self.frameBeforeTransform;
+            self.frameBeforeRotation = [[aDecoder decodeObjectForKey:@"frameBeforeRotation"] CGRectValue];
+            self.frame = self.frameBeforeRotation;
             CGAffineTransform transform = CGAffineTransformMakeRotation(self.rotationAngle);
             self.transform = transform;
         }
@@ -121,6 +121,38 @@
     }
     return self;
 }
+//// helper to get pre transform frame
+//-(CGRect)originalFrame {
+//    CGAffineTransform currentTransform = self.transform;
+//    self.transform = CGAffineTransformIdentity;
+//    CGRect originalFrame = self.frame;
+//    self.transform = currentTransform;
+//    
+//    return originalFrame;
+//}
+//// helper to get point offset from center
+//-(CGPoint)centerOffset:(CGPoint)thePoint {
+//    return CGPointMake(thePoint.x - self.center.x, thePoint.y - self.center.y);
+//}
+//// helper to get point back relative to center
+//-(CGPoint)pointRelativeToCenter:(CGPoint)thePoint {
+//    return CGPointMake(thePoint.x + self.center.x, thePoint.y + self.center.y);
+//}
+//// helper to get point relative to transformed coords
+//-(CGPoint)newPointInView:(CGPoint)thePoint {
+//    // get offset from center
+//    CGPoint offset = [self centerOffset:thePoint];
+//    // get transformed point
+//    CGPoint transformedPoint = CGPointApplyAffineTransform(offset, self.transform);
+//    // make relative to center
+//    return [self pointRelativeToCenter:transformedPoint];
+//}
+//
+//// now get your corners
+//-(CGPoint)newTopLeft {
+//    CGRect frame = [self originalFrame];
+//    return [self newPointInView:frame.origin];
+//}
 
 - (void)drawLines:(CGRect)rect
 {

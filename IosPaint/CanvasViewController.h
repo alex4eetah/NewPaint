@@ -21,13 +21,14 @@ typedef enum operationsType
 @interface CanvasViewController : UIViewController <PanelsDelegate>
 
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
+
 @property (nonatomic, strong) NSMutableArray *myViews;
 
 - (void)changeFigureName:(NSInteger)layer toName:(NSString *)name;
-- (void)highLightGivenLayerAtIndex:(NSInteger)index;
-- (void)unHighlighGiventLayerAtIndex:(NSInteger)index;
-- (void)putUpCurrentLayerAtIndex:(NSInteger)index;
-- (void)putDownCurrentLayerAtIndex:(NSInteger)index;
+- (void)highLightLayerAtIndex:(NSInteger)index;
+- (void)unHighlighLayerAtIndex:(NSInteger)index;
+- (void)putUpLayerAtIndex:(NSInteger)index;
+- (void)putDownLayerAtIndex:(NSInteger)index;
 - (void)deleteLayerAtIndex:(NSInteger)index;
 
 @end

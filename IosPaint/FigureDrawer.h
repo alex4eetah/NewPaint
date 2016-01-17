@@ -37,9 +37,16 @@ typedef enum shapeTypes
 @property (nonatomic, strong) UIImage* image;
 
 @property (nonatomic, assign) CGFloat rotationAngle;
-@property (nonatomic, assign) CGRect frameBeforeTransform;
+@property (nonatomic, assign) CGRect frameBeforeRotation;
 @property (nonatomic, assign) BOOL WasRorated;
 
 - (void)highLightPenLine;
 - (void)unHighLightPenLine;
+
+//-(CGRect)originalFrame;
+//-(CGPoint)centerOffset:(CGPoint)thePoint;
+//-(CGPoint)pointRelativeToCenter:(CGPoint)thePoint;
+//-(CGPoint)newPointInView:(CGPoint)thePoint;
+//-(CGPoint)newTopLeft;
+
 @end

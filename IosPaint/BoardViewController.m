@@ -120,22 +120,22 @@
 
 - (void)highLightLayerAtIndex:(NSInteger)index
 {
-    [self.canvasVC highLightGivenLayerAtIndex:index];
+    [self.canvasVC highLightLayerAtIndex:index];
 }
 
 - (void)unHighlightLayerAtIndex:(NSInteger)index
 {
-    [self.canvasVC unHighlighGiventLayerAtIndex:index];
+    [self.canvasVC unHighlighLayerAtIndex:index];
 }
 
 - (void)putUpCurrentLayerAtIndex:(NSInteger)index
 {
-    [self.canvasVC putUpCurrentLayerAtIndex:index];
+    [self.canvasVC putUpLayerAtIndex:index];
 }
 
 - (void)putDownCurrentLayerAtIndex:(NSInteger)index
 {
-    [self.canvasVC putDownCurrentLayerAtIndex:index];
+    [self.canvasVC putDownLayerAtIndex:index];
 }
 
 - (void)changeLayerName:(NSInteger)layer toName:(NSString *)name;

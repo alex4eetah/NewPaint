@@ -12,21 +12,20 @@
 
 @interface CanvasViewController ()
 
+#pragma mark data for creating figure
 @property (nonatomic, assign) NSInteger lineWidth;
 @property (nonatomic, strong) UIColor* currentColor;
 @property (nonatomic, assign) NSInteger currentShape;
 @property (nonatomic, assign) NSInteger numOfSides;
-
 @property (nonatomic, assign) CGPoint start;
 @property (nonatomic, assign) CGPoint stop;
-@property (nonatomic, strong) NSNumber* inset;
+//description:
+//start and stop opints is poinst of start touch and stop touch needed for creating frame for figure
 
-@property (nonatomic, assign) CGPoint startOfMove;
-@property (nonatomic, assign) CGPoint stopOfMove;
-@property (nonatomic, strong) FigureDrawer *viewToMove;
+@property (nonatomic, strong) FigureDrawer *viewToModify;
 @property (nonatomic,assign) BOOL hitTheMoovingHandle;
 
-@property (nonatomic, strong) UIView *viewToScale;
+//@property (nonatomic, strong) FigureDrawer *viewToModify;
 @property (nonatomic, assign) CGFloat currentScale;
 
 @property (nonatomic, strong) NSMutableArray *currentPointsOfLine;
@@ -59,6 +58,9 @@
 
 @property (nonatomic, strong) UIView *chosenArea;
 
+
+
+@property (nonatomic, strong) NSNumber* inset;
 @end
 
 
@@ -77,8 +79,6 @@
     self.lineWidth = 5;
     self.inset = [[NSNumber alloc] initWithDouble:self.lineWidth/2];
     self.isInProgress = NO;
-    
-
 }
 
 - (void) dealloc
@@ -100,43 +100,43 @@
             CGPoint location = [sender locationInView:sender.view];
             if ([sender.view hitTest:location withEvent:nil] != self.view &&
                 [[sender.view hitTest:location withEvent:nil] isKindOfClass:[FigureDrawer class]])
-                self.viewToMove = (FigureDrawer *)[sender.view hitTest:location withEvent:nil];
+                self.viewToModify = (FigureDrawer *)[sender.view hitTest:location withEvent:nil];
             
             else
                 return;
-            [self.viewToMove removeFromSuperview];
-            [self.view addSubview:self.viewToMove];
-            if (self.viewToMove.frame.size.height > 90 && self.viewToMove.frame.size.width > 90)
+            [self.viewToModify removeFromSuperview];
+            [self.view addSubview:self.viewToModify];
+            if (self.viewToModify.frame.size.height > 90 && self.viewToModify.frame.size.width > 90)
             {
                 self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
-                                                                                  self.viewToMove.bounds.size.width/2-45/2,
-                                                                                  self.viewToMove.bounds.size.height/2-45/2, 45, 45)];
+                                                                                  self.viewToModify.bounds.size.width/2-45/2,
+                                                                                  self.viewToModify.bounds.size.height/2-45/2, 45, 45)];
                 self.handleToDelete = [[UIImageView alloc] initWithFrame:CGRectMake(
-                                                                                    self.viewToMove.bounds.size.width-45,
+                                                                                    self.viewToModify.bounds.size.width-45,
                                                                                     0, 45, 45)];
             }
             else
             {
                 self.handleToMove = [[UIImageView alloc] initWithFrame:CGRectMake(
-                                                                                  self.viewToMove.frame.size.width-self.viewToMove.bounds.size.width,
-                                                                                  self.viewToMove.frame.size.height-self.viewToMove.bounds.size.height,
-                                                                                  self.viewToMove.frame.size.width,
-                                                                                  self.viewToMove.frame.size.height)];
+                                                                                  self.viewToModify.frame.size.width-self.viewToModify.bounds.size.width,
+                                                                                  self.viewToModify.frame.size.height-self.viewToModify.bounds.size.height,
+                                                                                  self.viewToModify.frame.size.width,
+                                                                                  self.viewToModify.frame.size.height)];
             }
             self.handleToMove.image = [UIImage imageNamed:@"move4545.png"];
             self.handleToMove.tag = 101;
             self.handleToDelete.image = [UIImage imageNamed:@"Delete-icon4545.png"];
             self.handleToDelete.tag = 109;
-            [self.viewToMove addSubview:self.handleToMove];
-            [self.viewToMove addSubview:self.handleToDelete];
+            [self.viewToModify addSubview:self.handleToMove];
+            [self.viewToModify addSubview:self.handleToDelete];
             self.isInProgress =YES;
             CGRect frame = CGRectMake(0, 0,
-                                      self.viewToMove.bounds.size.width,
-                                      self.viewToMove.bounds.size.height);
+                                      self.viewToModify.bounds.size.width,
+                                      self.viewToModify.bounds.size.height);
             
             UIView *background = [[UIView alloc] initWithFrame:frame];
             background.backgroundColor = [UIColor colorWithRed:0.23 green:0.67 blue:0.94 alpha:0.2];
-            [self.viewToMove addSubview:background];
+            [self.viewToModify addSubview:background];
         }
     }
 }
@@ -149,7 +149,7 @@
         {
             FigureDrawer *f = (FigureDrawer *)[sender.view hitTest:location withEvent:nil];
             if (f.shape != 6)//pan line
-                self.viewToScale = [sender.view hitTest:location withEvent:nil];
+                self.viewToModify = f;
             else
                 return;
         }
@@ -158,65 +158,101 @@
             [self.delegate HighLightCurrentOperation];
             return;
         }
-        self.viewToScale.backgroundColor = [UIColor colorWithRed:0.23 green:0.67 blue:0.94 alpha:0.2];
-        [self.myViews removeObject:self.viewToScale];
-        [self.myViews addObject:self.viewToScale];
-        [self.viewToScale setNeedsDisplay];
+        self.viewToModify.backgroundColor = [UIColor colorWithRed:0.23 green:0.67 blue:0.94 alpha:0.2];
+        /*[self.myViews removeObject:self.viewToModify];
+        [self.myViews addObject:self.viewToModify];
+        [self.viewToModify setNeedsDisplay];*/
     }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
-        self.viewToScale.backgroundColor = [UIColor clearColor];
-        [self.viewToScale setNeedsDisplay];
-        self.viewToScale = nil;
+        self.viewToModify.backgroundColor = [UIColor clearColor];
+        /*[self.viewToModify setNeedsDisplay];*/
+        self.viewToModify = nil;
     }
     
-    if(self.viewToScale)
+    if(self.viewToModify)
     {
-        [self.myViews removeObject:self.viewToScale];
+        
         CGFloat scale = sender.scale;
-        CGFloat xDiferance = self.viewToScale.frame.size.width - self.viewToScale.frame.size.width*scale;
-        CGFloat yDiferance = self.viewToScale.frame.size.height - self.viewToScale.frame.size.height*scale;
         
-        CGRect frame = CGRectMake(self.viewToScale.frame.origin.x+xDiferance/2,
-                                  self.viewToScale.frame.origin.y+yDiferance/2,
-                                  self.viewToScale.frame.size.width*scale,
-                                  self.viewToScale.frame.size.height*scale);
-        
-        self.viewToScale.frame = frame;
-        [self.myViews addObject:self.viewToScale];
-        [self.viewToScale setNeedsDisplay];
-        sender.scale = 1.0;
+        if (self.viewToModify.rotationAngle)
+        {
+            //reset rotation
+            self.viewToModify.transform = CGAffineTransformIdentity;
+            
+            //scale with frame before rotation
+            CGFloat xDiferance = self.viewToModify.frameBeforeRotation.size.width * scale - self.viewToModify.frameBeforeRotation.size.width;
+            CGFloat yDiferance = self.viewToModify.frameBeforeRotation.size.height * scale - self.viewToModify.frameBeforeRotation.size.height;
+            
+            CGRect frame = CGRectMake(self.viewToModify.frame.origin.x - xDiferance/2,
+                                      self.viewToModify.frame.origin.y - yDiferance/2,
+                                      self.viewToModify.frame.size.width + xDiferance,
+                                      self.viewToModify.frame.size.height + yDiferance);
+            
+            self.viewToModify.frameBeforeRotation = frame;
+            self.viewToModify.frame = frame;
+            [self.viewToModify setNeedsDisplay];
+            sender.scale = 1.0;
+            
+            //apply rotation back
+            CGAffineTransform rotation = CGAffineTransformMakeRotation(self.viewToModify.rotationAngle);
+            self.viewToModify.transform = rotation;
+        }
+        else
+        {
+            CGFloat xDiferance = self.viewToModify.frame.size.width * scale - self.viewToModify.frame.size.width;
+            CGFloat yDiferance = self.viewToModify.frame.size.height * scale - self.viewToModify.frame.size.height;
+            
+            CGRect frame = CGRectMake(self.viewToModify.frame.origin.x - xDiferance/2,
+                                      self.viewToModify.frame.origin.y - yDiferance/2,
+                                      self.viewToModify.frame.size.width + xDiferance,
+                                      self.viewToModify.frame.size.height + yDiferance);
+            
+            self.viewToModify.frame = frame;
+            
+            [self.viewToModify setNeedsDisplay];
+            sender.scale = 1.0;
+        }
     }
 }
 
 - (void)rotationDetected:(UIRotationGestureRecognizer *)sender
 {
     CGFloat rotation = 0.0;
-    
-    CGPoint location = [sender locationInView:sender.view];
-    self.viewToScale = [sender.view hitTest:location withEvent:nil];
-    FigureDrawer * figureToScale = (FigureDrawer*)self.viewToScale;
-    if (self.viewToScale  != self.view)
+    if (sender.state == UIGestureRecognizerStateBegan)
     {
-        if (figureToScale.WasRorated == NO)
+        CGPoint location = [sender locationInView:sender.view];
+        self.viewToModify = (FigureDrawer *)[sender.view hitTest:location withEvent:nil];
+        if (self.viewToModify.rotationAngle)
+            rotation = self.viewToModify.rotationAngle;
+    }
+    
+    
+    if (self.viewToModify  != self.view)
+    {
+        
+        if (self.viewToModify.WasRorated == NO)
         {
-            figureToScale.frameBeforeTransform = figureToScale.frame;
-            figureToScale.WasRorated = YES;
+            self.viewToModify.frameBeforeRotation = self.viewToModify.frame;
+            self.viewToModify.WasRorated = YES;
         }
         
-        [self.myViews removeObject:self.viewToScale];
-        rotation = sender.rotation;
+        [self.myViews removeObject:self.viewToModify];
+        if (rotation == 0.0)
+            rotation = sender.rotation;
+        else
+            rotation += sender.rotation;
         CGAffineTransform transform = CGAffineTransformMakeRotation(rotation);
-        self.viewToScale.transform = transform;
-        figureToScale.rotationAngle = rotation;
+        self.viewToModify.transform = transform;
+        self.viewToModify.rotationAngle = rotation;
     }
-    else if (self.viewToScale  == self.view)
+    else if (self.viewToModify  == self.view)
     {
         [self.delegate HighLightCurrentOperation];
     }
-    [self.myViews addObject:figureToScale];
+    [self.myViews addObject:self.viewToModify];
     
-    [figureToScale setNeedsDisplay];
+    [self.viewToModify setNeedsDisplay];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -278,9 +314,9 @@
             
             if (self.hitTheMoovingHandle)
             {
-                [[self.viewToMove subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-                [self.viewToMove setNeedsDisplay];
-                self.viewToMove = nil;
+                [[self.viewToModify subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                [self.viewToModify setNeedsDisplay];
+                self.viewToModify = nil;
                 self.hitTheMoovingHandle = NO;
                 self.isInProgress = NO;
             }
@@ -294,8 +330,8 @@
             }
             else if (isPointInsideDelete)
             {
-                [self.viewToMove removeFromSuperview];
-                [self.myViews removeObject:self.viewToMove];
+                [self.viewToModify removeFromSuperview];
+                [self.myViews removeObject:self.viewToModify];
                 self.isInProgress = NO;
 
             }
@@ -419,11 +455,13 @@
             
             if (self.hitTheMoovingHandle)
             {
-                self.stopOfMove = [touch locationInView:self.view];
+                CGPoint stopMovingPoint = [touch locationInView:self.view];
+                self.viewToModify.center = stopMovingPoint;
                 
-                [self.myViews removeObject:self.viewToMove];
-                self.viewToMove.center = self.stopOfMove;
-                [self.myViews addObject:self.viewToMove];
+                self.viewToModify.frameBeforeRotation = CGRectMake(self.viewToModify.frame.origin.x,
+                                                                 self.viewToModify.frame.origin.y,
+                                                                 self.viewToModify.bounds.size.width,
+                                                                 self.viewToModify.bounds.size.height);
             }
             
             break;
@@ -455,9 +493,9 @@
     }
     if (self.currentOperation == movement)
     {
-        [[self.viewToMove subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [self.viewToMove setNeedsDisplay];
-        self.viewToMove = nil;
+        [[self.viewToModify subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self.viewToModify setNeedsDisplay];
+        self.viewToModify = nil;
         self.isInProgress = NO;
         self.hitTheMoovingHandle = NO;
     }
@@ -496,7 +534,7 @@
     
 }
 
-- (void)highLightGivenLayerAtIndex:(NSInteger)index
+- (void)highLightLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
     if (currentFigure.shape == 6)
@@ -514,7 +552,7 @@
     }
 }
 
-- (void)unHighlighGiventLayerAtIndex:(NSInteger)index
+- (void)unHighlighLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
     if (currentFigure.shape == 6)
@@ -529,7 +567,7 @@
     }
 }
 
-- (void)putUpCurrentLayerAtIndex:(NSInteger)index
+- (void)putUpLayerAtIndex:(NSInteger)index
 {
     if (index < self.myViews.count-1)
     {
@@ -546,7 +584,7 @@
     }
 }
 
-- (void)putDownCurrentLayerAtIndex:(NSInteger)index
+- (void)putDownLayerAtIndex:(NSInteger)index
 {
     if (index > 0)
     {
