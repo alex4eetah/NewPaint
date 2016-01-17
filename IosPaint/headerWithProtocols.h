@@ -35,6 +35,7 @@
 - (void)allClear;
 - (void)setCurrentOperation:(NSInteger)value;
 - (void)setNumOfSides:(NSInteger)numOfSides;
+- (void)releaseResources;
 
 @end
 

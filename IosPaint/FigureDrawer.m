@@ -122,6 +122,17 @@
     return self;
 }
 
+-(void)dealloc
+{
+    self.shape = (int)NULL;
+    self.color = nil;
+    self.inset = nil;
+    self.lineWidth = (int)NULL;
+    self.pointsOfLine = nil;
+    self.image = nil;
+    self.figureName = nil;
+}
+
 #pragma mark - logic of drawing different shapes
 - (void)drawLines:(CGRect)rect
 {

@@ -38,7 +38,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(saveData)
-                                                 name:UIApplicationDidEnterBackgroundNotification
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(saveData)
+                                                 name:UIApplicationWillTerminateNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(restoreData)
@@ -46,8 +50,9 @@
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(restoreData)
-                                                 name:UIApplicationWillTerminateNotification
-                                            object:nil];
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+    
     _systemSavingPath = @"systemSavingFile.drwng";
     
 }
@@ -69,6 +74,12 @@
         self.loadFileButton.enabled = NO;
         self.DeleteFileButton.enabled = NO;
         self.filePicker.userInteractionEnabled = NO;
+    }
+    else
+    {
+        self.loadFileButton.enabled = YES;
+        self.DeleteFileButton.enabled = YES;
+        self.filePicker.userInteractionEnabled = YES;
     }
 }
 
@@ -114,6 +125,7 @@
 - (void)saveData
 {
     [self.delegate writeFigureToFile:self.systemSavingPath];
+    [self.delegate releaseResources];
 }
 
 - (void)restoreData

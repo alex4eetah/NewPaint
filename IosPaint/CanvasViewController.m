@@ -729,13 +729,16 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths firstObject];
     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
-
     NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
-    [archiver encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
-    [archiver finishEncoding];
-    [data writeToFile:documentFile atomically:YES];
+    if(data)
+    {
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        
+        [archiver encodeObject:self.myViews forKey:@"arrayOfFigureDrawers"];
+        [archiver finishEncoding];
+        [data writeToFile:documentFile atomically:YES];
+    }
     
 }
 
@@ -766,19 +769,22 @@
     NSString *documentFile = [documentDirectory stringByAppendingPathComponent:pathComponent];
     
     NSData *loadedData = [[NSData alloc] initWithContentsOfFile:documentFile];
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
-    self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
-    for (UIView *v in self.view.subviews)
+    if (loadedData)
     {
-        if ([v isKindOfClass:[FigureDrawer class]])
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:loadedData];
+        self.myViews = [unarchiver decodeObjectForKey:@"arrayOfFigureDrawers"];
+        for (UIView *v in self.view.subviews)
         {
-            [v removeFromSuperview];
+            if ([v isKindOfClass:[FigureDrawer class]])
+            {
+                [v removeFromSuperview];
+            }
         }
-    }
-    for (FigureDrawer *f in self.myViews)
-    {
-        [f setNeedsDisplay];
-        [self.view addSubview:f];
+        for (FigureDrawer *f in self.myViews)
+        {
+            [f setNeedsDisplay];
+            [self.view addSubview:f];
+        }
     }
 }
 
@@ -787,5 +793,15 @@
     [[self.myViews objectAtIndex:layer] setFigureName:name];
 }
 
+- (void)releaseResources
+{
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    self.myViews = nil;
+    self.currentColor = nil;
+    self.currentImage = nil;
+    self.currentPointsOfLine = nil;
+    self.currentShape = 0;
+    self.currentOperation = 0;
+}
 
 @end
