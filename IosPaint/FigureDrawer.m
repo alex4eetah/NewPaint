@@ -8,44 +8,9 @@
 
 #import "FigureDrawer.h"
 
-@interface UIColor (randomizator)
-
-+ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color;
-
-@end
-
-@implementation UIColor (randomizator)
-
-+ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color
-{
-    UIColor *thisColor = [self generateRandome];
-    
-    if (![thisColor isEqual:color])
-        return thisColor;
-    else
-        return [self generateRandomColorWithoutColor:color];
-}
-
-+ (UIColor *)generateRandome
-{
-    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-}
-@end
-
-
-
-
-
-
-
-
-
 @interface FigureDrawer()
 
-@property (nonatomic, strong) UIColor* collor;
+@property (nonatomic, strong) UIColor* color;
 @property (nonatomic, strong) NSNumber* inset;
 @property (nonatomic, assign) NSInteger lineWidth;
 @property (nonatomic, strong) UIColor *highlitedColor;
@@ -54,13 +19,13 @@
 
 @implementation FigureDrawer
 
-- (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape collor:(UIColor*)collor dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *)LinePoints image:(UIImage *)image
+- (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape color:(UIColor*)color dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *)LinePoints image:(UIImage *)image
 {
     self = [super initWithFrame:frame];
     if (self)
     {
         self.shape = (int)shape;
-        self.collor = collor;
+        self.color = color;
         self.inset = inset;
         self.lineWidth = width;
         self.pointsOfLine = LinePoints;
@@ -116,7 +81,7 @@
     
     [aCoder encodeObject: self.figureName forKey:@"figureName"];
     [aCoder encodeObject: [NSNumber numberWithLong: (int)self.shape] forKey:@"shape"];
-    [aCoder encodeObject: self.collor forKey:@"collor"];
+    [aCoder encodeObject: self.color forKey:@"color"];
     [aCoder encodeObject: self.inset forKey:@"inset"];
     [aCoder encodeObject: [NSNumber numberWithLong: self.lineWidth] forKey:@"lineWidth"];
     [aCoder encodeObject: [NSNumber numberWithLong: self.dekNum] forKey:@"dekNum"];
@@ -146,7 +111,7 @@
         
         self.figureName = [aDecoder decodeObjectForKey:@"figureName"];
         self.shape = (int)[[aDecoder decodeObjectForKey:@"shape"] longValue];
-        self.collor = [aDecoder decodeObjectForKey:@"collor"];
+        self.color = [aDecoder decodeObjectForKey:@"color"];
         self.inset = [aDecoder decodeObjectForKey:@"inset"];
         self.image = [aDecoder decodeObjectForKey:@"image"];
         self.lineWidth = (int)[[aDecoder decodeObjectForKey:@"lineWidth"] longValue];
@@ -163,7 +128,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, self.lineWidth);
     CGPoint endPoint = CGPointMake(newRect.size.width, newRect.size.height);
-    CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
+    CGContextSetStrokeColorWithColor(ctx, [self.color CGColor]);
     
     
     if (self.dekNum == 1 || self.dekNum == 3)
@@ -183,19 +148,30 @@
 
 - (void) drawPanLine:(NSArray *)points andColor:(UIColor *)color
 {
-    UIBezierPath *path = [UIBezierPath bezierPath];
+    [self drawSmoothLineFromArrayOfPoints:points whithColor:self.color andWidth:self.lineWidth];
+    
     if (color)
-        [color setStroke];
-    else
-        [self.collor setStroke];
-    path.lineWidth = self.lineWidth;
+    {
+        [self drawSmoothLineFromArrayOfPoints:points whithColor:color andWidth:self.lineWidth * 3];
+    }
+
+
+}
+
+- (void)drawSmoothLineFromArrayOfPoints:(NSArray *)points whithColor:(UIColor *)color andWidth:(CGFloat)width
+{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [color setStroke];
+    path.lineWidth = width;
+    
+    
     path.lineCapStyle = kCGLineCapRound;
     path.lineJoinStyle = kCGLineJoinRound;
     
     NSValue *value = [points firstObject];
     CGPoint firstPoint = [value CGPointValue];
     [path moveToPoint:firstPoint];
-
+    
     if (points.count > 2)
     {
         [path addLineToPoint:[self getMidPointBetweenPointA:firstPoint
@@ -230,7 +206,7 @@
  
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, self.lineWidth);
-    CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
+    CGContextSetStrokeColorWithColor(ctx, [self.color CGColor]);
     
     
     CGContextAddRect(ctx, CGRectInset
@@ -248,7 +224,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextBeginPath(ctx);
     
-    CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
+    CGContextSetStrokeColorWithColor(ctx, [self.color CGColor]);
     CGContextSetLineWidth(ctx, self.lineWidth);
     CGContextAddEllipseInRect(ctx, CGRectInset(rect, self.inset.doubleValue, self.inset.doubleValue));
     CGContextStrokePath(ctx);
@@ -262,7 +238,7 @@
     CGContextSetLineWidth(ctx, self.lineWidth);
     CGContextSetLineCap(ctx, kCGLineCapRound);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
-    CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
+    CGContextSetStrokeColorWithColor(ctx, [self.color CGColor]);
     
     CGPoint STPoint;
     CGPoint LBPoint;
@@ -318,7 +294,7 @@
     CGContextSetLineCap(ctx, kCGLineCapRound);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
     CGContextSetLineWidth(ctx, self.lineWidth);
-    CGContextSetStrokeColorWithColor(ctx, [self.collor CGColor]);
+    CGContextSetStrokeColorWithColor(ctx, [self.color CGColor]);
     
     for (int i = 0; i <= self.numOfSides; i++)
     {
@@ -344,8 +320,7 @@
 
 - (void)highLightPenLine
 {
-    self.highlitedColor = [[UIColor alloc] init];
-    self.highlitedColor = [UIColor generateRandomColorWithoutColor:self.collor];
+    self.highlitedColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.45];
     [self setNeedsDisplay];
 }
 

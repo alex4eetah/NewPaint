@@ -227,8 +227,8 @@
 		ED286FB31C40061E0010BA84 /* FileManaging */ = {
 			isa = PBXGroup;
 			children = (
-				6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */,
 				6AC6B5BB1C4AF6FC00D3B1E4 /* FileManagingVC.h */,
+				6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */,
 			);
 			name = FileManaging;
 			sourceTree = "<group>";

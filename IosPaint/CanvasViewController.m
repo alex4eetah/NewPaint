@@ -241,7 +241,7 @@
                                           self.view.frame.size.height);
                 FigureDrawer *currentView = [[FigureDrawer alloc] initWithFrame:frame
                                                                           shape:self.currentShape
-                                                                         collor:self.currentColor
+                                                                         color:self.currentColor
                                                                    dekartSystem:1
                                                                       withInset:self.inset
                                                                       lineWidth:self.lineWidth
@@ -260,7 +260,7 @@
                 
                 currentView = [[FigureDrawer alloc] initWithFrame:frame
                                                             shape:self.currentShape
-                                                           collor:self.currentColor
+                                                           color:self.currentColor
                                                      dekartSystem:1
                                                         withInset:self.inset
                                                         lineWidth:self.lineWidth

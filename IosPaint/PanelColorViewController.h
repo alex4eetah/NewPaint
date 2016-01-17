@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "FileManagingVC.h"
-//#import "PanelFiguresViewController.h"
 #import "headerWithProtocols.h"
 
 #pragma mark - DelegateProtocol

@@ -26,7 +26,7 @@ typedef enum shapeTypes
 @property (nonatomic) ShapeType shape;
 @property (nonatomic, strong) NSString *figureName;
 
-- (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape collor:(UIColor*)collor dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *) LinePoints image:(UIImage *)image;
+- (instancetype)initWithFrame:(CGRect)frame shape:(NSInteger)shape color:(UIColor*)color dekartSystem:(NSInteger)dekNum withInset:(NSNumber*)inset lineWidth:(NSInteger)width pointsOfLine:(NSArray *) LinePoints image:(UIImage *)image;
 
 
 @property (nonatomic, assign) NSInteger dekNum;

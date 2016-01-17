@@ -56,10 +56,12 @@
         case 1:
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
             [self.layerDelegate putUpCurrentLayerAtIndex:self.currentLayer];
+            [self.subviewPicker selectRow:self.currentLayer+1 inComponent:0 animated:YES];
             break;
         case 2:
             [self.layerDelegate unHighlightLayerAtIndex:self.currentLayer];
             [self.layerDelegate putDownCurrentLayerAtIndex:self.currentLayer];
+            [self.subviewPicker selectRow:self.currentLayer-1 inComponent:0 animated:YES];
             break;
             
         default:

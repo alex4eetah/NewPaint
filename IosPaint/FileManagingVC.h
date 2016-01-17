@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "PanelFiguresViewController.h"
-//#import "CanvasViewController.h"
 #import "headerWithProtocols.h"
 
 

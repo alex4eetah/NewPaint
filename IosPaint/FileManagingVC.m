@@ -67,6 +67,7 @@
     {
         self.loadFileButton.enabled = NO;
         self.DeleteFileButton.enabled = NO;
+        self.filePicker.userInteractionEnabled = NO;
     }
 }
 
