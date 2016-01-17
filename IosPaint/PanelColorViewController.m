@@ -121,7 +121,9 @@
             weakSelf.recentSettingsOutlet.alpha = 1.0;
         }];
         [self.resizerDelegate resizeColorContainerHeightTo:100];
-        self.colorPicker.delegate = self;
+        if (!self.colorPicker.delegate)
+            self.colorPicker.delegate = self;
+        [self pickerView:self.colorPicker didSelectRow:0 inComponent:0];
     }
 }
 
@@ -232,6 +234,7 @@
             weakSelf.colorMenuOutlet.alpha = 0.0;
             weakSelf.mainMenuOutlet.alpha = 1.0;
         }];
+        [self insertInRecentColorsColorWithRed:self.currentRed Green:self.currentGreen Blue:self.currentBlue Alpha:self.currentOpacity];
     }
     else if ([sender.view hitTest:location withEvent:nil].tag == -2)
     {
@@ -244,6 +247,7 @@
             weakSelf.widthAndOpacityMenuOutlet.alpha = 0.0;
             weakSelf.mainMenuOutlet.alpha = 1.0;
         }];
+        [self insertInRecentColorsColorWithRed:self.currentRed Green:self.currentGreen Blue:self.currentBlue Alpha:self.currentOpacity];
     }
     else if ([sender.view hitTest:location withEvent:nil].tag == -3)
     {
@@ -260,13 +264,9 @@
             weakSelf.recentSettingsOutlet.alpha = 0.0;
             weakSelf.mainMenuOutlet.alpha = 1.0;
         }];
-        [self pickerView:self.colorPicker didSelectRow:0 inComponent:0];
+        [self.colorPicker selectRow:0 inComponent:0 animated:YES];
     }
     
-    if ([sender.view hitTest:location withEvent:nil].tag != -3)
-    {
-        [self insertInRecentColorsColorWithRed:self.currentRed Green:self.currentGreen Blue:self.currentBlue Alpha:self.currentOpacity];
-    }
 }
 
 - (void)insertInRecentColorsColorWithRed:(CGFloat)red Green:(CGFloat)green Blue:(CGFloat)blue Alpha:(CGFloat)alpha
@@ -341,7 +341,7 @@
     
     UIGraphicsBeginImageContext(self.recentColorViewIndicator.frame.size);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(),100);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(),95);
     
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), thisRed, thisGreen, thisBlue, thisOpacity);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 50, 50);
