@@ -121,39 +121,8 @@
     }
     return self;
 }
-//// helper to get pre transform frame
-//-(CGRect)originalFrame {
-//    CGAffineTransform currentTransform = self.transform;
-//    self.transform = CGAffineTransformIdentity;
-//    CGRect originalFrame = self.frame;
-//    self.transform = currentTransform;
-//    
-//    return originalFrame;
-//}
-//// helper to get point offset from center
-//-(CGPoint)centerOffset:(CGPoint)thePoint {
-//    return CGPointMake(thePoint.x - self.center.x, thePoint.y - self.center.y);
-//}
-//// helper to get point back relative to center
-//-(CGPoint)pointRelativeToCenter:(CGPoint)thePoint {
-//    return CGPointMake(thePoint.x + self.center.x, thePoint.y + self.center.y);
-//}
-//// helper to get point relative to transformed coords
-//-(CGPoint)newPointInView:(CGPoint)thePoint {
-//    // get offset from center
-//    CGPoint offset = [self centerOffset:thePoint];
-//    // get transformed point
-//    CGPoint transformedPoint = CGPointApplyAffineTransform(offset, self.transform);
-//    // make relative to center
-//    return [self pointRelativeToCenter:transformedPoint];
-//}
-//
-//// now get your corners
-//-(CGPoint)newTopLeft {
-//    CGRect frame = [self originalFrame];
-//    return [self newPointInView:frame.origin];
-//}
 
+#pragma mark - logic of drawing different shapes
 - (void)drawLines:(CGRect)rect
 {
     CGRect newRect = CGRectInset(rect, 0, 0);
@@ -174,20 +143,16 @@
         CGContextAddLineToPoint(ctx, endPoint.x, endPoint.y);
     }
     CGContextStrokePath(ctx);
-    
-    
 }
 
 - (void) drawPanLine:(NSArray *)points andColor:(UIColor *)color
 {
     [self drawSmoothLineFromArrayOfPoints:points whithColor:self.color andWidth:self.lineWidth];
     
-    if (color)
+    if (color)//this means if figure need to be highlighted
     {
         [self drawSmoothLineFromArrayOfPoints:points whithColor:color andWidth:self.lineWidth * 3];
     }
-
-
 }
 
 - (void)drawSmoothLineFromArrayOfPoints:(NSArray *)points whithColor:(UIColor *)color andWidth:(CGFloat)width
@@ -244,15 +209,12 @@
     CGContextAddRect(ctx, CGRectInset
                      (CGRectMake(0, 0, rect.size.width, rect.size.height),
                       self.inset.doubleValue, self.inset.doubleValue));
-    
-    
+
     CGContextStrokePath(ctx);
-    
 }
 
 - (void)drawCircle:(CGRect)rect
 {
-    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextBeginPath(ctx);
     
@@ -350,6 +312,7 @@
     [self.image drawInRect:CGRectMake(0.0, 0.0, rect.size.width, rect.size.height)];
 }
 
+#pragma mark - layer managment
 - (void)highLightPenLine
 {
     self.highlitedColor = [UIColor colorWithRed:0.94 green:0.75 blue:0.31 alpha:0.45];
