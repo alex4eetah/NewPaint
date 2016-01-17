@@ -23,6 +23,7 @@ typedef enum operationsType
 @property (nonatomic, weak) id <FileManagerGelegate> delegate;
 
 @property (nonatomic, strong) NSMutableArray *myViews;
+//array of subviews
 
 - (void)changeFigureName:(NSInteger)layer toName:(NSString *)name;
 - (void)highLightLayerAtIndex:(NSInteger)index;
@@ -30,6 +31,7 @@ typedef enum operationsType
 - (void)putUpLayerAtIndex:(NSInteger)index;
 - (void)putDownLayerAtIndex:(NSInteger)index;
 - (void)deleteLayerAtIndex:(NSInteger)index;
+//layer managment
 
 @end
 

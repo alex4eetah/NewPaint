@@ -74,7 +74,6 @@
 }
 
 #pragma mark - ResizerProtocol methods
-
 - (void)resizeFileManagingContainerHeightTo:(CGFloat)height
 {
 
@@ -95,13 +94,10 @@
 }
 
 #pragma mark - LayerManagerGelegate methods
-
 - (void)prepareLayerPanel
 {
     [self.layerViewController getPreparedForShowing];
 }
-
-
 
 - (void)animateChangingOfConstraint:(NSLayoutConstraint *)constraint ToValue:(CGFloat)value
 {

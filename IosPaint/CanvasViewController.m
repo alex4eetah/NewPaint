@@ -12,55 +12,47 @@
 
 @interface CanvasViewController ()
 
-#pragma mark data for creating figure
 @property (nonatomic, assign) NSInteger lineWidth;
 @property (nonatomic, strong) UIColor* currentColor;
 @property (nonatomic, assign) NSInteger currentShape;
 @property (nonatomic, assign) NSInteger numOfSides;
+@property (nonatomic, strong) UIImage *currentImage;
 @property (nonatomic, assign) CGPoint start;
 @property (nonatomic, assign) CGPoint stop;
 //description:
 //start and stop opints is poinst of start touch and stop touch needed for creating frame for figure
 
 @property (nonatomic, strong) FigureDrawer *viewToModify;
-@property (nonatomic,assign) BOOL hitTheMoovingHandle;
+//viewToModify is view, that temporary contains modifying figure
 
-//@property (nonatomic, strong) FigureDrawer *viewToModify;
-@property (nonatomic, assign) CGFloat currentScale;
+@property (nonatomic, assign) BOOL isInProgress;
+//determines is view currently in stage of modifuing or not
+
+@property (nonatomic, strong) UIImageView* handleToMove;
+@property (nonatomic, strong) UIImageView* handleToDelete;
+//those views are used for  handling figure that is modifying
+
+@property (nonatomic,assign) BOOL hitTheMoovingHandle;
+//hitTheMoovingHandle is true when user hit handleToMove
 
 @property (nonatomic, strong) NSMutableArray *currentPointsOfLine;
+//is used to store points trough witch line would be drawn
 
 @property (nonatomic, strong) UILongPressGestureRecognizer *lPGesture;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
 @property (nonatomic, strong) UIRotationGestureRecognizer *rotationGesture;
+
 @property (nonatomic, assign) OperationType currentOperation;
-
-
-
-@property (nonatomic, strong) UIImageView* handleToMove;
-@property (nonatomic, strong) UIImageView* handleToDelete;
-@property (nonatomic, assign) BOOL isInProgress;
+//e.g. what mode is currently used
 
 @property (nonatomic, strong) LineDrawer* helperLineCanvas;
-
-@property (weak, nonatomic) IBOutlet UIView *managingViewOutlet;
-@property (weak, nonatomic) IBOutlet UIView *savingViewOutlet;
-@property (weak, nonatomic) IBOutlet UITextField *nameOfFileField;
-@property (weak, nonatomic) IBOutlet UIView *loadingViewOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *firstLoadingButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *secondLoadingButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *thirdLoadingButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *fourthLoadingButtonOutlet;
-
-@property (nonatomic, strong) UIImage *currentImage;
-
-@property (nonatomic, assign) BOOL didPreviousEventWasTap;
+//lines, that help to make good-looking pfoto size
 
 @property (nonatomic, strong) UIView *chosenArea;
-
-
+//area from canvas to be saved to gallery
 
 @property (nonatomic, strong) NSNumber* inset;
+
 @end
 
 
@@ -86,11 +78,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
+#pragma mark - gestures
 - (void)LongPressDetected:(UILongPressGestureRecognizer *)sender
 {
     if (sender.state == UIGestureRecognizerStateBegan)
@@ -140,6 +128,7 @@
         }
     }
 }
+
 - (void)PinchDetected:(UIPinchGestureRecognizer *)sender
 {
     if (sender.state == UIGestureRecognizerStateBegan)
@@ -159,14 +148,10 @@
             return;
         }
         self.viewToModify.backgroundColor = [UIColor colorWithRed:0.23 green:0.67 blue:0.94 alpha:0.2];
-        /*[self.myViews removeObject:self.viewToModify];
-        [self.myViews addObject:self.viewToModify];
-        [self.viewToModify setNeedsDisplay];*/
     }
     else if (sender.state == UIGestureRecognizerStateEnded)
     {
         self.viewToModify.backgroundColor = [UIColor clearColor];
-        /*[self.viewToModify setNeedsDisplay];*/
         self.viewToModify = nil;
     }
     
@@ -255,6 +240,7 @@
     [self.viewToModify setNeedsDisplay];
 }
 
+#pragma mark - touch logic
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch* touch = [[event allTouches] anyObject];
@@ -531,9 +517,10 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
+    [self touchesEnded:touches withEvent:event];
 }
 
+#pragma mark - layer managment
 - (void)highLightLayerAtIndex:(NSInteger)index
 {
     FigureDrawer *currentFigure = self.myViews[index];
@@ -617,10 +604,7 @@
     
 }
 
-
-
 #pragma mark - PanelsDelegate methods
-
 - (void)Undo
 {
     [[self.myViews lastObject] removeFromSuperview];
@@ -796,9 +780,6 @@
         [f setNeedsDisplay];
         [self.view addSubview:f];
     }
-    
-    self.loadingViewOutlet.hidden = YES;
-    self.managingViewOutlet.hidden = NO;
 }
 
 - (void)changeFigureName:(NSInteger)layer toName:(NSString *)name
