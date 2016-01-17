@@ -8,8 +8,38 @@
 
 #import "PanelColorViewController.h"
 
+@interface UIColor (randomizator)
+
++ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color;
+
+@end
+
+@implementation UIColor (randomizator)
+
++ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color
+{
+    UIColor *thisColor = [self generateRandom];
+    
+    if (![thisColor isEqual:color])
+        return thisColor;
+    else
+        return [self generateRandomColorWithoutColor:color];
+}
+
++ (UIColor *)generateRandom
+{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    CGFloat alpha = (arc4random() % 256 / 256.0 )+0.1;
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
+}
+@end
+
 @interface PanelColorViewController ()
+
 @property (strong, nonatomic) IBOutlet UIView *mainMenuOutlet;
+@property (weak, nonatomic) IBOutlet UIView *randomOrRealColorSettings;
 @property (strong, nonatomic) IBOutlet UIView *colorMenuOutlet;
 @property (strong, nonatomic) IBOutlet UIView *widthAndOpacityMenuOutlet;
 @property (weak, nonatomic) IBOutlet UIView *recentSettingsOutlet;
@@ -39,10 +69,6 @@
     self.currentWidth = 5;
     [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
     [self setNeedsOfIndicator:self.colorViewIndicator];
-//    self.colorViewIndicator.backgroundColor = [UIColor colorWithRed:self.currentRed
-//                                                              green:self.currentGreen
-//                                                               blue:self.currentBlue
-//                                                              alpha:1];
     
     UITapGestureRecognizer *singleFingerTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -54,9 +80,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//- (IBAction)didSelectItem:(UIButton *)sender
+
+//- (void)makeAnimatableTransitionUsingAlphaFromView1:(UIView *)view1 ToView2:(UIView *)view2
 //{
-//    [self.delegate didSelectColor:sender.backgroundColor];
+//    __typeof(self) __weak weakSelf = self;
+//    [UIView animateWithDuration:0.3 animations:^() {
+//        
+//        view1.alpha = 0.0;
+//        weakSelf.randomOrRealColorSettings.alpha = 1.0;
+//    }];
 //}
 
 #pragma mark - main menu settings
@@ -68,7 +100,7 @@
         [UIView animateWithDuration:0.3 animations:^() {
             
             weakSelf.mainMenuOutlet.alpha = 0.0;
-            weakSelf.colorMenuOutlet.alpha = 1.0;
+            weakSelf.randomOrRealColorSettings.alpha = 1.0;
         }];
     }
     else if (sender.tag == 2)
@@ -92,6 +124,45 @@
         self.colorPicker.delegate = self;
     }
 }
+
+# pragma mark random/real color settings
+- (IBAction)randomrealSettingsItemDidChanged:(UIButton *)sender
+{
+    switch (sender.tag)
+    {
+        case 1:
+        {
+            __typeof(self) __weak weakSelf = self;
+            [UIView animateWithDuration:0.3 animations:^() {
+                
+                weakSelf.randomOrRealColorSettings.alpha = 0.0;
+                weakSelf.mainMenuOutlet.alpha = 1.0;
+            }];
+            CGFloat red = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+            CGFloat green = ( arc4random() % 256 / 256.0 );
+            CGFloat blue = ( arc4random() % 256 / 256.0 );
+            CGFloat alpha = (arc4random() % 256 / 256.0 )+0.1; // 0.1 to 1.0
+            [self.delegate didSelectColor:[UIColor colorWithRed:red green:green blue:blue alpha:alpha]];
+            [self insertInRecentColorsColorWithRed:red Green:green Blue:blue Alpha:alpha];
+        }
+            break;
+            
+        case 2:
+        {
+            __typeof(self) __weak weakSelf = self;
+            [UIView animateWithDuration:0.3 animations:^() {
+                
+                weakSelf.randomOrRealColorSettings.alpha = 0.0;
+                weakSelf.colorMenuOutlet.alpha = 1.0;
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 #pragma mark - color/width/alpha settings
 - (IBAction)colorDidChanged:(UISlider *)sender
@@ -189,30 +260,43 @@
             weakSelf.recentSettingsOutlet.alpha = 0.0;
             weakSelf.mainMenuOutlet.alpha = 1.0;
         }];
+        [self pickerView:self.colorPicker didSelectRow:0 inComponent:0];
     }
     
     if ([sender.view hitTest:location withEvent:nil].tag != -3)
     {
-        if (!self.recentColors)
-        {
-            self.recentColors = [[NSMutableArray alloc] init];
-        }
-        if (![self.recentColors containsObject:[UIColor colorWithRed:self.currentRed
-                                                                  green:self.currentGreen
-                                                                   blue:self.currentBlue
-                                                                  alpha:self.currentOpacity]])
+        [self insertInRecentColorsColorWithRed:self.currentRed Green:self.currentGreen Blue:self.currentBlue Alpha:self.currentOpacity];
+    }
+}
 
-        {
-            static NSInteger i = 0;
-            
-            if (i >= 10)
-                i = 0;
-            if (self.recentColors.count)
-                [self.recentColors insertObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity] atIndex:i];
-            else
-                [self.recentColors addObject:[UIColor colorWithRed:self.currentRed green:self.currentGreen blue:self.currentBlue alpha:self.currentOpacity]];
-            i++;
-        }
+- (void)insertInRecentColorsColorWithRed:(CGFloat)red Green:(CGFloat)green Blue:(CGFloat)blue Alpha:(CGFloat)alpha
+{
+    if (!self.recentColors)
+    {
+        self.recentColors = [[NSMutableArray alloc] init];
+    }
+    if (![self.recentColors containsObject:[UIColor colorWithRed:red
+                                                           green:green
+                                                            blue:blue
+                                                           alpha:alpha]])
+        
+    {
+        static NSInteger i = 0;
+        
+        if (i >= 10)
+            i = 0;
+        if (self.recentColors.count)
+            [self.recentColors insertObject:[UIColor colorWithRed:red
+                                                            green:green
+                                                             blue:blue
+                                                            alpha:alpha]
+                                    atIndex:i];
+        else
+            [self.recentColors addObject:[UIColor colorWithRed:red
+                                                         green:green
+                                                          blue:blue
+                                                         alpha:alpha]];
+        i++;
     }
 }
 
@@ -285,7 +369,7 @@
     {
         attString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Red:%d Green:%d Blue:%d Alpha:%d",0,0,0,0] attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     }
-    [self pickerView:self.colorPicker didSelectRow:0 inComponent:0];
+    
     
     return attString;
     
