@@ -18,6 +18,7 @@
 		2662B9831C2432FC004C0719 /* PanelColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2662B9821C2432FC004C0719 /* PanelColorViewController.m */; };
 		26A35E7E1C207372008C9565 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26A35E7C1C207372008C9565 /* Main.storyboard */; };
 		26DF4F391C1EE55D00AC03D0 /* FigureDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */; };
+		6A3172501C4D904A00BC246C /* random.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A31724F1C4D904A00BC246C /* random.png */; };
 		6A99C9681C4C0A2500654B84 /* launchscreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6A99C9671C4C0A2500654B84 /* launchscreen.jpg */; };
 		6AC6B5BC1C4AF6FC00D3B1E4 /* FileManagingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */; };
 		6AC6B5C01C4AF73D00D3B1E4 /* CanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6B5BF1C4AF73D00D3B1E4 /* CanvasViewController.m */; };
@@ -67,6 +68,7 @@
 		26A35E7D1C207372008C9565 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = IosPaint/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26DF4F371C1EE55D00AC03D0 /* FigureDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FigureDrawer.h; sourceTree = "<group>"; };
 		26DF4F381C1EE55D00AC03D0 /* FigureDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FigureDrawer.m; sourceTree = "<group>"; };
+		6A31724F1C4D904A00BC246C /* random.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = random.png; sourceTree = "<group>"; };
 		6A99C9671C4C0A2500654B84 /* launchscreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launchscreen.jpg; sourceTree = "<group>"; };
 		6AC6B5BA1C4AF6FC00D3B1E4 /* FileManagingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManagingVC.m; sourceTree = "<group>"; };
 		6AC6B5BB1C4AF6FC00D3B1E4 /* FileManagingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagingVC.h; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		2634EEA41C1ED460007E6ED5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6A31724F1C4D904A00BC246C /* random.png */,
 				6A99C9671C4C0A2500654B84 /* launchscreen.jpg */,
 				ED2F31281C47E29300FBE2E0 /* move:remove.png */,
 				ED8779E11C468F4200E327DF /* width:alpha.png */,
@@ -334,6 +337,7 @@
 				ED8779CE1C46495100E327DF /* triangle.png in Resources */,
 				2634EEB11C1ED460007E6ED5 /* Assets.xcassets in Resources */,
 				ED8779DE1C468BB600E327DF /* recent.png in Resources */,
+				6A3172501C4D904A00BC246C /* random.png in Resources */,
 				ED30F9EC1C44201C0070B865 /* circle.png in Resources */,
 				6A99C9681C4C0A2500654B84 /* launchscreen.jpg in Resources */,
 				ED30F9EA1C441E710070B865 /* shapes.png in Resources */,

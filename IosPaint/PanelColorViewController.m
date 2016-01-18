@@ -69,8 +69,16 @@
     self.currentBlue = 0;
     self.currentOpacity = 1;
     self.currentWidth = 5;
-    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
-    [self setNeedsOfIndicator:self.colorViewIndicator];
+    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator
+                      WithRed:self.currentRed
+                    WithGreen:self.currentGreen
+                     WithBlue:self.currentBlue
+                    WithAlpha:self.currentOpacity];
+    [self setNeedsOfIndicator:self.colorViewIndicator
+                      WithRed:self.currentRed
+                    WithGreen:self.currentGreen
+                     WithBlue:self.currentBlue
+                    WithAlpha:self.currentOpacity];
     
     UITapGestureRecognizer *singleFingerTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -133,6 +141,16 @@
             CGFloat alpha = (arc4random() % 256 / 256.0 )+0.1; // 0.1 to 1.0
             [self.delegate didSelectColor:[UIColor colorWithRed:red green:green blue:blue alpha:alpha]];
             [self insertInRecentColorsColorWithRed:red Green:green Blue:blue Alpha:alpha];
+            [self setNeedsOfIndicator:self.colorViewIndicator
+                              WithRed:red
+                            WithGreen:green
+                             WithBlue:blue
+                            WithAlpha:alpha];
+            [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator
+                              WithRed:red
+                            WithGreen:green
+                             WithBlue:blue
+                            WithAlpha:alpha];
         }
             break;
             
@@ -170,7 +188,11 @@
         default:
             break;
     }
-    [self setNeedsOfIndicator:self.colorViewIndicator];
+    [self setNeedsOfIndicator:self.colorViewIndicator
+                      WithRed:self.currentRed
+                    WithGreen:self.currentGreen
+                     WithBlue:self.currentBlue
+                    WithAlpha:self.currentOpacity];
 }
 
 
@@ -178,16 +200,24 @@
 {
     self.currentWidth = sender.value;
     
-    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
+    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator
+                      WithRed:self.currentRed
+                    WithGreen:self.currentGreen
+                     WithBlue:self.currentBlue
+                    WithAlpha:self.currentOpacity];
 }
 
 - (IBAction)didOpacityGetChanged:(UISlider *)sender
 {
     self.currentOpacity = sender.value;
-    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator];
+    [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator
+                      WithRed:self.currentRed
+                    WithGreen:self.currentGreen
+                     WithBlue:self.currentBlue
+                    WithAlpha:self.currentOpacity];
 }
 
-- (void)setNeedsOfIndicator:(UIImageView *)indicator
+- (void)setNeedsOfIndicator:(UIImageView *)indicator WithRed:(CGFloat)red WithGreen:(CGFloat)green WithBlue:(CGFloat)blue WithAlpha:(CGFloat)alpha
 {
     UIGraphicsBeginImageContext(indicator.frame.size);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
@@ -196,7 +226,7 @@
     else if (indicator == self.colorViewIndicator)
         CGContextSetLineWidth(UIGraphicsGetCurrentContext(),50);
     
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), self.currentRed, self.currentGreen, self.currentBlue, self.currentOpacity);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, alpha);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 25, 25);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 25, 25);
     CGContextStrokePath(UIGraphicsGetCurrentContext());

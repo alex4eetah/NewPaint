@@ -487,18 +487,34 @@
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zym-eU-At9">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oy1-Ov-u1J">
-                                        <rect key="frame" x="20" y="0.0" width="276" height="50"/>
-                                        <state key="normal" title="Random"/>
-                                        <connections>
-                                            <action selector="randomrealSettingsItemDidChanged:" destination="v79-HU-1CI" eventType="touchUpInside" id="2nP-QC-Kx1"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKU-32-2Qx">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pKU-32-2Qx">
                                         <rect key="frame" x="304" y="0.0" width="276" height="50"/>
-                                        <state key="normal" title="Settings"/>
+                                        <state key="normal" image="Settings-icon.png">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Settings">
+                                                    <attributes>
+                                                        <font key="NSFont" size="38" name="IowanOldStyle-BoldItalic"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
                                         <connections>
                                             <action selector="randomrealSettingsItemDidChanged:" destination="v79-HU-1CI" eventType="touchUpInside" id="HAf-3d-ByS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oy1-Ov-u1J">
+                                        <rect key="frame" x="20" y="0.0" width="276" height="50"/>
+                                        <state key="normal" image="random.png">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Random">
+                                                    <attributes>
+                                                        <font key="NSFont" size="38" name="IowanOldStyle-BoldItalic"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="randomrealSettingsItemDidChanged:" destination="v79-HU-1CI" eventType="touchUpInside" id="2nP-QC-Kx1"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1724,6 +1740,7 @@
         <image name="move:remove.png" width="100" height="50"/>
         <image name="pen.png" width="50" height="50"/>
         <image name="poligon.png" width="50" height="50"/>
+        <image name="random.png" width="50" height="50"/>
         <image name="recent.png" width="50" height="50"/>
         <image name="rect.png" width="50" height="50"/>
         <image name="rotate.png" width="50" height="50"/>
