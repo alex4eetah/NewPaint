@@ -568,13 +568,17 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="alphaSlider" destination="x9W-Hf-hX8" id="GgD-a4-lAV"/>
+                        <outlet property="blueSlider" destination="Eg2-ue-uS3" id="p8k-OC-IcX"/>
                         <outlet property="colorMenuOutlet" destination="qMS-gN-a9P" id="0pJ-aO-98n"/>
                         <outlet property="colorPicker" destination="Ibl-co-qbA" id="rfU-Wu-L9o"/>
                         <outlet property="colorViewIndicator" destination="uxU-QJ-HaP" id="lP7-aV-B6I"/>
+                        <outlet property="greenSlider" destination="TEK-Ep-GxC" id="2DW-hb-2CG"/>
                         <outlet property="mainMenuOutlet" destination="KQF-vx-RRA" id="sHK-ZQ-SrT"/>
                         <outlet property="randomOrRealColorSettings" destination="zym-eU-At9" id="c4b-Ej-ORk"/>
                         <outlet property="recentColorViewIndicator" destination="rpV-yU-U6c" id="HU8-dA-WKO"/>
                         <outlet property="recentSettingsOutlet" destination="Wlr-cR-6AP" id="gpY-0C-9dW"/>
+                        <outlet property="redSlider" destination="4YN-b9-Qfl" id="07z-sq-CaN"/>
                         <outlet property="widthAndOpacityMenuOutlet" destination="zWh-gs-4ZC" id="LG1-xM-6Av"/>
                         <outlet property="widthAndOpacityViewIndicator" destination="sbV-Sf-tc5" id="DZV-RG-gjM"/>
                     </connections>

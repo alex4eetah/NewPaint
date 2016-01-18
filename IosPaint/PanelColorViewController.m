@@ -8,34 +8,6 @@
 
 #import "PanelColorViewController.h"
 
-@interface UIColor (randomizator)
-
-+ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color;
-
-@end
-
-@implementation UIColor (randomizator)
-
-+ (UIColor *)generateRandomColorWithoutColor:(UIColor *)color
-{
-    UIColor *randomColor = [self generateRandom];
-    
-    if (![randomColor isEqual:color])
-        return randomColor;
-    else
-        return [self generateRandomColorWithoutColor:color];
-}
-
-+ (UIColor *)generateRandom
-{
-    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-    CGFloat alpha = (arc4random() % 256 / 256.0 )+0.1;
-    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
-}
-@end
-
 @interface PanelColorViewController ()
 
 @property (strong, nonatomic) IBOutlet UIView *mainMenuOutlet;
@@ -57,6 +29,13 @@
 @property (strong, nonatomic) NSMutableArray *recentColors;//10 max
 @property (weak, nonatomic) IBOutlet UIImageView *recentColorViewIndicator;
 @property (strong, nonatomic) UIColor * colorChosenWithPicker;
+
+//sliders to set color compontnts
+@property (weak, nonatomic) IBOutlet UISlider *redSlider;
+@property (weak, nonatomic) IBOutlet UISlider *greenSlider;
+@property (weak, nonatomic) IBOutlet UISlider *blueSlider;
+@property (weak, nonatomic) IBOutlet UISlider *alphaSlider;
+
 
 @end
 
@@ -135,22 +114,37 @@
                 weakSelf.randomOrRealColorSettings.alpha = 0.0;
                 weakSelf.mainMenuOutlet.alpha = 1.0;
             }];
-            CGFloat red = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-            CGFloat green = ( arc4random() % 256 / 256.0 );
-            CGFloat blue = ( arc4random() % 256 / 256.0 );
-            CGFloat alpha = (arc4random() % 256 / 256.0 )+0.1; // 0.1 to 1.0
-            [self.delegate didSelectColor:[UIColor colorWithRed:red green:green blue:blue alpha:alpha]];
-            [self insertInRecentColorsColorWithRed:red Green:green Blue:blue Alpha:alpha];
+            self.currentRed = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+            self.currentGreen = ( arc4random() % 256 / 256.0 );
+            self.currentBlue = ( arc4random() % 256 / 256.0 );
+            self.currentOpacity= (arc4random() % 256 / 256.0 )+0.1; // 0.1 to 1.0
+            
+            [self.delegate didSelectColor:[UIColor colorWithRed:self.currentRed
+                                                          green:self.currentGreen
+                                                           blue:self.currentBlue
+                                                          alpha:self.currentOpacity]];
+            
+            [self insertInRecentColorsColorWithRed:self.currentRed
+                                             Green:self.currentGreen
+                                              Blue:self.currentBlue
+                                             Alpha:self.currentOpacity];
+            
             [self setNeedsOfIndicator:self.colorViewIndicator
-                              WithRed:red
-                            WithGreen:green
-                             WithBlue:blue
-                            WithAlpha:alpha];
+                              WithRed:self.currentRed
+                            WithGreen:self.currentGreen
+                             WithBlue:self.currentBlue
+                            WithAlpha:self.currentOpacity];
+            
             [self setNeedsOfIndicator:self.widthAndOpacityViewIndicator
-                              WithRed:red
-                            WithGreen:green
-                             WithBlue:blue
-                            WithAlpha:alpha];
+                              WithRed:self.currentRed
+                            WithGreen:self.currentGreen
+                             WithBlue:self.currentBlue
+                            WithAlpha:self.currentOpacity];
+            
+            [self setValueForColorSlidersRed:self.currentRed
+                                       Green:self.currentGreen
+                                        Blue:self.currentBlue
+                                       Alpha:self.currentOpacity];
         }
             break;
             
@@ -170,6 +164,13 @@
     }
 }
 
+- (void)setValueForColorSlidersRed:(CGFloat)red Green:(CGFloat)green Blue:(CGFloat)blue Alpha:(CGFloat)alpha
+{
+    self.redSlider.value = red;
+    self.greenSlider.value = green;
+    self.blueSlider.value = blue;
+    self.alphaSlider.value = alpha;
+}
 
 #pragma mark - color/width/alpha settings
 - (IBAction)colorDidChanged:(UISlider *)sender
