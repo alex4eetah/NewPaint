@@ -38,7 +38,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(saveData)
-                                                 name:UIApplicationWillResignActiveNotification
+                                                 name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(saveData)
